@@ -10,6 +10,9 @@ import SwiftUI
 struct CategoriesLittle: View {
     // MARK: - PROPERTIES
     
+    @Binding var selectedScreen: selectedScreen
+    @Binding var animatingTop: Bool
+    
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -21,8 +24,12 @@ struct CategoriesLittle: View {
                 
                 Spacer()
                 
+                
                 Button(action: {
-                    print("Working!")
+                    selectedScreen = .categories
+                    withAnimation(.linear) {
+                        animatingTop = true
+                    }
                 }, label: {
                     Text("See All")
                         .foregroundStyle(Color("DarkGreen"))
@@ -32,7 +39,7 @@ struct CategoriesLittle: View {
             }//:HSTACK
             Divider()
             
-            CategoriesGridH()
+            CategoriesHGrid()
         }//:VSTACK
         .padding()
         .background(.white)
@@ -42,5 +49,9 @@ struct CategoriesLittle: View {
 }
 
 #Preview {
-    CategoriesLittle()
+    @Previewable @State var selectedScreen : selectedScreen = .home
+    @Previewable @State var animatingTop : Bool = false
+    NavigationStack{
+        CategoriesLittle(selectedScreen: $selectedScreen, animatingTop: $animatingTop)
+    }
 }

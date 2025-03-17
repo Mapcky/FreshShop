@@ -1,23 +1,23 @@
 //
-//  CategoriesGridH.swift
+//  CategoriesVGrid.swift
 //  FreshShop
 //
-//  Created by Mateo Andres Perano on 14/03/2025.
+//  Created by Mateo Andres Perano on 17/03/2025.
 //
 
 import SwiftUI
 
-struct CategoriesGridH: View {
+struct CategoriesVGrid: View {
     // MARK: - PROPERTIES
-    private let rowSpacing: CGFloat = 10
+    private let columnSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
-        return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 1)
+        return Array(repeating: GridItem(.flexible(), spacing: columnSpacing), count: 3)
     }
+    
     // MARK: - BODY
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHGrid(rows: gridLayout, spacing: rowSpacing, content: {
-                ForEach(1...8, id:\.self) { item in
+            LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
+                ForEach(1...20, id:\.self) { item in
                     VStack {
                         ZStack {
                             Color("CategoriesBackground")
@@ -28,17 +28,20 @@ struct CategoriesGridH: View {
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text("Product \(item)")
+                        Text("Categorie \(item)")
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
                     }//: VSTACK
                 }
             })
-        }
+        .padding()
+        .padding(.bottom, 80)
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 }
 
 #Preview {
-    CategoriesGridH()
+    CategoriesVGrid()
 }
