@@ -23,7 +23,7 @@ struct ProductsVGrid: View {
                             Color("CategoriesBackground")
                             
                             Image(systemName: "cart.fill")
-                            VStack {
+                            VStack (alignment: .trailing) {
                                 Spacer()
                                 HStack(spacing: 15) {
                                     Button(action: {
@@ -48,7 +48,7 @@ struct ProductsVGrid: View {
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text("Categorie \(item)")
+                        Text("Product \(item)")
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
