@@ -12,6 +12,7 @@ struct MainScreen: View {
     
     @State private var search: String = ""
     @State private var animatingTop: Bool = false
+    @State private var animatingBot: Bool = false
     @State private var showing: selectedScreen = .home
     
     // MARK: - BODY
@@ -29,6 +30,7 @@ struct MainScreen: View {
                             Button(action: {
                                 withAnimation(.linear, {
                                     animatingTop = false
+                                    animatingBot = false
                                     showing = .home
                                 })
                             }, label: {
@@ -98,7 +100,7 @@ struct MainScreen: View {
                             .shadow(radius: 0.5)
                             .padding(.top, 30)
                     case .more:
-                        EmptyView()
+                        ProductDetailView()
                     case .profile:
                         ProfileScreen()
                             .padding(.horizontal, 15)
@@ -116,96 +118,103 @@ struct MainScreen: View {
         
         // MARK: - ACTION BAR
         .overlay(alignment: .bottom) {
-            ZStack{
-                Rectangle()
-                    .fill(Color("DarkGreen"))
-                    .clipShape(CustomShape(cutoutRatio: 8, cutoutHeight: 0))
-                    .frame(height: 80)
-                
-                HStack {
+            if !animatingBot {
+                ZStack{
+                    Rectangle()
+                        .fill(Color("DarkGreen"))
+                        .clipShape(CustomShape(cutoutRatio: 8, cutoutHeight: 0))
+                        .frame(height: 80)
                     
-                    HStack(spacing: 20) {
-                        Button(action: {
-                            withAnimation(.linear) {
-                                animatingTop = false
-                                showing = .home
-                            }
-                        }, label: {
-                            VStack(spacing: 8) {
-                                Image(systemName: "square.grid.2x2")
-                                    .imageScale(.large)
-                                Text("Home")
-                                
-                            }
-                        })
+                    HStack {
                         
-                        Button(action: {
-                            withAnimation(.linear) {
-                                animatingTop = false
-                                showing = .orders
-                            }
-                        }, label: {
-                            VStack(spacing: 8) {
-                                Image(systemName: "storefront")
-                                    .imageScale(.large)
-                                Text("Orders")
-                            }                })
-                    }
-                    
-                    Spacer()
-                    
-                    HStack(spacing: 20) {
-                        Button(action: {
-                            withAnimation(.linear) {
-                                animatingTop = false
-                                showing = .deals
-                            }
-                        }, label: {
-                            VStack(spacing: 8) {
-                                Image(systemName: "ticket")
-                                    .imageScale(.large)
-                                Text("Deals")
-                            }
-                        })
+                        HStack(spacing: 20) {
+                            Button(action: {
+                                withAnimation(.linear) {
+                                    animatingTop = false
+                                    animatingBot = false
+                                    showing = .home
+                                }
+                            }, label: {
+                                VStack(spacing: 8) {
+                                    Image(systemName: "square.grid.2x2")
+                                        .imageScale(.large)
+                                    Text("Home")
+                                    
+                                }
+                            })
+                            
+                            Button(action: {
+                                withAnimation(.linear) {
+                                    animatingTop = false
+                                    animatingBot = false
+                                    showing = .orders
+                                }
+                            }, label: {
+                                VStack(spacing: 8) {
+                                    Image(systemName: "storefront")
+                                        .imageScale(.large)
+                                    Text("Orders")
+                                }                })
+                        }
                         
-                        Button(action: {
-                            withAnimation(.linear) {
-                                animatingTop = false
-                                showing = .more
-                            }
-                        }, label: {
-                            VStack(spacing: 8) {
-                                Image(systemName: "slider.horizontal.3")
-                                    .imageScale(.large)
-                                
-                                Text("More")
-                            }
-                        })
-                    }
-                }//:HSTACK
-                .font(.headline)
-                .bold()
-                .foregroundStyle(.white)
-                .padding(.horizontal, 30)
-                .offset(y: -10)
-                .ignoresSafeArea()
-                
-                VStack {
+                        Spacer()
+                        
+                        HStack(spacing: 20) {
+                            Button(action: {
+                                withAnimation(.linear) {
+                                    animatingTop = false
+                                    animatingBot = false
+                                    showing = .deals
+                                }
+                            }, label: {
+                                VStack(spacing: 8) {
+                                    Image(systemName: "ticket")
+                                        .imageScale(.large)
+                                    Text("Deals")
+                                }
+                            })
+                            
+                            Button(action: {
+                                withAnimation(.linear) {
+                                    animatingTop = true
+                                    animatingBot = true
+                                    showing = .more
+                                }
+                            }, label: {
+                                VStack(spacing: 8) {
+                                    Image(systemName: "slider.horizontal.3")
+                                        .imageScale(.large)
+                                    
+                                    Text("More")
+                                }
+                            })
+                        }
+                    }//:HSTACK
+                    .font(.headline)
+                    .bold()
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 30)
+                    .offset(y: -10)
+                    .ignoresSafeArea()
                     
-                    ZStack {
-                        Circle().fill(.white)
-                        Circle().stroke(lineWidth: 8)
-                        Button(action: {}, label: {           Image(systemName: "cart")
-                                .imageScale(.large)
-                                .fontWeight(.black)
-                        })
-                    }//:ZSTACK
-                    .frame(width: 70, height: 70)
-                    .foregroundStyle(Color("DarkGreen"))
-                }
-                .offset(y: -40)
-                
-            }//:ZSTACK
+                    VStack {
+                        
+                        ZStack {
+                            Circle().fill(.white)
+                            Circle().stroke(lineWidth: 8)
+                            Button(action: {}, label: {           Image(systemName: "cart")
+                                    .imageScale(.large)
+                                    .fontWeight(.black)
+                            })
+                        }//:ZSTACK
+                        .frame(width: 70, height: 70)
+                        .foregroundStyle(Color("DarkGreen"))
+                    }
+                    .offset(y: -40)
+                    
+                }//:ZSTACK
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }//:Hide actionsBar
         } //:OVERLAY
         .ignoresSafeArea()
         

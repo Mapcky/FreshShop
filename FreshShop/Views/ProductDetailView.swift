@@ -16,25 +16,80 @@ struct ProductDetailView: View {
         VStack {
             ZStack {
                 //Color("LightGreen")
-                //Rectangle().fill(Color("LightGrayBackground"))
-                Rectangle().fill(Color("LightGreen"))
-                    .frame(maxHeight: 500)
+                Rectangle().fill(Color("LightGray"))
+                //Rectangle().fill(Color("LightGreen"))
+                    .frame(maxHeight: 450)
                     .clipShape(BottomCircle())
+                
                 //Color("LightGrayBackground")
                 
                 
-                VStack {
-                    Text("dsadsaads")
+                VStack (alignment: .leading) {
+                    
+                    VStack {
+                        
+                        Text("Product Title")
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                            .fontDesign(.rounded)
+                        
+                        
+                    }//:VSTACK TITLE
+                    .foregroundStyle(.white)
+                    .shadow(radius: 5, x: 0, y: 3)
+                    .padding()
+                    
+                    HStack(alignment: .center, spacing: 6) {
+                        
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Price")
+                                .fontWeight(.semibold)
+                            
+                            Text(100, format: .currency(code: "USD"))
+                                .font(.title3)
+                                .fontWeight(.black)
+                                .scaleEffect(1.2, anchor: .leading)
+                        }
+                        .padding(.trailing, 10)
+                        
+                        Spacer()
+                        
+                        Image("ProductPlaceholder")
+                            .resizable()
+                            .scaledToFit()
+                            .shadow(radius: 5, x: 0, y: 10)
+                    }
+                    .padding()
                 }
-                .frame(maxHeight: 300)
+                .padding(.top, 20)
+
                 
             }//:ZSTACK
             .ignoresSafeArea()
             Spacer()
-            
+        }//:VSTACK TOP PART
+        .ignoresSafeArea()
+        
+        // MARK: - BOTTOM PART
+        VStack {
             HStack {
-                Text("Product Title")
-                    .font(.system(size: 25, weight: .bold, design: .rounded))
+                VStack(alignment: .leading, spacing: 3, content: {
+                    Text("Ratings")
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color("LightGrayBackground"))
+                    
+                    HStack(alignment: .center, spacing: 3, content: {
+                        ForEach(1...5, id: \.self) { item in
+                            Button(action: {}, label: {
+                                Image(systemName: "star.fill")
+                                    .frame(width: 28, height: 28, alignment: .center)
+                                    .background(Color(.gray).clipShape(RoundedRectangle(cornerRadius: 5)))
+                                    .foregroundStyle(.white)
+                            })
+                        }
+                    })
+                })//:VSTACK RATING
                 
                 Spacer()
                 
@@ -43,7 +98,7 @@ struct ProductDetailView: View {
                         count -= 1
                     }, label: {
                         Text("-")
-                            .bold()
+                            .font(.system(size: 18, weight: .black, design: .rounded))
                     })
                     .foregroundStyle(.white)
                     .padding()
@@ -52,12 +107,14 @@ struct ProductDetailView: View {
                     )
                     Button(action: {}, label: {
                         Text("\(String(count))")
+                            .font(.system(size: 20, weight: .black, design: .rounded))
+                            .foregroundStyle(.black)
                     })
                     Button(action: {
                         count += 1
                     }, label: {
                         Text("+")
-                            .bold()
+                            .font(.system(size: 18, weight: .black, design: .rounded))
 
                     })
                     .foregroundStyle(.white)
@@ -66,10 +123,37 @@ struct ProductDetailView: View {
                         Circle().fill(Color("ButtonsDarkGreen"))
                     )
                 }
-            }//:VSTACK
+            }//:HSTACK
             .padding(.horizontal, 30)
             
-        }
+            VStack (alignment: .leading) {
+                Text("Description Details")
+                    .font(.system(.title3, design: .rounded))
+                    .foregroundStyle(.gray)
+                
+                ScrollView {
+                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nec felis in accumsan. Aenean euismod lectus eu lorem tristique, non finibus purus porttitor. Sed pulvinar ullamcorper ex, id ultricies ligula tincidunt vel. Donec ut augue vitae diam congue hendrerit. Donec id mi a mauris efficitur interdum. Suspendisse aliquam in odio tempus accumsan. Integer molestie, justo nec posuere porta, nunc erat tristique risus, vitae vestibulum nibh leo vitae ligula. Sed et nunc at risus rhoncus posuere. In in tempus nisi, auctor tristique quam.")
+                        .font(.system(.body, design: .rounded))
+                        .foregroundStyle(.gray)
+                        .multilineTextAlignment(.leading)
+                }
+            }
+            .padding(.horizontal, 25)
+            
+            Spacer()
+            
+            Button(action:{}, label: {
+                Spacer()
+                Text("Add to Cart")
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                Spacer()
+            })
+            .padding()
+            .background(Capsule().fill(Color("ButtonsDarkGreen")))
+            .foregroundStyle(.white)
+            .padding()
+            
+        }//:VSTACK
     }
 }
 
