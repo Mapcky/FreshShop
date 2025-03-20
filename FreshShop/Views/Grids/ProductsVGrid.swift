@@ -20,29 +20,9 @@ struct ProductsVGrid: View {
                 ForEach(1...20, id:\.self) { item in
                     VStack {
                         ZStack {
-                            Color("CategoriesBackground")
+                            Color("LightGreenGridBackground")
                             
                             Image(systemName: "cart.fill")
-                            VStack (alignment: .trailing) {
-                                Spacer()
-                                HStack(spacing: 15) {
-                                    Button(action: {
-                                        count -= 1
-                                    }, label: {
-                                        Text("-")
-                                    })
-                                    Button(action: {}, label: {
-                                        Text("\(String(count))")
-                                    })
-                                    Button(action: {
-                                        count += 1
-                                    }, label: {
-                                        Text("+")
-                                    })
-                                }
-                                .padding()
-                                
-                            }
                         }//: ZSTACK
                         .frame(width: 150, height: 150)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
@@ -52,6 +32,8 @@ struct ProductsVGrid: View {
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
+                        
+                        Text(20, format: .currency(code: "USD"))
                     }//: VSTACK
                 }
             })

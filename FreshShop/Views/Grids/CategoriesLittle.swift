@@ -44,7 +44,6 @@ struct CategoriesLittle: View {
         .padding()
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 24))
-        //.frame(height: 400)
     }
 }
 

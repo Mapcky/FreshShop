@@ -13,211 +13,84 @@ struct MainScreen: View {
     @State private var search: String = ""
     @State private var animatingTop: Bool = false
     @State private var animatingBot: Bool = false
-    @State private var showing: selectedScreen = .home
+    @State private var path = NavigationPath()
+    @State private var showingScreen: selectedScreen = .home
     
     // MARK: - BODY
     var body: some View {
-        ZStack {
-            Color("DarkGreen")
-                .ignoresSafeArea()
-            VStack {
-                VStack (spacing: 5) {
-                    HStack {
-                        if(!animatingTop) {
-                            Text("Let's get some deals")
-                        }
-                        else {
-                            Button(action: {
-                                withAnimation(.linear, {
-                                    animatingTop = false
-                                    animatingBot = false
-                                    showing = .home
-                                })
-                            }, label: {
-                                Image(systemName: "chevron.left")
-                                    .bold()
-                            })
-                        }//: BUTTON BACK
-                        
-                        Spacer()
-                        Button(action:{
-                            withAnimation(.linear) {
-                                animatingTop = true
-                                showing = .profile
-                            }
-                        }, label: {
-                            Text("Hi, User")
-                            Image(systemName: "person.crop.circle.fill")
-                                .font(.largeTitle)
-                        })
-                        
-                    }//:HSTACK
-                    .foregroundStyle(.white)
-                    .fontDesign(.rounded)
+        NavigationStack(path: $path) {
+            ZStack {
+                Color("DarkGreen")
+                    .ignoresSafeArea()
+                VStack {
+                    TopNavBar(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
                     
-                    if !animatingTop {
-                        HStack {
-                            Image(systemName: "magnifyingglass")
-                            TextField("Search your daily grocery food...", text: $search)
-                        }//:HSTACK
-                        .padding(8)
-                        .foregroundStyle(.gray)
-                        .background(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding(.vertical, 10)
-                    }
-                }
-                //.padding(.top, animatingTop ? 0 : 50)
-                .padding(.top, 60)
-                .padding(.horizontal, 35)
-                
-                
-                // MARK: - END TOP DESIGN
-                
-                ScrollView {
-                    switch showing {
-                    case .home:
-                        VStack (spacing: 0){
-                            CategoriesLittle(selectedScreen: $showing, animatingTop: $animatingTop)
+                    // MARK: - END TOP DESIGN
+                    
+                    ScrollView {
+                        switch showingScreen {
+                        case .home:
+                            VStack (spacing: 0){
+                                CategoriesLittle(selectedScreen: $showingScreen, animatingTop: $animatingTop)
+                                    .padding(.horizontal, 15)
+                                    .shadow(radius: 0.5)
+                                    .padding(.top, 30)
+                                
+                                BannerView()
+                                    .frame(minHeight: 220)
+                                    .padding(.horizontal, 20)
+                                
+                                PopularProductsLitleGrid(path: $path)
+                                    .padding(.horizontal, 15)
+                                    .shadow(radius: 0.5)
+                                    .padding(.top, 30)
+                            }
+                            .padding(.bottom, 150)
+                        case .categories:
+                            CategoriesVGrid()
                                 .padding(.horizontal, 15)
                                 .shadow(radius: 0.5)
                                 .padding(.top, 30)
-                            
-                            BannerView()
-                                .frame(minHeight: 256)
-                                .padding(.horizontal, 30)
+                        case .orders:
+                            EmptyView()
+                        case .deals:
+                            ProductsVGrid()
+                                .padding(.horizontal, 15)
+                                .shadow(radius: 0.5)
+                                .padding(.top, 30)
+                        case .more:
+                            EmptyView()
+                            //ProductDetailView()
+                        case .profile:
+                            ProfileScreen()
+                                .padding(.horizontal, 15)
+                                .shadow(radius: 0.5)
+                                .padding(.top, 30)
                         }
-                    case .categories:
-                        CategoriesVGrid()
-                            .padding(.horizontal, 15)
-                            .shadow(radius: 0.5)
-                            .padding(.top, 30)
-                    case .orders:
-                        EmptyView()
-                    case .deals:
-                        ProductsVGrid()
-                            .padding(.horizontal, 15)
-                            .shadow(radius: 0.5)
-                            .padding(.top, 30)
-                    case .more:
-                        ProductDetailView()
-                    case .profile:
-                        ProfileScreen()
-                            .padding(.horizontal, 15)
-                            .shadow(radius: 0.5)
-                            .padding(.top, 30)
-                    }
-                    
-                }//: SCROLL
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color("LightGrayBackground"))
-                .clipShape(CustomTopShape())
-            }//: VSTACK
-            
-        }//: ZSTACK
+                        
+                    }//: SCROLL
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color("LightGrayBackground"))
+                    .clipShape(CustomTopShape())
+                    .ignoresSafeArea()
+                }//: VSTACK
+                
+            }//: ZSTACK
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .productDetail(let product):
+                    ProductDetailView(product: product)
+                case .category(_):
+                    EmptyView()
+                }
+            }
+        }//: NAVIGATION STACK
         
         // MARK: - ACTION BAR
         .overlay(alignment: .bottom) {
-            if !animatingBot {
-                ZStack{
-                    Rectangle()
-                        .fill(Color("DarkGreen"))
-                        .clipShape(CustomShape(cutoutRatio: 8, cutoutHeight: 0))
-                        .frame(height: 80)
-                    
-                    HStack {
-                        
-                        HStack(spacing: 20) {
-                            Button(action: {
-                                withAnimation(.linear) {
-                                    animatingTop = false
-                                    animatingBot = false
-                                    showing = .home
-                                }
-                            }, label: {
-                                VStack(spacing: 8) {
-                                    Image(systemName: "square.grid.2x2")
-                                        .imageScale(.large)
-                                    Text("Home")
-                                    
-                                }
-                            })
-                            
-                            Button(action: {
-                                withAnimation(.linear) {
-                                    animatingTop = false
-                                    animatingBot = false
-                                    showing = .orders
-                                }
-                            }, label: {
-                                VStack(spacing: 8) {
-                                    Image(systemName: "storefront")
-                                        .imageScale(.large)
-                                    Text("Orders")
-                                }                })
-                        }
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 20) {
-                            Button(action: {
-                                withAnimation(.linear) {
-                                    animatingTop = false
-                                    animatingBot = false
-                                    showing = .deals
-                                }
-                            }, label: {
-                                VStack(spacing: 8) {
-                                    Image(systemName: "ticket")
-                                        .imageScale(.large)
-                                    Text("Deals")
-                                }
-                            })
-                            
-                            Button(action: {
-                                withAnimation(.linear) {
-                                    animatingTop = true
-                                    animatingBot = true
-                                    showing = .more
-                                }
-                            }, label: {
-                                VStack(spacing: 8) {
-                                    Image(systemName: "slider.horizontal.3")
-                                        .imageScale(.large)
-                                    
-                                    Text("More")
-                                }
-                            })
-                        }
-                    }//:HSTACK
-                    .font(.headline)
-                    .bold()
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 30)
-                    .offset(y: -10)
-                    .ignoresSafeArea()
-                    
-                    VStack {
-                        
-                        ZStack {
-                            Circle().fill(.white)
-                            Circle().stroke(lineWidth: 8)
-                            Button(action: {}, label: {           Image(systemName: "cart")
-                                    .imageScale(.large)
-                                    .fontWeight(.black)
-                            })
-                        }//:ZSTACK
-                        .frame(width: 70, height: 70)
-                        .foregroundStyle(Color("DarkGreen"))
-                    }
-                    .offset(y: -40)
-                    
-                }//:ZSTACK
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-            }//:Hide actionsBar
+            BottomNavBar(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
         } //:OVERLAY
         .ignoresSafeArea()
-        
     }
     
 }
@@ -230,6 +103,23 @@ enum selectedScreen {
     case more
     case profile
 }
+
+// MARK: - Route Working on
+enum Route: Hashable {
+    case productDetail(Product)
+    case category(ProductCategory)
+}
+
+struct Product: Hashable {
+    let id: Int
+    let name: String
+}
+
+struct ProductCategory: Hashable {
+    let id: Int
+    let name: String
+}
+
 
 #Preview {
     MainScreen()

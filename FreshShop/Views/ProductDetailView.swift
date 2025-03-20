@@ -9,15 +9,15 @@ import SwiftUI
 
 struct ProductDetailView: View {
     // MARK: - PROPERTIES
-    
+    var product: Product
     @State private var count: Int = 0
     // MARK: - BODY
     var body: some View {
         VStack {
             ZStack {
                 //Color("LightGreen")
-                Rectangle().fill(Color("LightGray"))
-                //Rectangle().fill(Color("LightGreen"))
+                //Rectangle().fill(Color("LightGray"))
+                Rectangle().fill(Color("LightGreen"))
                     .frame(maxHeight: 450)
                     .clipShape(BottomCircle())
                 
@@ -28,7 +28,7 @@ struct ProductDetailView: View {
                     
                     VStack {
                         
-                        Text("Product Title")
+                        Text(product.name)
                             .font(.largeTitle)
                             .fontWeight(.black)
                             .fontDesign(.rounded)
@@ -62,11 +62,11 @@ struct ProductDetailView: View {
                     .padding()
                 }
                 .padding(.top, 20)
-
+                
                 
             }//:ZSTACK
             .ignoresSafeArea()
-            Spacer()
+            //Spacer()
         }//:VSTACK TOP PART
         .ignoresSafeArea()
         
@@ -95,16 +95,20 @@ struct ProductDetailView: View {
                 
                 HStack(spacing: 15) {
                     Button(action: {
-                        count -= 1
+                        if count > 0 {
+                            count -= 1
+                        }
                     }, label: {
-                        Text("-")
-                            .font(.system(size: 18, weight: .black, design: .rounded))
+                        Image(systemName: "minus")
+                            .font(.system(size: 16, weight: .black, design: .rounded))
+                            .frame(width: 18, height: 18)
+                            .foregroundStyle(.white)
+                            .padding(10)
+                            .background(
+                                Circle().fill(Color("ButtonsDarkGreen"))
+                            )
+                            .contentShape(Circle())
                     })
-                    .foregroundStyle(.white)
-                    .padding()
-                    .background(
-                        Circle().fill(Color("ButtonsDarkGreen"))
-                    )
                     Button(action: {}, label: {
                         Text("\(String(count))")
                             .font(.system(size: 20, weight: .black, design: .rounded))
@@ -113,15 +117,16 @@ struct ProductDetailView: View {
                     Button(action: {
                         count += 1
                     }, label: {
-                        Text("+")
-                            .font(.system(size: 18, weight: .black, design: .rounded))
-
+                        Image(systemName: "plus")
+                            .font(.system(size: 16, weight: .black, design: .rounded))
+                            .frame(width: 18, height: 18)
+                            .foregroundStyle(.white)
+                            .padding(10)
+                            .background(
+                                Capsule().fill(Color("ButtonsDarkGreen"))
+                            )
+                            .contentShape(Circle())
                     })
-                    .foregroundStyle(.white)
-                    .padding()
-                    .background(
-                        Circle().fill(Color("ButtonsDarkGreen"))
-                    )
                 }
             }//:HSTACK
             .padding(.horizontal, 30)
@@ -131,32 +136,32 @@ struct ProductDetailView: View {
                     .font(.system(.title3, design: .rounded))
                     .foregroundStyle(.gray)
                 
-                ScrollView {
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nec felis in accumsan. Aenean euismod lectus eu lorem tristique, non finibus purus porttitor. Sed pulvinar ullamcorper ex, id ultricies ligula tincidunt vel. Donec ut augue vitae diam congue hendrerit. Donec id mi a mauris efficitur interdum. Suspendisse aliquam in odio tempus accumsan. Integer molestie, justo nec posuere porta, nunc erat tristique risus, vitae vestibulum nibh leo vitae ligula. Sed et nunc at risus rhoncus posuere. In in tempus nisi, auctor tristique quam.")
-                        .font(.system(.body, design: .rounded))
-                        .foregroundStyle(.gray)
-                        .multilineTextAlignment(.leading)
-                }
+                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nec felis in accumsan. Aenean euismod lectus eu lorem tristique, non finibus purus porttitor. Sed pulvinar ullamcorper ex, id ultricies ligula tincidunt vel. Donec ut augue vitae diam congue hendrerit. Donec id mi a mauris efficitur interdum. Suspendisse aliquam in odio tempus accumsan. Integer molestie, justo nec posuere porta, nunc erat tristique risus, vitae vestibulum nibh leo vitae ligula. Sed et nunc at risus rhoncus posuere. In in tempus nisi, auctor tristique quam.")
+                    .font(.system(.body, design: .rounded))
+                    .foregroundStyle(.gray)
+                    .multilineTextAlignment(.leading)
             }
             .padding(.horizontal, 25)
             
             Spacer()
             
-            Button(action:{}, label: {
-                Spacer()
+            Button(action:{
+            }, label: {
                 Text("Add to Cart")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
-                Spacer()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Capsule().fill(Color("ButtonsDarkGreen")))
+                    .foregroundStyle(.white)
+                    .padding()
+                    .contentShape(Capsule())
             })
-            .padding()
-            .background(Capsule().fill(Color("ButtonsDarkGreen")))
-            .foregroundStyle(.white)
-            .padding()
             
         }//:VSTACK
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 #Preview {
-    ProductDetailView()
+    ProductDetailView(product: Product(id: 1, name: "Fresh Oranges"))
 }

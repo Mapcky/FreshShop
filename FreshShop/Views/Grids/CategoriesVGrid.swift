@@ -20,7 +20,7 @@ struct CategoriesVGrid: View {
                 ForEach(1...20, id:\.self) { item in
                     VStack {
                         ZStack {
-                            Color("CategoriesBackground")
+                            Color("LightGreenGridBackground")
                             
                             Image(systemName: "cart.fill")
                         }//: ZSTACK
