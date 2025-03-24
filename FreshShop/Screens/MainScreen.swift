@@ -18,77 +18,63 @@ struct MainScreen: View {
     
     // MARK: - BODY
     var body: some View {
-        NavigationStack(path: $path) {
-            ZStack {
-                Color("DarkGreen")
-                    .ignoresSafeArea()
-                VStack {
-                    TopNavBar(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
-                    
-                    // MARK: - END TOP DESIGN
-                    
-                    ScrollView {
-                        switch showingScreen {
-                        case .home:
-                            VStack (spacing: 0){
-                                CategoriesLittle(selectedScreen: $showingScreen, animatingTop: $animatingTop)
+        ZStack {
+            Color("DarkGreen")
+                .ignoresSafeArea()
+            VStack {
+                TopNavBar(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
+                // MARK: - END TOP DESIGN
+                    NavigationStack(path: $path) {
+                        ScrollView {
+                            switch showingScreen {
+                            case .home:
+                                HomeScreen(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
+                                .padding(.bottom, 150)
+                            case .categories:
+                                CategoriesVGrid()
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
-                                
-                                BannerView()
-                                    .frame(minHeight: 220)
-                                    .padding(.horizontal, 20)
-                                
-                                PopularProductsLitleGrid(path: $path)
+                            case .orders:
+                                EmptyView()
+                            case .deals:
+                                ProductsVGrid()
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
-                            }
-                            .padding(.bottom, 150)
-                        case .categories:
-                            CategoriesVGrid()
-                                .padding(.horizontal, 15)
-                                .shadow(radius: 0.5)
-                                .padding(.top, 30)
-                        case .orders:
-                            EmptyView()
-                        case .deals:
-                            ProductsVGrid()
-                                .padding(.horizontal, 15)
-                                .shadow(radius: 0.5)
-                                .padding(.top, 30)
-                        case .more:
-                            EmptyView()
-                            //ProductDetailView()
-                        case .profile:
-                            ProfileScreen()
-                                .padding(.horizontal, 15)
-                                .shadow(radius: 0.5)
-                                .padding(.top, 30)
-                        }
-                        
-                    }//: SCROLL
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color("LightGrayBackground"))
+                            case .more:
+                                //EmptyView()
+                                ProductDetailView(product: Product(id: 1, name: "Orange"))
+                            case .profile:
+                                ProfileScreen()
+                                    .padding(.horizontal, 15)
+                                    .shadow(radius: 0.5)
+                                    .padding(.top, 30)
+                            }//: SWITCH SCREENS
+                            
+                        }//: SCROLL
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color("LightGrayBackground"))
+                        .clipShape(CustomTopShape())
+                        .ignoresSafeArea()
+                        .navigationDestination(for: Route.self) { route in
+                            switch route {
+                            case .productDetail(let product):
+                                ProductDetailView(product: product)
+                            case .category(_):
+                                EmptyView()
+                            }//: SWITCH
+                        }//: NAV DESTINATION
+                    }//: NAVSTACK
                     .clipShape(CustomTopShape())
                     .ignoresSafeArea()
-                }//: VSTACK
-                
-            }//: ZSTACK
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .productDetail(let product):
-                    ProductDetailView(product: product)
-                case .category(_):
-                    EmptyView()
-                }
-            }
-        }//: NAVIGATION STACK
-        
+            }//: VSTACK
+            .navigationBarHidden(true)
+        }//: ZSTACK
         // MARK: - ACTION BAR
         .overlay(alignment: .bottom) {
             BottomNavBar(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
+                //.hidden()
         } //:OVERLAY
         .ignoresSafeArea()
     }

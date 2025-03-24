@@ -14,6 +14,8 @@ struct PopularProductsHGrid: View {
     
     // MARK: - PROPERTIES
     @Binding var path: NavigationPath
+    @Binding var animatingTop: Bool
+    @Binding var animatingBot: Bool
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 1)
@@ -39,7 +41,13 @@ struct PopularProductsHGrid: View {
                             .fontDesign(.rounded)
                     }//: VSTACK
                     .onTapGesture {
-                        path.append(Route.productDetail(item))
+                        withAnimation(.linear) {
+                            path.append(Route.productDetail(item))
+                            animatingBot = true
+                        }
+                        withAnimation(nil) {
+                            animatingTop = true
+                        }
                     }
                 }
             })
@@ -47,8 +55,8 @@ struct PopularProductsHGrid: View {
     }
 
 }
-/*
+
  #Preview {
- PopularProductsHGrid()
+     PopularProductsHGrid(path: .constant(NavigationPath()), animatingTop: .constant(true), animatingBot: .constant(false))
  }
- */
+

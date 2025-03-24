@@ -68,15 +68,14 @@ struct TopNavBar: View {
                 .padding(.vertical, 10)
             }
         }
-        //.padding(.top, 60)
+        .padding(.top, 60)
         .padding(.horizontal, 35)
         
         
     }
 }
-/*
+
 #Preview {
-    TopNavBar()
+    TopNavBar(animatingTop: .constant(false), animatingBot: .constant(false), path: .constant(NavigationPath()), showingScreen: .constant(.home))
 }
 
-*/

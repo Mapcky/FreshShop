@@ -48,9 +48,7 @@ struct CategoriesLittle: View {
 }
 
 #Preview {
-    @Previewable @State var selectedScreen : selectedScreen = .home
-    @Previewable @State var animatingTop : Bool = false
     NavigationStack{
-        CategoriesLittle(selectedScreen: $selectedScreen, animatingTop: $animatingTop)
+        CategoriesLittle(selectedScreen: .constant(.home), animatingTop: .constant(true))
     }
 }

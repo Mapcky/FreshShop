@@ -21,7 +21,7 @@ struct BottomNavBar: View {
                 Rectangle()
                     .fill(Color("DarkGreen"))
                     .clipShape(CustomShape(cutoutRatio: 8, cutoutHeight: 0))
-                    .frame(height: 80)
+                    .frame(height: 75)
                 
                 HStack {
                     
@@ -30,7 +30,12 @@ struct BottomNavBar: View {
                             withAnimation(.easeInOut) {
                                 animatingTop = false
                                 animatingBot = false
-                                showingScreen = .home
+                                if !path.isEmpty{
+                                    path.removeLast()
+                                }
+                                else {
+                                    showingScreen = .home
+                                }
                             }
                         }, label: {
                             VStack(spacing: 8) {
@@ -82,14 +87,12 @@ struct BottomNavBar: View {
                             VStack(spacing: 8) {
                                 Image(systemName: "slider.horizontal.3")
                                     .imageScale(.large)
-                                
                                 Text("More")
                             }
                         })
                     }
                 }//:HSTACK
-                .font(.headline)
-                .bold()
+                .font(.subheadline)
                 .foregroundStyle(.white)
                 .padding(.horizontal, 30)
                 .offset(y: -10)
@@ -115,9 +118,8 @@ struct BottomNavBar: View {
         }//:Hide actionsBar
     }
 }
-/*
+
 #Preview {
-    BottomNavBar()
+    BottomNavBar(animatingTop: .constant(false), animatingBot: .constant(false), path: .constant(NavigationPath()), showingScreen: .constant(.home))
 }
 
-*/
