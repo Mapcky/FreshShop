@@ -29,7 +29,6 @@ struct BottomNavBar: View {
                         Button(action: {
                             withAnimation(.easeInOut) {
                                 animatingTop = false
-                                animatingBot = false
                                 if !path.isEmpty{
                                     path.removeLast()
                                 }
@@ -49,7 +48,6 @@ struct BottomNavBar: View {
                         Button(action: {
                             withAnimation(.easeInOut) {
                                 animatingTop = false
-                                animatingBot = false
                                 showingScreen = .orders
                             }
                         }, label: {
@@ -66,7 +64,6 @@ struct BottomNavBar: View {
                         Button(action: {
                             withAnimation(.easeInOut) {
                                 animatingTop = false
-                                animatingBot = false
                                 showingScreen = .deals
                             }
                         }, label: {
@@ -80,7 +77,6 @@ struct BottomNavBar: View {
                         Button(action: {
                             withAnimation(.easeInOut) {
                                 animatingTop = true
-                                animatingBot = true
                                 showingScreen = .more
                             }
                         }, label: {
@@ -103,7 +99,14 @@ struct BottomNavBar: View {
                     ZStack {
                         Circle().fill(.white)
                         Circle().stroke(lineWidth: 8)
-                        Button(action: {}, label: {           Image(systemName: "cart")
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                animatingTop = true
+                                animatingBot = true
+                                showingScreen = .cart
+                            }
+                        }, label: {
+                            Image(systemName: "cart")
                                 .imageScale(.large)
                                 .fontWeight(.bold)
                         })

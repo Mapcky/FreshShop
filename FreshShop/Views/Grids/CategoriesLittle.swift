@@ -10,6 +10,7 @@ import SwiftUI
 struct CategoriesLittle: View {
     // MARK: - PROPERTIES
     
+    @Binding var path: NavigationPath
     @Binding var selectedScreen: selectedScreen
     @Binding var animatingTop: Bool
     
@@ -26,8 +27,8 @@ struct CategoriesLittle: View {
                 
                 
                 Button(action: {
-                    selectedScreen = .categories
-                    withAnimation(.linear) {
+                    path.append(Route.allCategories)
+                    withAnimation(nil) {
                         animatingTop = true
                     }
                 }, label: {
@@ -39,7 +40,7 @@ struct CategoriesLittle: View {
             }//:HSTACK
             Divider()
             
-            CategoriesHGrid()
+            CategoriesHGrid(animatingTop: $animatingTop, path: $path)
         }//:VSTACK
         .padding()
         .background(.white)
@@ -49,6 +50,6 @@ struct CategoriesLittle: View {
 
 #Preview {
     NavigationStack{
-        CategoriesLittle(selectedScreen: .constant(.home), animatingTop: .constant(true))
+        CategoriesLittle(path: .constant(NavigationPath()), selectedScreen: .constant(.home), animatingTop: .constant(true))
     }
 }

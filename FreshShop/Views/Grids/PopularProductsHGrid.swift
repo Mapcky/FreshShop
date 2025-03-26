@@ -16,6 +16,7 @@ struct PopularProductsHGrid: View {
     @Binding var path: NavigationPath
     @Binding var animatingTop: Bool
     @Binding var animatingBot: Bool
+    
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 1)
@@ -57,6 +58,6 @@ struct PopularProductsHGrid: View {
 }
 
  #Preview {
-     PopularProductsHGrid(path: .constant(NavigationPath()), animatingTop: .constant(true), animatingBot: .constant(false))
+     PopularProductsHGrid(path: .constant(NavigationPath()), animatingTop: .constant(true), animatingBot: .constant(true))
  }
 

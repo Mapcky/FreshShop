@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ProductsVGrid: View {
     // MARK: - PROPERTIES
+    @Binding var path: NavigationPath
+    @Binding var animatingBot: Bool
+    
     private let columnSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: columnSpacing), count: 2)
@@ -17,7 +20,7 @@ struct ProductsVGrid: View {
     // MARK: - BODY
     var body: some View {
             LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
-                ForEach(1...20, id:\.self) { item in
+                ForEach(dairyProducts, id:\.self) { item in
                     VStack {
                         ZStack {
                             Color("LightGreenGridBackground")
@@ -28,13 +31,17 @@ struct ProductsVGrid: View {
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text("Product \(item)")
+                        Text(item.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
                         
                         Text(20, format: .currency(code: "USD"))
                     }//: VSTACK
+                    .onTapGesture {
+                        path.append(Route.productDetail(item))
+                        animatingBot = true
+                    }
                 }
             })
         .padding()
@@ -46,5 +53,5 @@ struct ProductsVGrid: View {
 
 
 #Preview {
-    ProductsVGrid()
+    ProductsVGrid(path: .constant(NavigationPath()), animatingBot: .constant(false))
 }

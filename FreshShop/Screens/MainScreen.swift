@@ -30,28 +30,30 @@ struct MainScreen: View {
                             case .home:
                                 HomeScreen(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
                                 .padding(.bottom, 150)
-                            case .categories:
-                                CategoriesVGrid()
+                            case .orders:
+                                ProductsVGrid(path: $path, animatingBot: $animatingBot)
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
-                            case .orders:
-                                EmptyView()
                             case .deals:
-                                ProductsVGrid()
+                                ProductsVGrid(path: $path, animatingBot: $animatingBot)
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
                             case .more:
-                                //EmptyView()
-                                ProductDetailView(product: Product(id: 1, name: "Orange"))
+                                EmptyView()
                             case .profile:
                                 ProfileScreen()
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
+                                
+                            case .cart:
+                                CartView()
+                                    .padding(.horizontal, 15)
+                                    .shadow(radius: 0.5)
+                                    .padding(.top, 30)
                             }//: SWITCH SCREENS
-                            
                         }//: SCROLL
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(Color("LightGrayBackground"))
@@ -61,8 +63,10 @@ struct MainScreen: View {
                             switch route {
                             case .productDetail(let product):
                                 ProductDetailView(product: product)
-                            case .category(_):
-                                EmptyView()
+                            case .categories(let category):
+                                CategoryProductsView(path: $path, animatingBot: $animatingBot, productCategory: category)
+                            case .allCategories:
+                                CategoriesVGrid(path: $path, animatingTop: $animatingTop)
                             }//: SWITCH
                         }//: NAV DESTINATION
                     }//: NAVSTACK
@@ -83,17 +87,18 @@ struct MainScreen: View {
 
 enum selectedScreen {
     case home
-    case categories
     case orders
     case deals
     case more
     case profile
+    case cart
 }
 
 // MARK: - Route Working on
 enum Route: Hashable {
     case productDetail(Product)
-    case category(ProductCategory)
+    case categories(ProductCategory)
+    case allCategories
 }
 
 struct Product: Hashable {

@@ -25,12 +25,10 @@ struct TopNavBar: View {
                 else {
                     Button(action: {
                         withAnimation(.easeInOut, {
-                            animatingTop = false
                             animatingBot = false
-                            if !path.isEmpty{
-                                path.removeLast()
-                            }
-                            else {
+                            path.removeLast()
+                            if path.isEmpty {
+                                animatingTop = false
                                 showingScreen = .home
                             }
                         })

@@ -13,10 +13,11 @@ struct HomeScreen: View {
     @Binding var animatingBot: Bool
     @Binding var path: NavigationPath
     @Binding var showingScreen: selectedScreen
+    
     // MARK: - BODY
     var body: some View {
         VStack (spacing: 0){
-            CategoriesLittle(selectedScreen: $showingScreen, animatingTop: $animatingTop)
+            CategoriesLittle(path: $path, selectedScreen: $showingScreen, animatingTop: $animatingTop)
                 .padding(.horizontal, 15)
                 .shadow(radius: 0.5)
                 .padding(.top, 30)

@@ -9,6 +9,10 @@ import SwiftUI
 
 struct CategoriesVGrid: View {
     // MARK: - PROPERTIES
+    
+    @Binding var path: NavigationPath
+    @Binding var animatingTop: Bool
+    
     private let columnSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: columnSpacing), count: 3)
@@ -16,8 +20,9 @@ struct CategoriesVGrid: View {
     
     // MARK: - BODY
     var body: some View {
+        ScrollView{
             LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
-                ForEach(1...20, id:\.self) { item in
+                ForEach(productCategoriesArray, id:\.self) { item in
                     VStack {
                         ZStack {
                             Color("LightGreenGridBackground")
@@ -28,20 +33,30 @@ struct CategoriesVGrid: View {
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text("Categorie \(item)")
+                        Text(item.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
                     }//: VSTACK
+                    .onTapGesture {
+                        path.append(Route.categories(item))
+                    }
+                    
                 }
-            })
-        .padding()
-        .padding(.bottom, 80)
-        .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+            })//:VGRID
+            .padding()
+            .padding(.bottom, 80)
+            .background(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .padding(.horizontal, 15)
+            .shadow(radius: 0.5)
+            .padding(.top, 30)
+        }//:SCROLL
+        .background(Color("LightGrayBackground"))
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
-    CategoriesVGrid()
+    CategoriesVGrid(path: .constant(NavigationPath()), animatingTop: .constant(false))
 }

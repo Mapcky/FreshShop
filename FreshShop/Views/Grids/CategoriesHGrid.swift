@@ -8,7 +8,16 @@
 import SwiftUI
 
 struct CategoriesHGrid: View {
+    // MARK: - DEVELOPMENT CATEGORIES
+    
+    private let popularCategories = Array(productCategoriesArray.prefix(8))
+    
     // MARK: - PROPERTIES
+    
+    @Binding var animatingTop: Bool
+    @Binding var path: NavigationPath
+    
+    
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 1)
@@ -17,7 +26,7 @@ struct CategoriesHGrid: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: gridLayout, spacing: rowSpacing, content: {
-                ForEach(1...8, id:\.self) { item in
+                ForEach(popularCategories, id:\.self) { item in
                     VStack {
                         ZStack {
                             Color("LightGreenGridBackground")
@@ -28,17 +37,25 @@ struct CategoriesHGrid: View {
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text("Categorie \(item)")
+                        Text(item.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
                     }//: VSTACK
-                }
-            })
+                    .onTapGesture {
+                        withAnimation(nil){
+                            animatingTop = true
+                        }
+                        withAnimation(){
+                            path.append(Route.categories(item))
+                        }
+                    }
+                }//LOOP
+            })//HGRID
         }//: SCROLL
     }
 }
 
 #Preview {
-    CategoriesHGrid()
+    CategoriesHGrid(animatingTop: .constant(false), path: .constant(NavigationPath()))
 }
