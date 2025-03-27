@@ -49,7 +49,7 @@ struct MainScreen: View {
                                     .padding(.top, 30)
                                 
                             case .cart:
-                                CartView()
+                                CartView(path: $path, animatingTop: $animatingTop)
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
@@ -67,6 +67,8 @@ struct MainScreen: View {
                                 CategoryProductsView(path: $path, animatingBot: $animatingBot, productCategory: category)
                             case .allCategories:
                                 CategoriesVGrid(path: $path, animatingTop: $animatingTop)
+                            case .purchaseComplete:
+                                PurchaseCompleteView(path: $path, showingScreen: $showingScreen, animatingTop: $animatingTop, animatingBot: $animatingBot)
                             }//: SWITCH
                         }//: NAV DESTINATION
                     }//: NAVSTACK
@@ -78,7 +80,6 @@ struct MainScreen: View {
         // MARK: - ACTION BAR
         .overlay(alignment: .bottom) {
             BottomNavBar(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
-                //.hidden()
         } //:OVERLAY
         .ignoresSafeArea()
     }
@@ -99,6 +100,7 @@ enum Route: Hashable {
     case productDetail(Product)
     case categories(ProductCategory)
     case allCategories
+    case purchaseComplete
 }
 
 struct Product: Hashable {

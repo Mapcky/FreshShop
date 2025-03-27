@@ -13,7 +13,7 @@ struct TopNavBar: View {
     @Binding var animatingBot: Bool
     @Binding var path: NavigationPath
     @Binding var showingScreen: selectedScreen
-    @State private var search :String = ""
+    @State private var search: String = ""
     
     // MARK: - BODY
     var body: some View {
@@ -22,11 +22,17 @@ struct TopNavBar: View {
                 if(!animatingTop) {
                     Text("Let's get some deals")
                 }
+                
+                
                 else {
+                    
                     Button(action: {
                         withAnimation(.easeInOut, {
                             animatingBot = false
-                            path.removeLast()
+                            if !path.isEmpty {
+                                path.removeLast()
+                            }
+                            
                             if path.isEmpty {
                                 animatingTop = false
                                 showingScreen = .home
@@ -35,8 +41,8 @@ struct TopNavBar: View {
                     }, label: {
                         Image(systemName: "chevron.left")
                             .bold()
-                    })
-                }//: BUTTON BACK
+                    })//: BUTTON BACK
+                }
                 
                 Spacer()
                 Button(action:{
