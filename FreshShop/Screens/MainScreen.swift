@@ -11,10 +11,13 @@ struct MainScreen: View {
     // MARK: - PROPERTIES
     
     @State private var search: String = ""
+    //@Environment(navigationState.self) private var navigationState
+    
     @State private var animatingTop: Bool = false
     @State private var animatingBot: Bool = false
     @State private var path = NavigationPath()
     @State private var showingScreen: selectedScreen = .home
+     
     
     // MARK: - BODY
     var body: some View {
@@ -31,7 +34,7 @@ struct MainScreen: View {
                                 HomeScreen(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
                                 .padding(.bottom, 150)
                             case .orders:
-                                ProductsVGrid(path: $path, animatingBot: $animatingBot)
+                                OrderScreen()
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
@@ -86,22 +89,6 @@ struct MainScreen: View {
     
 }
 
-enum selectedScreen {
-    case home
-    case orders
-    case deals
-    case more
-    case profile
-    case cart
-}
-
-// MARK: - Route Working on
-enum Route: Hashable {
-    case productDetail(Product)
-    case categories(ProductCategory)
-    case allCategories
-    case purchaseComplete
-}
 
 struct Product: Hashable {
     let id: Int
@@ -116,6 +103,7 @@ struct ProductCategory: Hashable {
 
 #Preview {
     MainScreen()
+        .environment(NavigationState())
 }
 
 

@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct FreshShopApp: App {
+    // MARK: - PROPERTIES
+    
+    @State private var navigationState = NavigationState()
+    
+    // MARK: - BODY
     var body: some Scene {
         WindowGroup {
             MainScreen()
+                .environment(navigationState)
         }
     }
 }
