@@ -9,10 +9,11 @@ import SwiftUI
 
 struct PopularProductsLitleGrid: View {
     // MARK: - PROPERTIES
-    
+/*
     @Binding var path: NavigationPath
     @Binding var animatingTop: Bool
     @Binding var animatingBot: Bool
+ */
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -25,7 +26,7 @@ struct PopularProductsLitleGrid: View {
             }//:HSTACK
             Divider()
             
-            PopularProductsHGrid(path: $path, animatingTop: $animatingTop, animatingBot: $animatingBot)
+            PopularProductsHGrid()
         }//:VSTACK
         .padding()
         .background(.white)
@@ -35,7 +36,7 @@ struct PopularProductsLitleGrid: View {
 
 
 #Preview {
-    PopularProductsLitleGrid(path: .constant(NavigationPath()), animatingTop: .constant(true), animatingBot: .constant(false))
+    PopularProductsLitleGrid()
 }
  
 

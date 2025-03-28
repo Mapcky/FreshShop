@@ -13,10 +13,11 @@ struct CategoriesHGrid: View {
     private let popularCategories = Array(productCategoriesArray.prefix(8))
     
     // MARK: - PROPERTIES
-    
+    @Environment(\.navigationState) private var navigationState
+/*
     @Binding var animatingTop: Bool
     @Binding var path: NavigationPath
-    
+  */
     
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
@@ -44,10 +45,10 @@ struct CategoriesHGrid: View {
                     }//: VSTACK
                     .onTapGesture {
                         withAnimation(nil){
-                            animatingTop = true
+                            navigationState.animatingTop = true
                         }
                         withAnimation(){
-                            path.append(Route.categories(item))
+                            navigationState.path.append(Route.categories(item))
                         }
                     }
                 }//LOOP
@@ -57,5 +58,6 @@ struct CategoriesHGrid: View {
 }
 
 #Preview {
-    CategoriesHGrid(animatingTop: .constant(false), path: .constant(NavigationPath()))
+    CategoriesHGrid()
+        .environment(\.navigationState, NavigationState())
 }

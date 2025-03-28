@@ -8,13 +8,13 @@
 import SwiftUI
 import Observation
 
-@MainActor
 @Observable
-class NavigationState {
+class NavigationState: ObservableObject {
     var path = NavigationPath()
     var animatingTop: Bool = false
     var animatingBot: Bool = false
     var showingScreen: selectedScreen = .home
+    
 }
 
 enum selectedScreen {
@@ -32,4 +32,8 @@ enum Route: Hashable {
     case categories(ProductCategory)
     case allCategories
     case purchaseComplete
+}
+
+extension EnvironmentValues {
+    @Entry var navigationState = NavigationState()
 }

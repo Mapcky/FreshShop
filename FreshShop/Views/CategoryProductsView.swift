@@ -9,8 +9,10 @@ import SwiftUI
 
 struct CategoryProductsView: View {
     // MARK: - PROPERTIES
+    /*
     @Binding var path: NavigationPath
     @Binding var animatingBot: Bool
+     */
     @State var productCategory: ProductCategory
     // MARK: - BODY
     var body: some View {
@@ -19,7 +21,7 @@ struct CategoryProductsView: View {
                 Text(productCategory.name)
                     .font(.title3)
                     .fontDesign(.rounded)
-                ProductsVGrid(path: $path, animatingBot: $animatingBot)
+                ProductsVGrid()
             }//:VSTACK
             .padding(.horizontal, 15)
             .shadow(radius: 0.5)
@@ -31,5 +33,6 @@ struct CategoryProductsView: View {
 }
 
 #Preview {
-    CategoryProductsView(path: .constant(NavigationPath()), animatingBot: .constant(false), productCategory: ProductCategory(id: 1, name: "Dairy"))
+    CategoryProductsView(productCategory: ProductCategory(id: 1, name: "Dairy"))
+
 }

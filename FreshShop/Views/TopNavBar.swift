@@ -9,33 +9,35 @@ import SwiftUI
 
 struct TopNavBar: View {
     // MARK: - PROPERTIES
+    
+    @Environment(\.navigationState) private var navigationState
+
+    /*
     @Binding var animatingTop: Bool
     @Binding var animatingBot: Bool
     @Binding var path: NavigationPath
     @Binding var showingScreen: selectedScreen
+     */
     @State private var search: String = ""
     
     // MARK: - BODY
     var body: some View {
         VStack (spacing: 5) {
             HStack {
-                if(!animatingTop) {
+                if(!navigationState.animatingTop) {
                     Text("Let's get some deals")
                 }
-                
-                
                 else {
-                    
                     Button(action: {
                         withAnimation(.easeInOut, {
-                            animatingBot = false
-                            if !path.isEmpty {
-                                path.removeLast()
+                            navigationState.animatingBot = false
+                            if !navigationState.path.isEmpty {
+                                navigationState.path.removeLast()
                             }
                             
-                            if path.isEmpty {
-                                animatingTop = false
-                                showingScreen = .home
+                            if navigationState.path.isEmpty {
+                                navigationState.animatingTop = false
+                                navigationState.showingScreen = .home
                             }
                         })
                     }, label: {
@@ -47,8 +49,8 @@ struct TopNavBar: View {
                 Spacer()
                 Button(action:{
                     withAnimation(.linear) {
-                        animatingTop = true
-                        showingScreen = .profile
+                        navigationState.animatingTop = true
+                        navigationState.showingScreen = .profile
                     }
                 }, label: {
                     Text("Hi, User")
@@ -60,7 +62,7 @@ struct TopNavBar: View {
             .foregroundStyle(.white)
             .fontDesign(.rounded)
             
-            if !animatingTop {
+            if !navigationState.animatingTop {
                 HStack {
                     Image(systemName: "magnifyingglass")
                     TextField("Search your daily grocery food...", text: $search)
@@ -80,6 +82,7 @@ struct TopNavBar: View {
 }
 
 #Preview {
-    TopNavBar(animatingTop: .constant(false), animatingBot: .constant(false), path: .constant(NavigationPath()), showingScreen: .constant(.home))
+    TopNavBar()
+        .environment(\.navigationState, NavigationState())
 }
 

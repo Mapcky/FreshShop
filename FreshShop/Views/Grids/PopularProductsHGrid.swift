@@ -13,10 +13,14 @@ struct PopularProductsHGrid: View {
     let productsArray: [Product] = [Product(id: 1, name: "Fresh Orange"), Product(id: 2, name: "Milk"), Product(id: 3, name: "Bananas"), Product(id: 4, name: "Strawberry"), Product(id: 5, name: "Blueberry"), Product(id: 6, name: "Lemon")]
     
     // MARK: - PROPERTIES
+    @Environment(\.navigationState) private var navigationState
+
+    /*
     @Binding var path: NavigationPath
     @Binding var animatingTop: Bool
     @Binding var animatingBot: Bool
     
+     */
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 1)
@@ -43,11 +47,11 @@ struct PopularProductsHGrid: View {
                     }//: VSTACK
                     .onTapGesture {
                         withAnimation(.linear) {
-                            path.append(Route.productDetail(item))
-                            animatingBot = true
+                            navigationState.path.append(Route.productDetail(item))
+                            navigationState.animatingBot = true
                         }
                         withAnimation(nil) {
-                            animatingTop = true
+                            navigationState.animatingTop = true
                         }
                     }
                 }
@@ -58,6 +62,8 @@ struct PopularProductsHGrid: View {
 }
 
  #Preview {
-     PopularProductsHGrid(path: .constant(NavigationPath()), animatingTop: .constant(true), animatingBot: .constant(true))
+     PopularProductsHGrid()
+         .environment(\.navigationState, NavigationState())
+
  }
 

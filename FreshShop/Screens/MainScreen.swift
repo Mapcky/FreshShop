@@ -11,13 +11,13 @@ struct MainScreen: View {
     // MARK: - PROPERTIES
     
     @State private var search: String = ""
-    //@Environment(navigationState.self) private var navigationState
-    
-    @State private var animatingTop: Bool = false
+    @Environment(\.navigationState) private var navigationState
+    @State private var localPath = NavigationPath()
+    /*@State private var animatingTop: Bool = false
     @State private var animatingBot: Bool = false
     @State private var path = NavigationPath()
     @State private var showingScreen: selectedScreen = .home
-     
+     */
     
     // MARK: - BODY
     var body: some View {
@@ -25,13 +25,13 @@ struct MainScreen: View {
             Color("DarkGreen")
                 .ignoresSafeArea()
             VStack {
-                TopNavBar(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
+                TopNavBar()
                 // MARK: - END TOP DESIGN
-                    NavigationStack(path: $path) {
+                NavigationStack(path: $localPath) {
                         ScrollView {
-                            switch showingScreen {
+                            switch navigationState.showingScreen {
                             case .home:
-                                HomeScreen(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
+                                HomeScreen()
                                 .padding(.bottom, 150)
                             case .orders:
                                 OrderScreen()
@@ -39,7 +39,7 @@ struct MainScreen: View {
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
                             case .deals:
-                                ProductsVGrid(path: $path, animatingBot: $animatingBot)
+                                ProductsVGrid()
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
@@ -52,7 +52,7 @@ struct MainScreen: View {
                                     .padding(.top, 30)
                                 
                             case .cart:
-                                CartView(path: $path, animatingTop: $animatingTop)
+                                CartView()
                                     .padding(.horizontal, 15)
                                     .shadow(radius: 0.5)
                                     .padding(.top, 30)
@@ -67,13 +67,19 @@ struct MainScreen: View {
                             case .productDetail(let product):
                                 ProductDetailView(product: product)
                             case .categories(let category):
-                                CategoryProductsView(path: $path, animatingBot: $animatingBot, productCategory: category)
+                                CategoryProductsView( productCategory: category)
                             case .allCategories:
-                                CategoriesVGrid(path: $path, animatingTop: $animatingTop)
+                                CategoriesVGrid()
                             case .purchaseComplete:
-                                PurchaseCompleteView(path: $path, showingScreen: $showingScreen, animatingTop: $animatingTop, animatingBot: $animatingBot)
+                                PurchaseCompleteView()
                             }//: SWITCH
                         }//: NAV DESTINATION
+                        .onChange(of: navigationState.path) { newValue in
+                            localPath = newValue
+                        }
+                        .onChange(of: localPath) { newValue in
+                            navigationState.path = newValue
+                        }
                     }//: NAVSTACK
                     .clipShape(CustomTopShape())
                     .ignoresSafeArea()
@@ -82,7 +88,7 @@ struct MainScreen: View {
         }//: ZSTACK
         // MARK: - ACTION BAR
         .overlay(alignment: .bottom) {
-            BottomNavBar(animatingTop: $animatingTop, animatingBot: $animatingBot, path: $path, showingScreen: $showingScreen)
+            BottomNavBar()
         } //:OVERLAY
         .ignoresSafeArea()
     }
@@ -103,7 +109,7 @@ struct ProductCategory: Hashable {
 
 #Preview {
     MainScreen()
-        .environment(NavigationState())
+        .environment(\.navigationState, NavigationState())
 }
 
 

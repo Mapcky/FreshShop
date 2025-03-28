@@ -9,11 +9,13 @@ import SwiftUI
 
 struct CategoriesLittle: View {
     // MARK: - PROPERTIES
-    
+    @Environment(\.navigationState) private var navigationState
+
+    /*
     @Binding var path: NavigationPath
     @Binding var selectedScreen: selectedScreen
     @Binding var animatingTop: Bool
-    
+    */
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -27,9 +29,9 @@ struct CategoriesLittle: View {
                 
                 
                 Button(action: {
-                    path.append(Route.allCategories)
+                    navigationState.path.append(Route.allCategories)
                     withAnimation(nil) {
-                        animatingTop = true
+                        navigationState.animatingTop = true
                     }
                 }, label: {
                     Text("See All")
@@ -40,7 +42,7 @@ struct CategoriesLittle: View {
             }//:HSTACK
             Divider()
             
-            CategoriesHGrid(animatingTop: $animatingTop, path: $path)
+            CategoriesHGrid()
         }//:VSTACK
         .padding()
         .background(.white)
@@ -50,6 +52,7 @@ struct CategoriesLittle: View {
 
 #Preview {
     NavigationStack{
-        CategoriesLittle(path: .constant(NavigationPath()), selectedScreen: .constant(.home), animatingTop: .constant(true))
+        CategoriesLittle()
+            .environment(\.navigationState, NavigationState())
     }
 }

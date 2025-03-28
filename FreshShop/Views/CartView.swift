@@ -9,9 +9,13 @@ import SwiftUI
 
 struct CartView: View {
     // MARK: - PROPERTIES
+    /*
     @Binding var path: NavigationPath
     @Binding var animatingTop: Bool
+     */
     
+    @Environment(\.navigationState) private var navigationState
+
     // MARK: - BODY
     var body: some View {
         VStack{
@@ -22,8 +26,8 @@ struct CartView: View {
             Spacer()
             
             Button(action:{
-                animatingTop = false
-                path.append(Route.purchaseComplete)
+                navigationState.animatingTop = false
+                navigationState.path.append(Route.purchaseComplete)
             }, label: {
                 Text("Proceed to Checkout")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
@@ -39,5 +43,7 @@ struct CartView: View {
 }
 
 #Preview {
-    CartView(path: .constant(NavigationPath()), animatingTop: .constant(false))
+    CartView()
+        .environment(\.navigationState, NavigationState())
+
 }

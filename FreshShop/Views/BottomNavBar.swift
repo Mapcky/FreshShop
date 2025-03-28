@@ -9,14 +9,17 @@ import SwiftUI
 
 struct BottomNavBar: View {
     // MARK: - PROPERTIES
+    /*
     @Binding var animatingTop: Bool
     @Binding var animatingBot: Bool
     @Binding var path: NavigationPath
     @Binding var showingScreen: selectedScreen
-    
+    */
+    @Environment(\.navigationState) private var navigationState
+
     // MARK: - BODY
     var body: some View {
-        if !animatingBot {
+        if !navigationState.animatingBot {
             ZStack{
                 Rectangle()
                     .fill(Color("DarkGreen"))
@@ -28,12 +31,12 @@ struct BottomNavBar: View {
                     HStack(spacing: 20) {
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                animatingTop = false
-                                if !path.isEmpty{
-                                    path.removeLast()
+                                navigationState.animatingTop = false
+                                if !navigationState.path.isEmpty{
+                                    navigationState.path.removeLast()
                                 }
                                 else {
-                                    showingScreen = .home
+                                    navigationState.showingScreen = .home
                                 }
                             }
                         }, label: {
@@ -47,8 +50,8 @@ struct BottomNavBar: View {
                         
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                animatingTop = false
-                                showingScreen = .orders
+                                navigationState.animatingTop = false
+                                navigationState.showingScreen = .orders
                             }
                         }, label: {
                             VStack(spacing: 8) {
@@ -63,8 +66,8 @@ struct BottomNavBar: View {
                     HStack(spacing: 20) {
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                animatingTop = false
-                                showingScreen = .deals
+                                navigationState.animatingTop = false
+                                navigationState.showingScreen = .deals
                             }
                         }, label: {
                             VStack(spacing: 8) {
@@ -76,8 +79,8 @@ struct BottomNavBar: View {
                         
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                animatingTop = true
-                                showingScreen = .more
+                                navigationState.animatingTop = true
+                                navigationState.showingScreen = .more
                             }
                         }, label: {
                             VStack(spacing: 8) {
@@ -101,9 +104,9 @@ struct BottomNavBar: View {
                         Circle().stroke(lineWidth: 8)
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                animatingTop = true
-                                animatingBot = true
-                                showingScreen = .cart
+                                navigationState.animatingTop = true
+                                navigationState.animatingBot = true
+                                navigationState.showingScreen = .cart
                             }
                         }, label: {
                             Image(systemName: "cart")
@@ -123,6 +126,8 @@ struct BottomNavBar: View {
 }
 
 #Preview {
-    BottomNavBar(animatingTop: .constant(false), animatingBot: .constant(false), path: .constant(NavigationPath()), showingScreen: .constant(.home))
+    BottomNavBar()
+        .environment(\.navigationState, NavigationState())
+
 }
 

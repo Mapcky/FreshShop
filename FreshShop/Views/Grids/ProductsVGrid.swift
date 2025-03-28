@@ -9,8 +9,12 @@ import SwiftUI
 
 struct ProductsVGrid: View {
     // MARK: - PROPERTIES
+    /*
     @Binding var path: NavigationPath
     @Binding var animatingBot: Bool
+    */
+    @Environment(\.navigationState) private var navigationState
+
     
     private let columnSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
@@ -39,8 +43,8 @@ struct ProductsVGrid: View {
                         Text(20, format: .currency(code: "USD"))
                     }//: VSTACK
                     .onTapGesture {
-                        path.append(Route.productDetail(item))
-                        animatingBot = true
+                        navigationState.path.append(Route.productDetail(item))
+                        navigationState.animatingBot = true
                     }
                 }
             })
@@ -53,5 +57,6 @@ struct ProductsVGrid: View {
 
 
 #Preview {
-    ProductsVGrid(path: .constant(NavigationPath()), animatingBot: .constant(false))
+    ProductsVGrid()
+        .environment(\.navigationState, NavigationState())
 }

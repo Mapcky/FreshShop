@@ -9,10 +9,12 @@ import SwiftUI
 
 struct CategoriesVGrid: View {
     // MARK: - PROPERTIES
-    
+    /*
     @Binding var path: NavigationPath
     @Binding var animatingTop: Bool
-    
+    */
+    @Environment(\.navigationState) private var navigationState
+
     private let columnSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: columnSpacing), count: 3)
@@ -39,7 +41,7 @@ struct CategoriesVGrid: View {
                             .fontDesign(.rounded)
                     }//: VSTACK
                     .onTapGesture {
-                        path.append(Route.categories(item))
+                        navigationState.path.append(Route.categories(item))
                     }
                     
                 }
@@ -58,5 +60,7 @@ struct CategoriesVGrid: View {
 }
 
 #Preview {
-    CategoriesVGrid(path: .constant(NavigationPath()), animatingTop: .constant(false))
+    CategoriesVGrid()
+        .environment(\.navigationState, NavigationState())
+
 }

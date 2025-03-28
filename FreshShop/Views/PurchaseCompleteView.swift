@@ -9,11 +9,14 @@ import SwiftUI
 
 struct PurchaseCompleteView: View {
     // MARK: - PROPERTIES
+    /*
     @Binding var path: NavigationPath
     @Binding var showingScreen: selectedScreen
     @Binding var animatingTop: Bool
     @Binding var animatingBot: Bool
-    
+    */
+    @Environment(\.navigationState) private var navigationState
+
     // MARK: - BODY
     var body: some View {
         ZStack {
@@ -34,10 +37,10 @@ struct PurchaseCompleteView: View {
                     .foregroundColor(.green)
                 
                 Button(action: {
-                    showingScreen = .home
-                    animatingBot = false
-                    animatingTop = false
-                    path.removeLast(path.count)
+                    navigationState.showingScreen = .home
+                    navigationState.animatingBot = false
+                    navigationState.animatingTop = false
+                    navigationState.path.removeLast(navigationState.path.count)
                 },label: {
                     Text("Back to home")
                         .fontWeight(.semibold)
@@ -56,5 +59,7 @@ struct PurchaseCompleteView: View {
 }
 
 #Preview {
-    PurchaseCompleteView(path: .constant(NavigationPath()), showingScreen: .constant(.home), animatingTop: .constant(true), animatingBot: .constant(false))
+    PurchaseCompleteView()
+        .environment(\.navigationState, NavigationState())
+
 }
