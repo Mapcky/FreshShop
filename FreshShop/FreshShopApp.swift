@@ -11,13 +11,13 @@ import SwiftUI
 struct FreshShopApp: App {
     // MARK: - PROPERTIES
     
-    @State private var navigationState = NavigationState()
-    
+    @Environment(\.navigationState) private var navigationState
+
     // MARK: - BODY
     var body: some Scene {
         WindowGroup {
             MainScreen()
-                .environment(navigationState)
+                .environment(\.navigationState, NavigationState())
         }
     }
 }

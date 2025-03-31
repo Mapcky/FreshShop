@@ -52,3 +52,5 @@ let dairyProducts: [Product] = [
     Product(id: 19, name: "Lactose-Free Milk"),
     Product(id: 20, name: "Swiss Cheese")
 ]
+
+let orderExample: Order = Order(id: 1, orderItems: Array(dairyProducts[1...5]))

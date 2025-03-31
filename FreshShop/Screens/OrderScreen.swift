@@ -8,13 +8,24 @@
 import SwiftUI
 
 struct OrderScreen: View {
+    // MARK: - PROPERTIES
+    // MARK: - BODY
     var body: some View {
-        ScrollView {
-            ForEach(1...4, id:\.self) { item in
-                OrderItemsView()
-            }
+        VStack(alignment: .leading, spacing: 10) {
+            Text("My Orders")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.horizontal)
             
-        }//: Scroll
+            ScrollView {
+                LazyVStack(spacing: 10) {
+                    ForEach(1...4, id:\.self) { _ in
+                        OrderLittleView(order: orderExample)
+                    }//:LOOP
+                }//:LVSTACK
+                .padding(.horizontal)
+            }//: Scroll
+        }//:VSTACK
         .padding()
         .padding(.bottom, 80)
         .background(.white)

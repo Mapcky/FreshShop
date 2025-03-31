@@ -50,7 +50,7 @@ struct BottomNavBar: View {
                         
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                navigationState.animatingTop = false
+                                navigationState.animatingTop = true
                                 navigationState.showingScreen = .orders
                             }
                         }, label: {
@@ -66,7 +66,7 @@ struct BottomNavBar: View {
                     HStack(spacing: 20) {
                         Button(action: {
                             withAnimation(.easeInOut) {
-                                navigationState.animatingTop = false
+                                navigationState.animatingTop = true
                                 navigationState.showingScreen = .deals
                             }
                         }, label: {

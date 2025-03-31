@@ -72,14 +72,16 @@ struct MainScreen: View {
                                 CategoriesVGrid()
                             case .purchaseComplete:
                                 PurchaseCompleteView()
+                            case .orderDetail(let order):
+                                OrderDetailView(order: order)
                             }//: SWITCH
                         }//: NAV DESTINATION
-                        .onChange(of: navigationState.path) { newValue in
-                            localPath = newValue
-                        }
-                        .onChange(of: localPath) { newValue in
-                            navigationState.path = newValue
-                        }
+                        .onChange(of: navigationState.path, {
+                            localPath = navigationState.path
+                        })
+                        .onChange(of: localPath, {
+                            navigationState.path = localPath
+                        })
                     }//: NAVSTACK
                     .clipShape(CustomTopShape())
                     .ignoresSafeArea()
@@ -104,6 +106,11 @@ struct Product: Hashable {
 struct ProductCategory: Hashable {
     let id: Int
     let name: String
+}
+
+struct Order: Hashable {
+    let id: Int
+    var orderItems: [Product] //use order items in future
 }
 
 

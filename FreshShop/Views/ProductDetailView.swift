@@ -133,7 +133,7 @@ struct ProductDetailView: View {
                 .padding(.horizontal, 30)
                 
                 VStack (alignment: .leading) {
-                    Text("Description Details")
+                    Text("Product Description")
                         .font(.system(.title3, design: .rounded))
                         .foregroundStyle(.gray)
                     

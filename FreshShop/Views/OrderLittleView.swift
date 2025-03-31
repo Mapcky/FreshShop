@@ -1,5 +1,5 @@
 //
-//  OrderItemsView.swift
+//  OrderLittleView.swift
 //  FreshShop
 //
 //  Created by Mateo Andres Perano on 27/03/2025.
@@ -7,7 +7,12 @@
 
 import SwiftUI
 
-struct OrderItemsView: View {
+struct OrderLittleView: View {
+    // MARK: - PROPERTIES
+    @Environment(\.navigationState) private var navigationState
+    let order: Order
+
+    // MARK: - BODY
     var body: some View {
         HStack(spacing: 15) {
             Image(systemName: "shippingbox")
@@ -25,7 +30,10 @@ struct OrderItemsView: View {
             }
             Spacer()
             
-            Button(action: {}, label: {
+            Button(action: {
+                navigationState.path.append(Route.orderDetail(order))
+                
+            }, label: {
                 Image(systemName: "arrow.right")
                     .font(.system(size: 40))
                     .foregroundStyle(.white)
@@ -39,9 +47,11 @@ struct OrderItemsView: View {
         .padding(.horizontal, 10)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        
     }
 }
 
 #Preview {
-    OrderItemsView()
+    OrderLittleView(order: orderExample)
+        .environment(\.navigationState, NavigationState())
 }
