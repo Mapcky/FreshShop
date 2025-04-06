@@ -14,40 +14,43 @@ struct OrderLittleView: View {
 
     // MARK: - BODY
     var body: some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 12) {
             Image(systemName: "shippingbox")
                 .resizable()
                 .scaledToFit()
+                .frame(width: 60, height: 60)
             
-            Spacer()
             
-            VStack {
+            VStack(alignment: .leading, spacing: 5) {
                 Text("Order N###")
+                    .font(.headline)
+                    .fontWeight(.medium)
+                
+                Text("Total $$$$")
                     .font(.subheadline)
-
-                Text("$$$$")
-                    .font(.caption)
+                    .foregroundColor(.gray)
             }
-            Spacer()
+            .frame(maxWidth: .infinity, alignment: .leading)
+
             
             Button(action: {
                 navigationState.path.append(Route.orderDetail(order))
                 
             }, label: {
-                Image(systemName: "arrow.right")
-                    .font(.system(size: 40))
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 24))
                     .foregroundStyle(.white)
-                    .bold()
                     .padding()
-                    .background(Color.green.opacity(0.8))
+                    .background(Color.green)
                     .clipShape(Circle())
+                    .shadow(radius: 3)
             })//: BUTTON
         }//: HSTACK
-        .frame(height: 100)
-        .padding(.horizontal, 10)
+        .padding(12)
+        .frame(height: 90)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 20))
-        
+        .shadow(color: .gray.opacity(0.2), radius: 3, x: 0, y: 2)
     }
 }
 

@@ -23,8 +23,11 @@ struct OrderDetailView: View {
                         OrderItemView(product: item)
                     }//:LOOP
                 }//:SECTION
+                .listRowSeparator(.hidden)
+                
                 Section {
                     HStack{
+                        
                         Spacer()
                         Text("$$$ Total")
                             .font(.title)
@@ -33,14 +36,12 @@ struct OrderDetailView: View {
                         Spacer()
                     }//:HSTACK
                 }//:SECTION
+                .listRowSeparator(.hidden)
             }//:LIST
             .listStyle(.plain)
             .scrollIndicators(.hidden)
-            
-
         }//: VSTACK
         .navigationBarBackButtonHidden()
-        .padding()
         .padding(.bottom, 80)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 24))

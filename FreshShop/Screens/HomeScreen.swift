@@ -33,7 +33,7 @@ struct HomeScreen: View {
                 .padding(.horizontal, 15)
                 .shadow(radius: 0.5)
                 .padding(.top, 30)
-        }
+        }//: VSTACK
     }
 }
 
