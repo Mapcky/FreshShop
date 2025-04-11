@@ -9,11 +9,10 @@ import SwiftUI
 
 struct CategoriesHGrid: View {
     // MARK: - DEVELOPMENT CATEGORIES
-    
-    private let popularCategories = Array(productCategoriesArray.prefix(8))
-    
+        
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
+    @Environment(CategoryViewModel.self) private var categoryVM
 /*
     @Binding var animatingTop: Bool
     @Binding var path: NavigationPath
@@ -27,18 +26,26 @@ struct CategoriesHGrid: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: gridLayout, spacing: rowSpacing, content: {
-                ForEach(popularCategories, id:\.self) { item in
+                ForEach(categoryVM.categories.prefix(6), id:\.self) { category in
                     VStack {
                         ZStack {
                             Color("LightGreenGridBackground")
                             
-                            Image(systemName: "cart.fill")
+                            AsyncImage(url: URL(string: category.imageUrl)) { img in
+                                img.resizable()
+                                    .scaledToFit()
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
+                            } placeholder: {
+                                Image(systemName: "cart")
+                            }
+                            
+                            
                         }//: ZSTACK
                         .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text(item.name)
+                        Text(category.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
@@ -48,7 +55,7 @@ struct CategoriesHGrid: View {
                             navigationState.animatingTop = true
                         }
                         withAnimation(){
-                            navigationState.path.append(Route.categories(item))
+                            //navigationState.path.append(Route.categories(category.name))
                         }
                     }
                 }//LOOP
@@ -60,4 +67,5 @@ struct CategoriesHGrid: View {
 #Preview {
     CategoriesHGrid()
         .environment(\.navigationState, NavigationState())
+        .environment(CategoryViewModel(httpClient: .development))
 }

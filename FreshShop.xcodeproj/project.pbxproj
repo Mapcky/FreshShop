@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		302EBA7B2DA974EC00DE0AF7 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 302EBA7A2DA974EC00DE0AF7 /* JWTDecode */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		3086F0BF2D84A55F00D8EA6C /* FreshShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreshShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				302EBA7B2DA974EC00DE0AF7 /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = FreshShop;
 			packageProductDependencies = (
+				302EBA7A2DA974EC00DE0AF7 /* JWTDecode */,
 			);
 			productName = FreshShop;
 			productReference = 3086F0BF2D84A55F00D8EA6C /* FreshShop.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 3086F0B62D84A55F00D8EA6C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				302EBA792DA974EB00DE0AF7 /* XCRemoteSwiftPackageReference "JWTDecode" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3086F0C02D84A55F00D8EA6C /* Products */;
 			projectDirPath = "";
@@ -326,6 +335,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		302EBA792DA974EB00DE0AF7 /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		302EBA7A2DA974EC00DE0AF7 /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 302EBA792DA974EB00DE0AF7 /* XCRemoteSwiftPackageReference "JWTDecode" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3086F0B72D84A55F00D8EA6C /* Project object */;
 }

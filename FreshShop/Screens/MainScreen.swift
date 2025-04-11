@@ -13,6 +13,8 @@ struct MainScreen: View {
     @State private var search: String = ""
     @Environment(\.navigationState) private var navigationState
     @State private var localPath = NavigationPath()
+    @Environment(CategoryViewModel.self) private var categoryVM
+
     /*@State private var animatingTop: Bool = false
     @State private var animatingBot: Bool = false
     @State private var path = NavigationPath()
@@ -93,6 +95,9 @@ struct MainScreen: View {
             BottomNavBar()
         } //:OVERLAY
         .ignoresSafeArea()
+        .task {
+            try? await categoryVM.loadCategories()
+        }
     }
     
 }
@@ -117,6 +122,7 @@ struct Order: Hashable {
 #Preview {
     MainScreen()
         .environment(\.navigationState, NavigationState())
+        .environment(CategoryViewModel(httpClient: .development))
 }
 
 

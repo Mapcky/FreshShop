@@ -12,12 +12,14 @@ struct FreshShopApp: App {
     // MARK: - PROPERTIES
     
     @Environment(\.navigationState) private var navigationState
+    @State private var categoryVM = CategoryViewModel(httpClient: HTTPClient())
 
     // MARK: - BODY
     var body: some Scene {
         WindowGroup {
             MainScreen()
                 .environment(\.navigationState, NavigationState())
+                .environment(categoryVM)
         }
     }
 }
