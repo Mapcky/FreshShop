@@ -29,7 +29,7 @@ let productCategoriesArray: [ProductCategory] = [
     ProductCategory(id: 19, name: "Baby Products"),
     ProductCategory(id: 20, name: "Pet Supplies")
 ]
-
+/*
 let dairyProducts: [Product] = [
     Product(id: 1, name: "Milk"),
     Product(id: 2, name: "Cheddar Cheese"),
@@ -52,5 +52,6 @@ let dairyProducts: [Product] = [
     Product(id: 19, name: "Lactose-Free Milk"),
     Product(id: 20, name: "Swiss Cheese")
 ]
+*/
 
-let orderExample: Order = Order(id: 1, orderItems: Array(dairyProducts[1...5]))
+//let orderExample: Order = Order(id: 1, orderItems: Array(dairyProducts[1...5]))

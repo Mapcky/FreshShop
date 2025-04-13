@@ -9,12 +9,9 @@ import SwiftUI
 
 struct CategoriesVGrid: View {
     // MARK: - PROPERTIES
-    /*
-    @Binding var path: NavigationPath
-    @Binding var animatingTop: Bool
-    */
     @Environment(\.navigationState) private var navigationState
-
+    @Environment(CategoryViewModel.self) private var categoryVM
+    
     private let columnSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: columnSpacing), count: 3)
@@ -24,24 +21,30 @@ struct CategoriesVGrid: View {
     var body: some View {
         ScrollView{
             LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
-                ForEach(productCategoriesArray, id:\.self) { item in
+                ForEach(categoryVM.categories, id:\.self) { category in
                     VStack {
                         ZStack {
                             Color("LightGreenGridBackground")
                             
-                            Image(systemName: "cart.fill")
+                            AsyncImage(url: URL(string: category.imageUrl)) { img in
+                                img.resizable()
+                                    .scaledToFit()
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
+                            } placeholder: {
+                                Image(systemName: "cart")
+                            }
                         }//: ZSTACK
                         .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text(item.name)
+                        Text(category.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
                     }//: VSTACK
                     .onTapGesture {
-                        navigationState.path.append(Route.categories(item))
+                        //navigationState.path.append(Route.categories(item))
                     }
                     
                 }
@@ -62,5 +65,6 @@ struct CategoriesVGrid: View {
 #Preview {
     CategoriesVGrid()
         .environment(\.navigationState, NavigationState())
+        .environment(CategoryViewModel(httpClient: .development))
 
 }

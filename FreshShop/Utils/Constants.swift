@@ -11,5 +11,10 @@ struct Constants {
     
     struct Urls {
         static let allCategories: URL = URL(string: "http://localhost:8080/api/category/all")!
+        
+        
+        static func products(_ categoryId: Int) -> URL {
+            return URL(string: "http://localhost:8080/api/product/fromCategory/\(categoryId)")!
+        }
     }
 }

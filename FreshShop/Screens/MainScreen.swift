@@ -30,63 +30,63 @@ struct MainScreen: View {
                 TopNavBar()
                 // MARK: - END TOP DESIGN
                 NavigationStack(path: $localPath) {
-                        ScrollView {
-                            switch navigationState.showingScreen {
-                            case .home:
-                                HomeScreen()
+                    ScrollView {
+                        switch navigationState.showingScreen {
+                        case .home:
+                            HomeScreen()
                                 .padding(.bottom, 150)
-                            case .orders:
-                                OrderScreen()
-                                    .padding(.horizontal, 15)
-                                    .shadow(radius: 0.5)
-                                    .padding(.top, 30)
-                            case .deals:
-                                ProductsVGrid()
-                                    .padding(.horizontal, 15)
-                                    .shadow(radius: 0.5)
-                                    .padding(.top, 30)
-                            case .more:
-                                EmptyView()
-                            case .profile:
-                                ProfileScreen()
-                                    .padding(.horizontal, 15)
-                                    .shadow(radius: 0.5)
-                                    .padding(.top, 30)
-                                
-                            case .cart:
-                                CartView()
-                                    .padding(.horizontal, 15)
-                                    .shadow(radius: 0.5)
-                                    .padding(.top, 30)
-                            }//: SWITCH SCREENS
-                        }//: SCROLL
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color("LightGrayBackground"))
-                        .clipShape(CustomTopShape())
-                        .ignoresSafeArea()
-                        .navigationDestination(for: Route.self) { route in
-                            switch route {
-                            case .productDetail(let product):
-                                ProductDetailView(product: product)
-                            case .categories(let category):
-                                CategoryProductsView( productCategory: category)
-                            case .allCategories:
-                                CategoriesVGrid()
-                            case .purchaseComplete:
-                                PurchaseCompleteView()
-                            case .orderDetail(let order):
-                                OrderDetailView(order: order)
-                            }//: SWITCH
-                        }//: NAV DESTINATION
-                        .onChange(of: navigationState.path, {
-                            localPath = navigationState.path
-                        })
-                        .onChange(of: localPath, {
-                            navigationState.path = localPath
-                        })
-                    }//: NAVSTACK
+                        case .orders:
+                            OrderScreen()
+                                .padding(.horizontal, 15)
+                                .shadow(radius: 0.5)
+                                .padding(.top, 30)
+                        case .deals:
+                            ProductsVGrid()
+                                .padding(.horizontal, 15)
+                                .shadow(radius: 0.5)
+                                .padding(.top, 30)
+                        case .more:
+                            EmptyView()
+                        case .profile:
+                            ProfileScreen()
+                                .padding(.horizontal, 15)
+                                .shadow(radius: 0.5)
+                                .padding(.top, 30)
+                            
+                        case .cart:
+                            CartView()
+                                .padding(.horizontal, 15)
+                                .shadow(radius: 0.5)
+                                .padding(.top, 30)
+                        }//: SWITCH SCREENS
+                    }//: SCROLL
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color("LightGrayBackground"))
                     .clipShape(CustomTopShape())
                     .ignoresSafeArea()
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case .productDetail(let product):
+                            ProductDetailView(product: product)
+                        case .categories(let category):
+                            CategoryProductsView( productCategory: category)
+                        case .allCategories:
+                            CategoriesVGrid()
+                        case .purchaseComplete:
+                            PurchaseCompleteView()
+                        case .orderDetail(let order):
+                            OrderDetailView(order: order)
+                        }//: SWITCH
+                    }//: NAV DESTINATION
+                    .onChange(of: navigationState.path, {
+                        localPath = navigationState.path
+                    })
+                    .onChange(of: localPath, {
+                        navigationState.path = localPath
+                    })
+                }//: NAVSTACK
+                .clipShape(CustomTopShape())
+                .ignoresSafeArea()
             }//: VSTACK
             .navigationBarHidden(true)
         }//: ZSTACK
@@ -99,23 +99,18 @@ struct MainScreen: View {
             try? await categoryVM.loadCategories()
         }
     }
-    
 }
 
 
-struct Product: Hashable {
-    let id: Int
-    let name: String
-}
 
 struct ProductCategory: Hashable {
     let id: Int
     let name: String
 }
 
-struct Order: Hashable {
+struct Order: Hashable, Equatable, Codable {
     let id: Int
-    var orderItems: [Product] //use order items in future
+    //var orderItems: [Product] //use order items in future
 }
 
 
