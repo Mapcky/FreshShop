@@ -13,6 +13,7 @@ struct FreshShopApp: App {
     
     @Environment(\.navigationState) private var navigationState
     @State private var categoryVM = CategoryViewModel(httpClient: HTTPClient())
+    @State private var productVM = ProductViewModel(httpClient: HTTPClient())
 
     // MARK: - BODY
     var body: some Scene {
@@ -20,6 +21,7 @@ struct FreshShopApp: App {
             MainScreen()
                 .environment(\.navigationState, NavigationState())
                 .environment(categoryVM)
+                .environment(productVM)
         }
     }
 }

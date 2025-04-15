@@ -56,6 +56,6 @@ struct OrderItemView: View {
 }
 
 #Preview {
-    OrderItemView(product: dairyProducts[5])
+    OrderItemView(product: Product(id: 3, name: "Bananas",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1))
         .environment(\.navigationState, NavigationState())
 }

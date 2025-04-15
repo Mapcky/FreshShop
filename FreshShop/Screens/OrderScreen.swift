@@ -20,7 +20,8 @@ struct OrderScreen: View {
             ScrollView {
                 LazyVStack(spacing: 10) {
                     ForEach(1...4, id:\.self) { _ in
-                        OrderLittleView(order: orderExample)
+                        //OrderLittleView(order: orderExample)
+                        Text("order xd")
                     }//:LOOP
                 }//:LVSTACK
                 .padding(.horizontal)

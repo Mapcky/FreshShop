@@ -37,16 +37,14 @@ struct CategoriesVGrid: View {
                         .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
-                        
                         Text(category.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
                     }//: VSTACK
                     .onTapGesture {
-                        //navigationState.path.append(Route.categories(item))
+                        navigationState.path.append(Route.categories(category.id, category.name))
                     }
-                    
                 }
             })//:VGRID
             .padding()

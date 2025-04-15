@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderDetailView: View {
     // MARK: - PROPERTIES
-    let order: Order
+    //let order: Order
     // MARK: - BODY
     var body: some View {
         VStack(spacing: 10) {
@@ -19,8 +19,9 @@ struct OrderDetailView: View {
             
             List {
                 Section {
-                    ForEach(order.orderItems, id: \.self) { item in
-                        OrderItemView(product: item)
+                    ForEach(1...4, id: \.self) { item in
+                        //OrderItemView(product: item)
+                        Text("ordersItems")
                     }//:LOOP
                 }//:SECTION
                 .listRowSeparator(.hidden)
@@ -49,5 +50,5 @@ struct OrderDetailView: View {
 }
 
 #Preview {
-    OrderDetailView(order: orderExample)
+    OrderDetailView()//order: orderExample)
 }

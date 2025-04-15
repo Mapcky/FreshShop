@@ -12,6 +12,7 @@ import SwiftUI
 @Observable
 class ProductViewModel {
     private(set) var productsByCategory: [Int: [Product]] = [:]
+    private(set) var testingxpp: [Product] = []
     let httpClient: HTTPClient
     
     init(httpClient: HTTPClient) {
@@ -22,7 +23,7 @@ class ProductViewModel {
     func loadProducts(categoryId: Int) async throws {
         if productsByCategory[categoryId] != nil {
             return
-        }
+        }//Products already loaded
         
         let resource = Resource(url: Constants.Urls.products(categoryId), modelType: ProductResponse.self)
         
@@ -30,11 +31,18 @@ class ProductViewModel {
         
         if let products = response.products, response.success {
             productsByCategory[categoryId] = products
+            testingxpp = products
+            for product in testingxpp {
+                print(product.name)
+            }
         } else {
             print(response.message ?? "Failed fetching products")
         }
     }
     
+    func productsLocalByCategoryId(categoryId: Int) -> [Product] {
+        return productsByCategory[categoryId] ?? []
+    }
     
     
 }

@@ -10,17 +10,16 @@ import SwiftUI
 struct PopularProductsHGrid: View {
     
     // MARK: - DEVELOPMENT PRODUCTS
-    let productsArray: [Product] = [Product(id: 1, name: "Fresh Orange"), Product(id: 2, name: "Milk"), Product(id: 3, name: "Bananas"), Product(id: 4, name: "Strawberry"), Product(id: 5, name: "Blueberry"), Product(id: 6, name: "Lemon")]
+    let productsArray: [Product] = [Product(id: 1, name: "Fresh Orange",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 2, name: "Milk",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 3, name: "Bananas",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1), Product(id: 4, name: "Strawberry",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 5, name: "Blueberry",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 6, name: "Lemon",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1)]
+
     
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
 
-    /*
-    @Binding var path: NavigationPath
-    @Binding var animatingTop: Bool
-    @Binding var animatingBot: Bool
-    
-     */
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 1)
@@ -29,7 +28,7 @@ struct PopularProductsHGrid: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: gridLayout, spacing: rowSpacing, content: {
-                ForEach(productsArray, id:\.self) { item in
+                ForEach(1...4, id:\.self) { item in
                     VStack {
                         ZStack {
                             Color("LightGreenGridBackground")
@@ -40,7 +39,7 @@ struct PopularProductsHGrid: View {
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text(item.name)
+                        Text(String(item))
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)

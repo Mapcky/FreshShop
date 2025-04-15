@@ -11,12 +11,6 @@ struct HomeScreen: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
 
-    /*
-    @Binding var animatingTop: Bool
-    @Binding var animatingBot: Bool
-    @Binding var path: NavigationPath
-    @Binding var showingScreen: selectedScreen
-    */
     // MARK: - BODY
     var body: some View {
         VStack (spacing: 0){

@@ -13,10 +13,7 @@ struct CategoriesHGrid: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
     @Environment(CategoryViewModel.self) private var categoryVM
-/*
-    @Binding var animatingTop: Bool
-    @Binding var path: NavigationPath
-  */
+    @Environment(ProductViewModel.self) private var productVM
     
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
@@ -55,7 +52,7 @@ struct CategoriesHGrid: View {
                             navigationState.animatingTop = true
                         }
                         withAnimation(){
-                            //navigationState.path.append(Route.categories(category.name))
+                            navigationState.path.append(Route.categories(category.id, category.name))
                         }
                     }
                 }//LOOP
@@ -68,4 +65,5 @@ struct CategoriesHGrid: View {
     CategoriesHGrid()
         .environment(\.navigationState, NavigationState())
         .environment(CategoryViewModel(httpClient: .development))
+        .environment(ProductViewModel(httpClient: .development))
 }

@@ -9,19 +9,19 @@ import SwiftUI
 
 struct CategoryProductsView: View {
     // MARK: - PROPERTIES
-    /*
-    @Binding var path: NavigationPath
-    @Binding var animatingBot: Bool
-     */
-    @State var productCategory: ProductCategory
+
+    @Environment(ProductViewModel.self) private var productVM
+    var selectedCategoryId: Int
+    var selectedCategoryName: String
+
     // MARK: - BODY
     var body: some View {
         ScrollView {
             VStack {
-                Text(productCategory.name)
+                Text(selectedCategoryName)
                     .font(.title3)
                     .fontDesign(.rounded)
-                ProductsVGrid()
+                ProductsVGrid(selectedCategoryId: selectedCategoryId)
             }//:VSTACK
             .padding(.horizontal, 15)
             .shadow(radius: 0.5)
@@ -29,10 +29,15 @@ struct CategoryProductsView: View {
         }//:SCROLL
         .background(Color("LightGrayBackground"))
         .navigationBarBackButtonHidden()
+        .task {
+            try? await productVM.loadProducts(categoryId: selectedCategoryId)
+        }
     }
 }
 
 #Preview {
-    CategoryProductsView(productCategory: ProductCategory(id: 1, name: "Dairy"))
+    CategoryProductsView(selectedCategoryId: 1, selectedCategoryName: "Dairy")
+        .environment(ProductViewModel(httpClient: .development))
+
 
 }

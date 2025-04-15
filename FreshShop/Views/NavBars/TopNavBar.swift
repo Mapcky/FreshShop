@@ -12,12 +12,6 @@ struct TopNavBar: View {
     
     @Environment(\.navigationState) private var navigationState
 
-    /*
-    @Binding var animatingTop: Bool
-    @Binding var animatingBot: Bool
-    @Binding var path: NavigationPath
-    @Binding var showingScreen: selectedScreen
-     */
     @State private var search: String = ""
     
     // MARK: - BODY

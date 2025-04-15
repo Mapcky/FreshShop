@@ -16,25 +16,16 @@ struct ProductDetailView: View {
         ScrollView {
             VStack {
                 ZStack {
-                    //Color("LightGreen")
-                    //Rectangle().fill(Color("LightGray"))
                     Rectangle().fill(Color("LightGreen"))
                         .frame(maxHeight: 450)
                         .clipShape(BottomCircle())
-                    
-                    //Color("LightGrayBackground")
-                    
-                    
+
                     VStack (alignment: .leading) {
-                        
                         VStack {
-                            
                             Text(product.name)
                                 .font(.largeTitle)
                                 .fontWeight(.black)
                                 .fontDesign(.rounded)
-                            
-                            
                         }//:VSTACK TITLE
                         .foregroundStyle(.white)
                         .shadow(radius: 5, x: 0, y: 3)
@@ -63,8 +54,6 @@ struct ProductDetailView: View {
                         .padding()
                     }
                     .padding(.top, 20)
-                    
-                    
                 }//:ZSTACK
                 .ignoresSafeArea()
             }//:VSTACK TOP PART
@@ -167,5 +156,5 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(product: Product(id: 1, name: "Fresh Oranges"))
+    ProductDetailView(product: Product(id: 1, name: "Fresh Oranges",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1))
 }

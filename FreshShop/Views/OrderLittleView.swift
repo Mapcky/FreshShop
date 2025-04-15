@@ -10,7 +10,7 @@ import SwiftUI
 struct OrderLittleView: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
-    let order: Order
+    //let order: Order
 
     // MARK: - BODY
     var body: some View {
@@ -34,7 +34,7 @@ struct OrderLittleView: View {
 
             
             Button(action: {
-                navigationState.path.append(Route.orderDetail(order))
+                //navigationState.path.append(Route.orderDetail(order))
                 
             }, label: {
                 Image(systemName: "chevron.right")
@@ -55,6 +55,6 @@ struct OrderLittleView: View {
 }
 
 #Preview {
-    OrderLittleView(order: orderExample)
+    OrderLittleView()//order: orderExample)
         .environment(\.navigationState, NavigationState())
 }

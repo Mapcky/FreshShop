@@ -9,12 +9,7 @@ import SwiftUI
 
 struct BottomNavBar: View {
     // MARK: - PROPERTIES
-    /*
-    @Binding var animatingTop: Bool
-    @Binding var animatingBot: Bool
-    @Binding var path: NavigationPath
-    @Binding var showingScreen: selectedScreen
-    */
+
     @Environment(\.navigationState) private var navigationState
 
     // MARK: - BODY

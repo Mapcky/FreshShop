@@ -10,12 +10,8 @@ import SwiftUI
 struct CategoriesLittle: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
+    
 
-    /*
-    @Binding var path: NavigationPath
-    @Binding var selectedScreen: selectedScreen
-    @Binding var animatingTop: Bool
-    */
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -26,8 +22,7 @@ struct CategoriesLittle: View {
                     .fontDesign(.rounded)
                 
                 Spacer()
-                
-                
+
                 Button(action: {
                     navigationState.path.append(Route.allCategories)
                     withAnimation(nil) {
@@ -37,11 +32,9 @@ struct CategoriesLittle: View {
                     Text("See All")
                         .foregroundStyle(Color("DarkGreen"))
                         .fontDesign(.rounded)
-
                 })
             }//:HSTACK
             Divider()
-            
             CategoriesHGrid()
         }//:VSTACK
         .padding()

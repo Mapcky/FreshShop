@@ -15,11 +15,6 @@ struct MainScreen: View {
     @State private var localPath = NavigationPath()
     @Environment(CategoryViewModel.self) private var categoryVM
 
-    /*@State private var animatingTop: Bool = false
-    @State private var animatingBot: Bool = false
-    @State private var path = NavigationPath()
-    @State private var showingScreen: selectedScreen = .home
-     */
     
     // MARK: - BODY
     var body: some View {
@@ -41,7 +36,7 @@ struct MainScreen: View {
                                 .shadow(radius: 0.5)
                                 .padding(.top, 30)
                         case .deals:
-                            ProductsVGrid()
+                            ProductsVGrid(selectedCategoryId: 1)
                                 .padding(.horizontal, 15)
                                 .shadow(radius: 0.5)
                                 .padding(.top, 30)
@@ -66,16 +61,23 @@ struct MainScreen: View {
                     .ignoresSafeArea()
                     .navigationDestination(for: Route.self) { route in
                         switch route {
-                        case .productDetail(let product):
-                            ProductDetailView(product: product)
-                        case .categories(let category):
-                            CategoryProductsView( productCategory: category)
+                        case .productDetail(
+                            let productId):
+                            //ProductDetailView(product: productId)
+                            EmptyView()
+                        case .categories(
+                            let categoryId,
+                            let categoryName):
+                            CategoryProductsView(selectedCategoryId: categoryId,selectedCategoryName: categoryName)
+
                         case .allCategories:
                             CategoriesVGrid()
                         case .purchaseComplete:
                             PurchaseCompleteView()
-                        case .orderDetail(let order):
-                            OrderDetailView(order: order)
+                        case .orderDetail(
+                            let order):
+                          //  OrderDetailView(order: order)
+                            EmptyView()
                         }//: SWITCH
                     }//: NAV DESTINATION
                     .onChange(of: navigationState.path, {
@@ -102,12 +104,6 @@ struct MainScreen: View {
 }
 
 
-
-struct ProductCategory: Hashable {
-    let id: Int
-    let name: String
-}
-
 struct Order: Hashable, Equatable, Codable {
     let id: Int
     //var orderItems: [Product] //use order items in future
@@ -118,6 +114,7 @@ struct Order: Hashable, Equatable, Codable {
     MainScreen()
         .environment(\.navigationState, NavigationState())
         .environment(CategoryViewModel(httpClient: .development))
+        .environment(ProductViewModel(httpClient: .development))
 }
 
 

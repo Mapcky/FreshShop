@@ -28,8 +28,8 @@ enum selectedScreen {
 
 // MARK: - Route Working on
 enum Route: Hashable {
-    case productDetail(Product)
-    case categories(ProductCategory)
+    case productDetail(Int)
+    case categories(Int, String)
     case allCategories
     case purchaseComplete
     case orderDetail(Order)

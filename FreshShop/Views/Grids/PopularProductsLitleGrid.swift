@@ -9,11 +9,7 @@ import SwiftUI
 
 struct PopularProductsLitleGrid: View {
     // MARK: - PROPERTIES
-/*
-    @Binding var path: NavigationPath
-    @Binding var animatingTop: Bool
-    @Binding var animatingBot: Bool
- */
+
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
