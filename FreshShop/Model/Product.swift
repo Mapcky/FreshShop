@@ -10,7 +10,7 @@ import Foundation
 struct Product: Codable, Equatable, Hashable {
     let id: Int
     var name: String
-    var price: Float
+    var price: String
     var quantity: Int
     var imageUrl: String
     let categoryId: Int

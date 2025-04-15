@@ -156,5 +156,5 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(product: Product(id: 1, name: "Fresh Oranges",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1))
+    ProductDetailView(product: Product(id: 1, name: "Fresh Oranges",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1))
 }

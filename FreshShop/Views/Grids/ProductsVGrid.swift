@@ -33,7 +33,13 @@ struct ProductsVGrid: View {
                         ZStack {
                             Color("LightGreenGridBackground")
                             
-                            Image(systemName: "cart.fill")
+                            AsyncImage(url: URL(string: product.imageUrl)) { img in
+                                img.resizable()
+                                    .scaledToFit()
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
+                            } placeholder: {
+                                Image(systemName: "cart")
+                            }
                         }//: ZSTACK
                         .frame(width: 150, height: 150)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
@@ -44,7 +50,7 @@ struct ProductsVGrid: View {
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
                         
-                        Text(product.price, format: .currency(code: "ARS"))
+                        Text(Double(product.price) ?? 0, format: .currency(code: "ARS"))
                     }//: VSTACK
                     .onTapGesture {
                         navigationState.path.append(Route.productDetail(4))//productId change
@@ -56,13 +62,6 @@ struct ProductsVGrid: View {
         .padding(.bottom, 80)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 24))
-
-        .onChange(of: products,
-                  { for product in products {
-                      print(product.name)
-                  }
-        })
-        
     }
 }
 

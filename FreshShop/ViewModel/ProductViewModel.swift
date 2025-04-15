@@ -12,7 +12,6 @@ import SwiftUI
 @Observable
 class ProductViewModel {
     private(set) var productsByCategory: [Int: [Product]] = [:]
-    private(set) var testingxpp: [Product] = []
     let httpClient: HTTPClient
     
     init(httpClient: HTTPClient) {
@@ -31,10 +30,6 @@ class ProductViewModel {
         
         if let products = response.products, response.success {
             productsByCategory[categoryId] = products
-            testingxpp = products
-            for product in testingxpp {
-                print(product.name)
-            }
         } else {
             print(response.message ?? "Failed fetching products")
         }

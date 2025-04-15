@@ -10,11 +10,12 @@ import SwiftUI
 struct PopularProductsHGrid: View {
     
     // MARK: - DEVELOPMENT PRODUCTS
-    let productsArray: [Product] = [Product(id: 1, name: "Fresh Orange",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1),
-        Product(id: 2, name: "Milk",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1),
-        Product(id: 3, name: "Bananas",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1), Product(id: 4, name: "Strawberry",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1),
-        Product(id: 5, name: "Blueberry",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1),
-        Product(id: 6, name: "Lemon",price: 100,quantity: 50, imageUrl: "xd",categoryId: 1)]
+    let productsArray: [Product] = [Product(id: 1, name: "Fresh Orange",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 2, name: "Milk",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 3, name: "Bananas",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 4, name: "Strawberry",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 5, name: "Blueberry",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1),
+        Product(id: 6, name: "Lemon",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1)]
 
     
     // MARK: - PROPERTIES
