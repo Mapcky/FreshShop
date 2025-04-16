@@ -9,8 +9,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
     // MARK: - PROPERTIES
-    var product: Product
-    @State private var count: Int = 0
+    var productDetailVM: ProductDetailViewModel
     // MARK: - BODY
     var body: some View {
         ScrollView {
@@ -22,7 +21,7 @@ struct ProductDetailView: View {
 
                     VStack (alignment: .leading) {
                         VStack {
-                            Text(product.name)
+                            Text(productDetailVM.product.name)
                                 .font(.largeTitle)
                                 .fontWeight(.black)
                                 .fontDesign(.rounded)
@@ -37,7 +36,7 @@ struct ProductDetailView: View {
                                 Text("Price")
                                     .fontWeight(.semibold)
                                 
-                                Text(100, format: .currency(code: "USD"))
+                                Text(Double(productDetailVM.product.price) ?? 0, format: .currency(code: "ARS"))
                                     .font(.title3)
                                     .fontWeight(.black)
                                     .scaleEffect(1.2, anchor: .leading)
@@ -46,10 +45,13 @@ struct ProductDetailView: View {
                             
                             Spacer()
                             
-                            Image("ProductPlaceholder")
-                                .resizable()
-                                .scaledToFit()
-                                .shadow(radius: 5, x: 0, y: 10)
+                            AsyncImage(url: URL(string: productDetailVM.product.imageUrl)) { img in
+                                img.resizable()
+                                    .scaledToFit()
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
+                            } placeholder: {
+                                Image(systemName: "cart")
+                            }
                         }
                         .padding()
                     }
@@ -85,9 +87,7 @@ struct ProductDetailView: View {
                     
                     HStack(spacing: 15) {
                         Button(action: {
-                            if count > 0 {
-                                count -= 1
-                            }
+                            productDetailVM.decrementCount()
                         }, label: {
                             Image(systemName: "minus")
                                 .font(.system(size: 16, weight: .black, design: .rounded))
@@ -100,12 +100,12 @@ struct ProductDetailView: View {
                                 .contentShape(Circle())
                         })
                         Button(action: {}, label: {
-                            Text("\(String(count))")
+                            Text("\(String(productDetailVM.count))")
                                 .font(.system(size: 20, weight: .black, design: .rounded))
                                 .foregroundStyle(.black)
                         })
                         Button(action: {
-                            count += 1
+                            productDetailVM.incrementCount()
                         }, label: {
                             Image(systemName: "plus")
                                 .font(.system(size: 16, weight: .black, design: .rounded))
@@ -156,5 +156,5 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(product: Product(id: 1, name: "Fresh Oranges",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1))
+    ProductDetailView(productDetailVM: ProductDetailViewModel(product: Product(id: 1, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1)))
 }

@@ -53,7 +53,7 @@ struct ProductsVGrid: View {
                         Text(Double(product.price) ?? 0, format: .currency(code: "ARS"))
                     }//: VSTACK
                     .onTapGesture {
-                        navigationState.path.append(Route.productDetail(4))//productId change
+                        navigationState.path.append(Route.productDetail(product))
                         navigationState.animatingBot = true
                     }
                 }

@@ -62,9 +62,8 @@ struct MainScreen: View {
                     .navigationDestination(for: Route.self) { route in
                         switch route {
                         case .productDetail(
-                            let productId):
-                            //ProductDetailView(product: productId)
-                            EmptyView()
+                            let product):
+                            ProductDetailView(productDetailVM: ProductDetailViewModel(product: product))
                         case .categories(
                             let categoryId,
                             let categoryName):
@@ -104,10 +103,7 @@ struct MainScreen: View {
 }
 
 
-struct Order: Hashable, Equatable, Codable {
-    let id: Int
-    //var orderItems: [Product] //use order items in future
-}
+
 
 
 #Preview {

@@ -47,7 +47,7 @@ struct PopularProductsHGrid: View {
                     }//: VSTACK
                     .onTapGesture {
                         withAnimation(.linear) {
-                            navigationState.path.append(Route.productDetail(item))
+                            //navigationState.path.append(Route.productDetail(item))
                             navigationState.animatingBot = true
                         }
                         withAnimation(nil) {
