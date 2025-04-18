@@ -9,12 +9,9 @@ import SwiftUI
 
 struct CartView: View {
     // MARK: - PROPERTIES
-    /*
-    @Binding var path: NavigationPath
-    @Binding var animatingTop: Bool
-     */
-    
+
     @Environment(\.navigationState) private var navigationState
+    @Environment(CartViewModel.self) private var cartVM
 
     // MARK: - BODY
     var body: some View {
@@ -39,11 +36,15 @@ struct CartView: View {
                     .contentShape(Capsule())
             })
         }
+        .task {
+            try? await cartVM.loadCart()
+        }
     }
 }
 
 #Preview {
     CartView()
         .environment(\.navigationState, NavigationState())
+        .environment(CartViewModel(httpClient: .development))
 
 }

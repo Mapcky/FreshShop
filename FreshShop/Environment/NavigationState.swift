@@ -32,7 +32,7 @@ enum Route: Hashable {
     case categories(Int, String)
     case allCategories
     case purchaseComplete
-    case orderDetail(Order)
+    case orderDetail(Int)
 }
 
 extension EnvironmentValues {

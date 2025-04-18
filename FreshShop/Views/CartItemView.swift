@@ -10,11 +10,7 @@ import SwiftUI
 struct CartItemView: View {
     // MARK: - PROPERTIES
     @State private var count: Int = 0
-    /*
-    var product: Product
-    var quantity: Int
-    var total: Float
-    */
+
     // MARK: - BODY
     var body: some View {
         HStack(spacing: 10) {

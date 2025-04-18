@@ -14,6 +14,7 @@ struct FreshShopApp: App {
     @Environment(\.navigationState) private var navigationState
     @State private var categoryVM = CategoryViewModel(httpClient: HTTPClient())
     @State private var productVM = ProductViewModel(httpClient: HTTPClient())
+    @State private var cartVM = CartViewModel(httpClient: HTTPClient())
 
     // MARK: - BODY
     var body: some Scene {
@@ -22,6 +23,7 @@ struct FreshShopApp: App {
                 .environment(\.navigationState, NavigationState())
                 .environment(categoryVM)
                 .environment(productVM)
+                .environment(cartVM)
         }
     }
 }

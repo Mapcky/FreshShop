@@ -9,12 +9,7 @@ import SwiftUI
 
 struct PurchaseCompleteView: View {
     // MARK: - PROPERTIES
-    /*
-    @Binding var path: NavigationPath
-    @Binding var showingScreen: selectedScreen
-    @Binding var animatingTop: Bool
-    @Binding var animatingBot: Bool
-    */
+
     @Environment(\.navigationState) private var navigationState
 
     // MARK: - BODY

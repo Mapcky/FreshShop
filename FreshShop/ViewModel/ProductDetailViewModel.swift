@@ -10,8 +10,7 @@ import Foundation
 @Observable
 class ProductDetailViewModel {
     let product: Product
-    var count: Int = 0
-    
+    var count: Int = 1
     
     init(product: Product) {
         self.product = product
