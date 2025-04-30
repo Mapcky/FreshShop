@@ -18,10 +18,15 @@ struct Cart: Codable {
     }
 }
 
-struct CartItem: Codable {
+struct CartItem: Codable, Hashable {
     var id: Int
-    var products: Product
+    var product: Product
     var quantity: Int = 1
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, quantity
+        case product = "Product"
+    }
 }
 
 struct CartResponse: Codable {

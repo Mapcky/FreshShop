@@ -10,13 +10,11 @@ import SwiftUI
 struct CartItemView: View {
     // MARK: - PROPERTIES
     @State private var count: Int = 0
-
+    var cartItemVM: CartItemViewModel
     // MARK: - BODY
     var body: some View {
         HStack(spacing: 10) {
-            Image(systemName: "shippingbox")
-                .resizable()
-                .scaledToFit()
+            ImageLoader(urlString: cartItemVM.productImage)
             
             Spacer()
             VStack {
@@ -76,5 +74,5 @@ struct CartItemView: View {
 }
 
 #Preview {
-    CartItemView()
+    CartItemView(cartItemVM: CartItemViewModel(cartItem: CartItem(id: 1, product: Product(id: 1, name: "test", price: "30", quantity: 10, imageUrl: "", categoryId: 1))))
 }

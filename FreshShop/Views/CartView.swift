@@ -16,8 +16,8 @@ struct CartView: View {
     // MARK: - BODY
     var body: some View {
         VStack{
-            ForEach(1...4, id:\.self) { item in
-                CartItemView()
+            ForEach(cartVM.cartItems, id:\.self) { cartItem in
+                CartItemView(cartItemVM: CartItemViewModel(cartItem: cartItem))
             }
             
             Spacer()
@@ -25,6 +25,7 @@ struct CartView: View {
             Button(action:{
                 navigationState.animatingTop = false
                 navigationState.path.append(Route.purchaseComplete)
+                print(cartVM.cart?.id)
             }, label: {
                 Text("Proceed to Checkout")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
@@ -34,11 +35,8 @@ struct CartView: View {
                     .foregroundStyle(.white)
                     .padding()
                     .contentShape(Capsule())
-            })
-        }
-        .task {
-            try? await cartVM.loadCart()
-        }
+            })//: BUTTON
+        }//: VSTACK
     }
 }
 

@@ -10,6 +10,17 @@ import SwiftUI
 struct ProductDetailView: View {
     // MARK: - PROPERTIES
     var productDetailVM: ProductDetailViewModel
+    @Environment(CartViewModel.self) private var cartVM
+    
+    // MARK: - FUNCTIONS
+    private func addItemToCart() async {
+        do {
+            try await cartVM.addItemToCart(productId: productDetailVM.product.id, quantity: productDetailVM.count)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     // MARK: - BODY
     var body: some View {
         ScrollView {
@@ -50,7 +61,7 @@ struct ProductDetailView: View {
                                     .scaledToFit()
                                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
                             } placeholder: {
-                                Image(systemName: "cart")
+                                ProgressView()
                             }
                         }
                         .padding()
@@ -136,6 +147,9 @@ struct ProductDetailView: View {
                 Spacer()
                 
                 Button(action:{
+                    Task {
+                        await addItemToCart()
+                    }
                 }, label: {
                     Text("Add to Cart")
                         .font(.system(size: 18, weight: .bold, design: .rounded))
@@ -156,5 +170,7 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(productDetailVM: ProductDetailViewModel(product: Product(id: 1, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1)))
+    ProductDetailView(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1)))
+        .environment(CartViewModel(httpClient: .development))
+        .environment(ProductViewModel(httpClient: .development))
 }

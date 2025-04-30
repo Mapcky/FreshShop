@@ -14,6 +14,7 @@ struct MainScreen: View {
     @Environment(\.navigationState) private var navigationState
     @State private var localPath = NavigationPath()
     @Environment(CategoryViewModel.self) private var categoryVM
+    @Environment(CartViewModel.self) private var cartVM
 
     
     // MARK: - BODY
@@ -99,6 +100,10 @@ struct MainScreen: View {
         .task {
             try? await categoryVM.loadCategories()
         }
+        .task {
+            try? await cartVM.loadCart()
+        }
+        
     }
 }
 
@@ -111,6 +116,7 @@ struct MainScreen: View {
         .environment(\.navigationState, NavigationState())
         .environment(CategoryViewModel(httpClient: .development))
         .environment(ProductViewModel(httpClient: .development))
+        .environment(CartViewModel(httpClient: .development))
 }
 
 

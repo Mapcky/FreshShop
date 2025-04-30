@@ -19,15 +19,16 @@ class CartViewModel {
     
     func loadCart() async throws {
         let resource = Resource(url: Constants.Urls.loadCart, modelType: CartResponse.self)
-        
         let response = try await httpClient.load(resource)
         
-        if response.success {
-            self.cart = response.cart
+        if response.success, let cart = response.cart {
+            self.cart = cart
         } else {
             print(response.message ?? "Fail during loading cart")
         }
+        
     }
+    
     
     func addItemToCart(productId: Int, quantity: Int) async throws {
         let body = ["productId" : productId, "quantity" : quantity]
@@ -46,7 +47,13 @@ class CartViewModel {
             }
         }
         else {
-            print(response.message ?? "Fail during loading cart")
+            print(response.message ?? "Fail adding an item to the cart")
         }
     }
+    
+    // MARK: - COMPUTED PROPERTIES
+    var cartItems: [CartItem] {
+        return cart?.cartItems ?? []
+    }
+    
 }

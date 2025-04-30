@@ -31,5 +31,5 @@ class ProductDetailViewModel {
             count -= 1
         }
     }
-    
+
 }
