@@ -51,6 +51,22 @@ class CartViewModel {
         }
     }
     
+    func removeItemFromCart(cartItemId: Int) async throws {
+                
+        let resouce = Resource(url: Constants.Urls.removeCartItems(cartItemId), method: .delete, modelType: CartItemRemoveResponse.self)
+        
+        let response = try await httpClient.load(resouce)
+        
+        if  response.success {
+            if let index = cart?.cartItems?.firstIndex(where: { $0.id == cartItemId }) {
+                cart?.cartItems?.remove(at: index)
+            }
+        }
+        else {
+            print(response.message ?? "Fail removing an item from the cart")
+        }
+    }
+    
     // MARK: - COMPUTED PROPERTIES
     var cartItems: [CartItem] {
         return cart?.cartItems ?? []

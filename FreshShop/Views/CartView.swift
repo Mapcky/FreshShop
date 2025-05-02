@@ -25,7 +25,6 @@ struct CartView: View {
             Button(action:{
                 navigationState.animatingTop = false
                 navigationState.path.append(Route.purchaseComplete)
-                print(cartVM.cart?.id)
             }, label: {
                 Text("Proceed to Checkout")
                     .font(.system(size: 18, weight: .bold, design: .rounded))

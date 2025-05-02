@@ -9,8 +9,23 @@ import SwiftUI
 
 struct CartItemView: View {
     // MARK: - PROPERTIES
-    @State private var count: Int = 0
+    @Environment(CartViewModel.self) private var cartVM
     var cartItemVM: CartItemViewModel
+    
+    // MARK: - FUNCTIONS
+    
+    func modifyQuantity(modifier: Int) {
+        Task {
+            try await cartVM.addItemToCart(productId: cartItemVM.productId, quantity: modifier)
+        }
+    }
+    
+    func removeCartItem(){
+        Task {
+            try await cartVM.removeItemFromCart(cartItemId: cartItemVM.id)
+        }
+    }
+    
     // MARK: - BODY
     var body: some View {
         HStack(spacing: 10) {
@@ -18,21 +33,18 @@ struct CartItemView: View {
             
             Spacer()
             VStack {
-                //Cart item properties
-                //Item Name
-                Text("Item Name")
-                //Quantity
-                Text("Quntity")
-                    .font(.footnote)
-                //Total
-                Text("Total")
+                Text(cartItemVM.productName)
+                
+                Text(cartItemVM.total)
             }
             Spacer()
 
             HStack(spacing: 10) {
                 Button(action: {
-                    if count > 0 {
-                        count -= 1
+                    if cartItemVM.quantity > 1 {
+                        modifyQuantity(modifier: -1)
+                    } else {
+                        removeCartItem()
                     }
                 }, label: {
                     Image(systemName: "minus")
@@ -44,14 +56,14 @@ struct CartItemView: View {
                             Circle().fill(Color("ButtonsDarkGreen"))
                         )
                         .contentShape(Circle())
-                })
-                Button(action: {}, label: {
-                    Text("\(String(count))")
+                })//: MINUS BUTTON
+                
+                Text(String(cartItemVM.quantity))
                         .font(.system(size: 16, weight: .black, design: .rounded))
                         .foregroundStyle(.black)
-                })
+                
                 Button(action: {
-                    count += 1
+                    modifyQuantity(modifier: 1)
                 }, label: {
                     Image(systemName: "plus")
                         .font(.system(size: 12, weight: .black, design: .rounded))
@@ -62,7 +74,7 @@ struct CartItemView: View {
                             Capsule().fill(Color("ButtonsDarkGreen"))
                         )
                         .contentShape(Circle())
-                })
+                })//: PLUS BUTTON
             }//BUTTON HSTACK
         }//:HSTACK
         .frame(height: 100)
@@ -75,4 +87,5 @@ struct CartItemView: View {
 
 #Preview {
     CartItemView(cartItemVM: CartItemViewModel(cartItem: CartItem(id: 1, product: Product(id: 1, name: "test", price: "30", quantity: 10, imageUrl: "", categoryId: 1))))
+        .environment(CartViewModel(httpClient: .development))
 }

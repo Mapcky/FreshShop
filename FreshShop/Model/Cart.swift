@@ -40,3 +40,8 @@ struct AddCartItemResponse: Codable {
     let message: String?
     let cartItem: CartItem?
 }
+
+struct CartItemRemoveResponse: Codable {
+    let success: Bool
+    let message: String?
+}
