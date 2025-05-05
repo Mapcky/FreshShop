@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
     // MARK: - PROPERTIES
+    @Environment(\.navigationState) private var navigationState
     var productDetailVM: ProductDetailViewModel
     @Environment(CartViewModel.self) private var cartVM
     
@@ -150,6 +151,9 @@ struct ProductDetailView: View {
                     Task {
                         await addItemToCart()
                     }
+                    navigationState.path = NavigationPath()
+                    navigationState.animatingBot = true
+                    navigationState.showingScreen = .cart
                 }, label: {
                     Text("Add to Cart")
                         .font(.system(size: 18, weight: .bold, design: .rounded))
@@ -171,6 +175,7 @@ struct ProductDetailView: View {
 
 #Preview {
     ProductDetailView(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1)))
+        .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(ProductViewModel(httpClient: .development))
 }

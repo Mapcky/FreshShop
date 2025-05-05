@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 @MainActor
 @Observable
@@ -52,7 +53,7 @@ class CartViewModel {
     }
     
     func removeItemFromCart(cartItemId: Int) async throws {
-                
+        
         let resouce = Resource(url: Constants.Urls.removeCartItems(cartItemId), method: .delete, modelType: CartItemRemoveResponse.self)
         
         let response = try await httpClient.load(resouce)
@@ -70,6 +71,18 @@ class CartViewModel {
     // MARK: - COMPUTED PROPERTIES
     var cartItems: [CartItem] {
         return cart?.cartItems ?? []
+    }
+    
+    var total: String {
+        guard let items = cart?.cartItems else { return "0" }
+
+        let totalValue: Double = items.reduce(0.0) { result, cartItem in
+            let price = Double(cartItem.product.price) ?? 0
+            let quantity = Double(cartItem.quantity)
+            return result + price * quantity
+        }
+
+        return String(format: "%.2f", totalValue)
     }
     
 }

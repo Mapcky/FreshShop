@@ -22,6 +22,16 @@ struct CartView: View {
             
             Spacer()
             
+            HStack {
+                Text("Total")
+                
+                Text("$ \(cartVM.total)")
+            }
+            .font(.title2)
+            .fontWeight(.bold)
+            .fontDesign(.rounded)
+            .padding(.top, 10)
+            
             Button(action:{
                 navigationState.animatingTop = false
                 navigationState.path.append(Route.purchaseComplete)
@@ -36,6 +46,9 @@ struct CartView: View {
                     .contentShape(Capsule())
             })//: BUTTON
         }//: VSTACK
+        .task {
+            try? await cartVM.loadCart()
+        }
     }
 }
 
