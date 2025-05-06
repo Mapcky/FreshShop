@@ -33,6 +33,7 @@ enum Route: Hashable {
     case allCategories
     case purchaseComplete
     case orderDetail(Int)
+    case adress
 }
 
 extension EnvironmentValues {

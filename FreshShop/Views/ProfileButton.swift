@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ProfileButton: View {
     // MARK: - PROPERTIES
-    
     let buttonImage: String
     let buttonTitle: String
-    
+    let action: () -> Void
     // MARK: - BODY
     var body: some View {
-        Button(action: {}, label: {
+        Button(action: {
+            action()
+        }, label: {
             HStack {
                 Image(systemName: buttonImage)
                 
@@ -40,6 +41,6 @@ struct ProfileButton: View {
 }
 
 #Preview {
-    ProfileButton(buttonImage: "person.fill", buttonTitle: "Account information")
-    ProfileButton(buttonImage: "person.fill", buttonTitle: "Account Information")
+    ProfileButton(buttonImage: "person.fill", buttonTitle: "Account information", action: {})
+        
 }

@@ -28,7 +28,7 @@ struct ImageLoader: View {
                     .foregroundColor(.gray)
                     .opacity(0.6)
                     .task {
-                        reloadFlag += 1
+                        reloadFlag += 1 //temporal solution
                     }
             default:
                 EmptyView()

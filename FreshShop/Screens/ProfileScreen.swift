@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileScreen: View {
     // MARK: - PROPERTIES
-    
+    @Environment(\.navigationState) private var navigationState
     // MARK: - BODY
     var body: some View {
         VStack (spacing: 20) {
@@ -26,13 +26,15 @@ struct ProfileScreen: View {
                     .foregroundStyle(.gray)
             }//: VSTACK NAME & EMAIL
             
-            ProfileButton(buttonImage: "person.fill", buttonTitle: "Account Information")
+            ProfileButton(buttonImage: "person.fill", buttonTitle: "Account Information", action: {})
             
-            ProfileButton(buttonImage: "map.fill", buttonTitle: "Delivery Adress")
+            ProfileButton(buttonImage: "map.fill", buttonTitle: "Delivery Adress", action: {
+                navigationState.path.append(Route.adress)
+            })
             
-            ProfileButton(buttonImage: "creditcard.fill", buttonTitle: "Payment Method")
+            ProfileButton(buttonImage: "creditcard.fill", buttonTitle: "Payment Method", action: {})
             
-            ProfileButton(buttonImage: "person.2.badge.gearshape.fill", buttonTitle: "Support")
+            ProfileButton(buttonImage: "person.2.badge.gearshape.fill", buttonTitle: "Support", action: {})
             
         }//:VSTACK
         .padding()
@@ -44,4 +46,5 @@ struct ProfileScreen: View {
 
 #Preview {
     ProfileScreen()
+        .environment(\.navigationState, NavigationState())
 }
