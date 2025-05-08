@@ -9,18 +9,19 @@ import SwiftUI
 
 struct CategoryProductsView: View {
     // MARK: - PROPERTIES
-
+    
     @Environment(ProductViewModel.self) private var productVM
     var selectedCategoryId: Int
     var selectedCategoryName: String
-
+    
     // MARK: - BODY
     var body: some View {
         ScrollView {
-            VStack {
+            VStack() {
                 Text(selectedCategoryName)
-                    .font(.title3)
+                    .font(.title)
                     .fontDesign(.rounded)
+                    .foregroundStyle(.gray.opacity(0.7))
                 ProductsVGrid(selectedCategoryId: selectedCategoryId)
             }//:VSTACK
             .padding(.horizontal, 15)
@@ -38,6 +39,6 @@ struct CategoryProductsView: View {
 #Preview {
     CategoryProductsView(selectedCategoryId: 1, selectedCategoryName: "Dairy")
         .environment(ProductViewModel(httpClient: .development))
-
-
+    
+    
 }

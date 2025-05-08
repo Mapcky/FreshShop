@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoriesHGrid: View {
     // MARK: - DEVELOPMENT CATEGORIES
-        
+    
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
     @Environment(CategoryViewModel.self) private var categoryVM
@@ -27,25 +27,24 @@ struct CategoriesHGrid: View {
                     VStack {
                         ZStack {
                             Color("LightGreenGridBackground")
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
                             
-                            AsyncImage(url: URL(string: category.imageUrl)) { img in
-                                img.resizable()
-                                    .scaledToFit()
-                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
-                            } placeholder: {
-                                Image(systemName: "cart")
-                            }
-                            
+                            ImageLoader(urlString: category.imageUrl)
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
                             
                         }//: ZSTACK
                         .frame(width: 100, height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                        
                         
                         Text(category.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .frame(width: 100)
                     }//: VSTACK
                     .onTapGesture {
                         withAnimation(nil){

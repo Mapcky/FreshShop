@@ -30,16 +30,25 @@ struct CartItemView: View {
     var body: some View {
         HStack(spacing: 10) {
             ImageLoader(urlString: cartItemVM.productImage)
+                .frame(width: 80, height: 80)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
             
-            Spacer()
-            VStack {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(cartItemVM.productName)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .lineLimit(2)
+                    .truncationMode(.tail)
                 
                 Text(cartItemVM.total)
-            }
-            Spacer()
-
-            HStack(spacing: 10) {
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color("DarkGreen"))
+            }//:VSTACK LEFT PART
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            
+            HStack(spacing: 12) {
                 Button(action: {
                     if cartItemVM.quantity > 1 {
                         modifyQuantity(modifier: -1)
@@ -48,40 +57,33 @@ struct CartItemView: View {
                     }
                 }, label: {
                     Image(systemName: "minus")
-                        .font(.system(size: 12, weight: .black, design: .rounded))
-                        .frame(width: 10, height: 10)
+                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                        .frame(width: 24, height: 24)
                         .foregroundStyle(.white)
-                        .padding(10)
-                        .background(
-                            Circle().fill(Color("ButtonsDarkGreen"))
-                        )
-                        .contentShape(Circle())
-                })//: MINUS BUTTON
+                        .background(Circle().fill(Color("ButtonsDarkGreen")))
+                })//:MINUS BUTTON
                 
                 Text(String(cartItemVM.quantity))
-                        .font(.system(size: 16, weight: .black, design: .rounded))
-                        .foregroundStyle(.black)
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+                    .frame(width: 28, alignment: .center)
                 
                 Button(action: {
                     modifyQuantity(modifier: 1)
                 }, label: {
                     Image(systemName: "plus")
-                        .font(.system(size: 12, weight: .black, design: .rounded))
-                        .frame(width: 10, height: 10)
+                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                        .frame(width: 24, height: 24)
                         .foregroundStyle(.white)
-                        .padding(10)
-                        .background(
-                            Capsule().fill(Color("ButtonsDarkGreen"))
-                        )
-                        .contentShape(Circle())
+                        .background(Circle().fill(Color("ButtonsDarkGreen")))
                 })//: PLUS BUTTON
-            }//BUTTON HSTACK
-        }//:HSTACK
-        .frame(height: 100)
-        .padding(.horizontal, 10)
-        .fontDesign(.rounded)
-        .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+            }//: BUTTON HSTACK
+        }//: HSTACK
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
 }
 

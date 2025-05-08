@@ -12,7 +12,7 @@ struct CategoriesVGrid: View {
     @Environment(\.navigationState) private var navigationState
     @Environment(CategoryViewModel.self) private var categoryVM
     
-    private let columnSpacing: CGFloat = 10
+    private let columnSpacing: CGFloat = 12
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: columnSpacing), count: 3)
     }
@@ -22,25 +22,27 @@ struct CategoriesVGrid: View {
         ScrollView{
             LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
                 ForEach(categoryVM.categories, id:\.self) { category in
-                    VStack {
+                    VStack(spacing: 8) {
                         ZStack {
                             Color("LightGreenGridBackground")
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
                             
-                            AsyncImage(url: URL(string: category.imageUrl)) { img in
-                                img.resizable()
-                                    .scaledToFit()
-                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
-                            } placeholder: {
-                                Image(systemName: "cart")
-                            }
+                            
+                            ImageLoader(urlString: category.imageUrl)
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
                         }//: ZSTACK
                         .frame(width: 100, height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         Text(category.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .frame(width: 100)
                     }//: VSTACK
                     .onTapGesture {
                         navigationState.path.append(Route.categories(category.id, category.name))
@@ -64,5 +66,5 @@ struct CategoriesVGrid: View {
     CategoriesVGrid()
         .environment(\.navigationState, NavigationState())
         .environment(CategoryViewModel(httpClient: .development))
-
+    
 }

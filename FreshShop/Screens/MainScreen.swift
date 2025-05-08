@@ -15,7 +15,7 @@ struct MainScreen: View {
     @State private var localPath = NavigationPath()
     @Environment(CategoryViewModel.self) private var categoryVM
     @Environment(CartViewModel.self) private var cartVM
-
+    
     
     // MARK: - BODY
     var body: some View {
@@ -69,14 +69,14 @@ struct MainScreen: View {
                             let categoryId,
                             let categoryName):
                             CategoryProductsView(selectedCategoryId: categoryId,selectedCategoryName: categoryName)
-
+                            
                         case .allCategories:
                             CategoriesVGrid()
                         case .purchaseComplete:
                             PurchaseCompleteView()
                         case .orderDetail(
                             let order):
-                          //  OrderDetailView(order: order)
+                            //  OrderDetailView(order: order)
                             EmptyView()
                         case .adress:
                             DeliveryAdressView()
@@ -105,7 +105,6 @@ struct MainScreen: View {
         .task {
             try? await cartVM.loadCart()
         }
-        
     }
 }
 
@@ -120,5 +119,3 @@ struct MainScreen: View {
         .environment(ProductViewModel(httpClient: .development))
         .environment(CartViewModel(httpClient: .development))
 }
-
-

@@ -75,14 +75,20 @@ class CartViewModel {
     
     var total: String {
         guard let items = cart?.cartItems else { return "0" }
-
+        
         let totalValue: Double = items.reduce(0.0) { result, cartItem in
             let price = Double(cartItem.product.price) ?? 0
             let quantity = Double(cartItem.quantity)
             return result + price * quantity
         }
-
+        
         return String(format: "%.2f", totalValue)
+    }
+    
+    var cartItemsQuantity: Int {
+        cart?.cartItems?.reduce(0, { total, item in
+            total + item.quantity
+        }) ?? 0
     }
     
 }

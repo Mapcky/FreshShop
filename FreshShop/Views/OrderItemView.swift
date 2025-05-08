@@ -14,7 +14,7 @@ struct OrderItemView: View {
     
     // MARK: - BODY
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 15) {
             Image("ProductPlaceholder")
                 .resizable()
                 .scaledToFit()
@@ -29,23 +29,25 @@ struct OrderItemView: View {
                     )
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.trailing, 10)
             
             VStack (alignment: .leading, spacing: 5) {
                 Text(product.name)
-                    .font(.subheadline)
-                    .lineLimit(1)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .lineLimit(2)
                     .truncationMode(.tail)
                 
                 Text("Quantity number")
                     .font(.caption)
+                    .bold()
                     .foregroundStyle(.gray)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             Text("$ Total Price")
                 .font(.headline)
                 .fontDesign(.rounded)
-                .frame(width: 80, alignment: .trailing)
         }//: HSTACK
         .padding(.horizontal, 10)
         .frame(height: 90)

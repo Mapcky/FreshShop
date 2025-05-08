@@ -20,7 +20,6 @@ struct BannerView: View {
                     .resizable()
                     .scaledToFit()
                     .clipShape(RoundedRectangle(cornerRadius: 12))
-                
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .always))

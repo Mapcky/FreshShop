@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductsVGrid: View {
     // MARK: - PROPERTIES
-
+    
     @Environment(\.navigationState) private var navigationState
     @Environment(ProductViewModel.self) private var productVM
     var selectedCategoryId: Int
@@ -27,37 +27,41 @@ struct ProductsVGrid: View {
     
     // MARK: - BODY
     var body: some View {
-            LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
-                ForEach(products, id:\.self) { product in
+        LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
+            ForEach(products, id:\.self) { product in
+                VStack {
+                    ZStack {
+                        Color("LightGreenGridBackground")
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                        
+                        ImageLoader(urlString: product.imageUrl)
+                            .frame(width: 100, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }//: ZSTACK
+                    .frame(height: 120)
+                    
                     VStack {
-                        ZStack {
-                            Color("LightGreenGridBackground")
-                            
-                            AsyncImage(url: URL(string: product.imageUrl)) { img in
-                                img.resizable()
-                                    .scaledToFit()
-                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
-                            } placeholder: {
-                                Image(systemName: "cart")
-                            }
-                        }//: ZSTACK
-                        .frame(width: 150, height: 150)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                        
-                        
                         Text(product.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
+                            .foregroundColor(.primary)
+                            .lineLimit(2)
+                            .multilineTextAlignment(.center)
+                            .frame(width: 120)
                         
                         Text(Double(product.price) ?? 0, format: .currency(code: "ARS"))
-                    }//: VSTACK
-                    .onTapGesture {
-                        navigationState.path.append(Route.productDetail(product))
-                        navigationState.animatingBot = true
-                    }
+                            .font(.system(size: 14))
+                            .fontWeight(.bold)
+                    }//: VSTACK NAME
+                }//: VSTACK
+                .onTapGesture {
+                    navigationState.path.append(Route.productDetail(product))
+                    navigationState.animatingBot = true
                 }
-            })
+            }
+        })
         .padding()
         .padding(.bottom, 80)
         .background(.white)

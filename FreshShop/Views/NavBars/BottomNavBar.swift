@@ -11,6 +11,7 @@ struct BottomNavBar: View {
     // MARK: - PROPERTIES
 
     @Environment(\.navigationState) private var navigationState
+    @Environment(CartViewModel.self) private var cartVM
 
     // MARK: - BODY
     var body: some View {
@@ -104,12 +105,26 @@ struct BottomNavBar: View {
                             withAnimation(.easeInOut) {
                                 navigationState.animatingTop = true
                                 navigationState.animatingBot = true
+                                navigationState.path = NavigationPath()
                                 navigationState.showingScreen = .cart
                             }
                         }, label: {
-                            Image(systemName: "cart")
-                                .imageScale(.large)
-                                .fontWeight(.bold)
+                            ZStack {
+                                Image(systemName: "cart")
+                                    .imageScale(.large)
+                                    .fontWeight(.bold)
+                                
+                                if cartVM.cartItemsQuantity > 0 {
+                                    Text(String(cartVM.cartItemsQuantity))
+                                        .font(.caption2)
+                                        .bold()
+                                        .foregroundStyle(.white)
+                                        .padding(8)
+                                        .background(.orange)
+                                        .clipShape(Circle())
+                                        .offset(x:15, y:-12)
+                                }//: if
+                            }//:ZSTACK
                         })
                     }//:ZSTACK
                     .frame(width: 70, height: 70)
@@ -126,6 +141,7 @@ struct BottomNavBar: View {
 #Preview {
     BottomNavBar()
         .environment(\.navigationState, NavigationState())
+        .environment(CartViewModel(httpClient: .development))
 
 }
 

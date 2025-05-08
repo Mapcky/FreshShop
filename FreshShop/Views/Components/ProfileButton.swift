@@ -42,5 +42,5 @@ struct ProfileButton: View {
 
 #Preview {
     ProfileButton(buttonImage: "person.fill", buttonTitle: "Account information", action: {})
-        
+    
 }
