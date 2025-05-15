@@ -13,6 +13,8 @@ struct NiceTextField: View {
     @Binding var fieldValue: String
     @FocusState private var isFocused: Bool
     @State private var isActive: Bool = false
+    
+    var onChange: (() -> Void)?
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .leading, spacing: 10, content: {
@@ -34,6 +36,7 @@ struct NiceTextField: View {
                         isActive.toggle()
                     }
                 })
+                .onChange(of: fieldValue, {oldValue, newValue in (onChange ?? {})()})
         })
     }
 }

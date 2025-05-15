@@ -33,8 +33,10 @@ struct CartView: View {
             .padding(.top, 10)
             
             Button(action:{
-                navigationState.animatingTop = false
-                navigationState.path.append(Route.purchaseComplete)
+                //navigationState.animatingTop = false
+                //navigationState.path.append(Route.purchaseComplete)
+                navigationState.path.append(Route.placeOrder)
+
             }, label: {
                 Text("Proceed to Checkout")
                     .font(.system(size: 18, weight: .bold, design: .rounded))

@@ -29,7 +29,7 @@ struct ProfileScreen: View {
             ProfileButton(buttonImage: "person.fill", buttonTitle: "Account Information", action: {})
             
             ProfileButton(buttonImage: "map.fill", buttonTitle: "Delivery Adress", action: {
-                navigationState.path.append(Route.adress)
+                navigationState.path.append(Route.address)
             })
             
             ProfileButton(buttonImage: "creditcard.fill", buttonTitle: "Payment Method", action: {})

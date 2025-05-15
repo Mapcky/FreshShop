@@ -41,10 +41,10 @@ class CartViewModel {
         let response = try await httpClient.load(resouce)
         
         if let cartItem = response.cartItem, response.success {
-            if let index = cart?.cartItems?.firstIndex(where: { $0.id == cartItem.id }) {
-                cart?.cartItems?[index] = cartItem
+            if let index = cart?.cartItems.firstIndex(where: { $0.id == cartItem.id }) {
+                cart?.cartItems[index] = cartItem
             } else {
-                cart?.cartItems?.append(cartItem)
+                cart?.cartItems.append(cartItem)
             }
         }
         else {
@@ -59,8 +59,8 @@ class CartViewModel {
         let response = try await httpClient.load(resouce)
         
         if  response.success {
-            if let index = cart?.cartItems?.firstIndex(where: { $0.id == cartItemId }) {
-                cart?.cartItems?.remove(at: index)
+            if let index = cart?.cartItems.firstIndex(where: { $0.id == cartItemId }) {
+                cart?.cartItems.remove(at: index)
             }
         }
         else {
@@ -86,7 +86,7 @@ class CartViewModel {
     }
     
     var cartItemsQuantity: Int {
-        cart?.cartItems?.reduce(0, { total, item in
+        cart?.cartItems.reduce(0, { total, item in
             total + item.quantity
         }) ?? 0
     }

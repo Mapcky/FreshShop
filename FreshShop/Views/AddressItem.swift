@@ -1,5 +1,5 @@
 //
-//  AddresItem.swift
+//  AddressItem.swift
 //  FreshShop
 //
 //  Created by Mateo Andres Perano on 08/05/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddresItem: View {
+struct AddressItem: View {
     // MARK: - PROPERTIES
     
     //Temporal Address struct
@@ -36,7 +36,7 @@ struct AddresItem: View {
                 .font(.footnote)
                 .foregroundColor(.gray)
         }
-        .padding()
+        //.padding()
         .background(Color("LightGray"))
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
@@ -44,5 +44,5 @@ struct AddresItem: View {
 }
 
 #Preview {
-    AddresItem()
+    AddressItem()
 }

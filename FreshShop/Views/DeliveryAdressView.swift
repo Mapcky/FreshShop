@@ -51,7 +51,9 @@ struct DeliveryAdressView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     
-                    NiceTextField(titleLabel: "Street", fieldValue: $street)
+                    NiceTextField(titleLabel: "Street", fieldValue: $street) {
+                        
+                    }
                     NiceTextField(titleLabel: "City", fieldValue: $city)
                     NiceTextField(titleLabel: "State", fieldValue: $state)
                     NiceTextField(titleLabel: "Country", fieldValue: $country)

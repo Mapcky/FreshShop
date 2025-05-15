@@ -78,8 +78,10 @@ struct MainScreen: View {
                             let order):
                             //  OrderDetailView(order: order)
                             EmptyView()
-                        case .adress:
+                        case .address:
                             DeliveryAdressView()
+                        case .placeOrder:
+                            PlaceOrderView()
                         }//: SWITCH
                     }//: NAV DESTINATION
                     .onChange(of: navigationState.path, {
