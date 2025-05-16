@@ -82,6 +82,8 @@ struct MainScreen: View {
                             DeliveryAdressView()
                         case .placeOrder:
                             PlaceOrderView()
+                        case .creditCard:
+                            CreditCardView()
                         }//: SWITCH
                     }//: NAV DESTINATION
                     .onChange(of: navigationState.path, {

@@ -14,15 +14,17 @@ struct CreditCardView: View {
     @State private var expireMonth: String = ""
     @State private var expireYear: String = ""
     @State private var CVV: String = ""
-    
     @State private var cardFrontSide: Bool = true
+    
+    @FocusState private var activeField: FocusedTextField?
+    @State private var animateField: FocusedTextField?
     // MARK: - BODY
     var body: some View {
         
         VStack(spacing: 10) {
             
             ZStack {
-                if !cardFrontSide {
+                if animateField != .CVV {
                     MeshGradient(
                         width: 3,
                         height: 3,
@@ -71,6 +73,7 @@ struct CreditCardView: View {
                     }
                     .foregroundStyle(.white)
                     .monospaced()
+                    .transition(.flip)
                     
                 }//:IF
                 else {
@@ -99,34 +102,62 @@ struct CreditCardView: View {
                         }//:OVERLAY
                         .foregroundStyle(.white)
                         .monospaced()
-                        
+                        .transition(.reverseFlip)
                 }//: ELSE
             }//:ZSTACK
             .frame(height: 200)
+            .animation(.snappy, value: activeField)
         
             NiceTextField(titleLabel: "Card Number", fieldValue: $cardNumber) {
                 cardNumber = String(cardNumber.group(" ", count: 4).prefix(19))
             }
+            .focused($activeField, equals: .cardNumber)
             
             NiceTextField(titleLabel: "Name", fieldValue: $cardName)
+                .focused($activeField, equals: .cardName)
             
             HStack(spacing: 10) {
                 NiceTextField(titleLabel: "Month", fieldValue: $expireMonth) {
                     expireMonth = String(expireMonth.prefix(2))
+                    
+                    if expireMonth.count == 2 {
+                        activeField = .expireYear
+                    }
                 }
+                .focused($activeField, equals: .expireMonth)
                 
                 NiceTextField(titleLabel: "Year", fieldValue: $expireYear) {
                     expireYear = String(expireYear.prefix(2))
                 }
+                .focused($activeField, equals: .expireYear)
                 
                 NiceTextField(titleLabel: "CVV", fieldValue: $CVV) {
                     CVV = String(CVV.prefix(3))
                 }
+                .focused($activeField, equals: .CVV)
             }//:HSTACK
             .keyboardType(.numberPad)
         }//:VSTACK
         .padding()
+        .onChange(of: activeField, { oldValue, newValue in
+            withAnimation(.snappy) {
+                animateField = newValue
+            }
+        })
+        .navigationBarBackButtonHidden()
     }
+}
+
+
+// MARK: - FOCUSED TEXT FIELD ENUM
+
+enum FocusedTextField {
+    case none
+    case cardNumber
+    case cardName
+    case expireMonth
+    case expireYear
+    case CVV
 }
 
 #Preview {

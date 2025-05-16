@@ -35,6 +35,7 @@ enum Route: Hashable {
     case orderDetail(Int)
     case address
     case placeOrder
+    case creditCard
 }
 
 extension EnvironmentValues {

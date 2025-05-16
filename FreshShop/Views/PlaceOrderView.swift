@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlaceOrderView: View {
     // MARK: - PROPERTIES
+    @Environment(\.navigationState) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
 
     // MARK: - BODY
@@ -41,6 +42,38 @@ struct PlaceOrderView: View {
                     Text("$ \(cartVM.total)")
                 }
                 .bold()
+                
+                VStack(spacing: 5) {
+                    Button(action:{
+                        navigationState.path.append(Route.creditCard)
+                    }, label: {
+                        Image(systemName: "creditcard")
+                        Text("Pay with credit card")
+                    })//: BUTTON
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Capsule().fill(Color("ButtonsDarkGreen")))
+                    .foregroundStyle(.white)
+                    .padding()
+                    .contentShape(Capsule())
+                    
+                    Button(action:{
+
+                    }, label: {
+                        Text("Pay with")
+                        Text("stripe")
+                            .fontWeight(.black)
+                    })//: BUTTON
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Capsule().fill(Color("stripeColor")))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal)
+                    .contentShape(Capsule())
+                }//:VSTACK
+                
             }//: VSTACK
             .padding()
             .padding(.bottom, 80)
@@ -58,5 +91,6 @@ struct PlaceOrderView: View {
 
 #Preview {
     PlaceOrderView()
+        .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
 }
