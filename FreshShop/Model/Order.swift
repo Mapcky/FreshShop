@@ -12,16 +12,23 @@ struct Order: Codable, Hashable {
     let userId: Int
     var status: OrderStatus
     var orderItems: [OrderItem]
+    let total: String
     
     init(from cart: Cart) {
         self.id = nil
         self.userId = cart.userId
         self.status = .pending
         self.orderItems = cart.cartItems.map(OrderItem.init)
+        let totalValue: Double = cart.cartItems.reduce(0.0) { result, cartItem in
+            let price = Double(cartItem.product.price) ?? 0
+            let quantity = Double(cartItem.quantity)
+            return result + price * quantity
+        }
+        self.total = String(format: "%.2f", totalValue)
     }
     
     private enum CodingKeys: String, CodingKey {
-        case id, status, orderItems
+        case id, status, orderItems, total
         case userId = "user_id"
     }
     
@@ -55,4 +62,16 @@ struct OrderItem: Codable, Hashable {
         self.product = cartItem.product
         self.quantity = cartItem.quantity
     }
+    
+    
+    private enum CodingKeys: String, CodingKey {
+        case id,quantity
+        case product = "Product"
+    }
+}
+
+struct GetOrdersResponse: Codable {
+    var orders: [Order] = []
+    let message: String?
+    let success: Bool
 }

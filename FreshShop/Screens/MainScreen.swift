@@ -15,6 +15,8 @@ struct MainScreen: View {
     @State private var localPath = NavigationPath()
     @Environment(CategoryViewModel.self) private var categoryVM
     @Environment(CartViewModel.self) private var cartVM
+    @Environment(OrderViewModel.self) private var orderVM
+
     
     
     // MARK: - BODY
@@ -122,4 +124,5 @@ struct MainScreen: View {
         .environment(CategoryViewModel(httpClient: .development))
         .environment(ProductViewModel(httpClient: .development))
         .environment(CartViewModel(httpClient: .development))
+        .environment(OrderViewModel(httpClient: .development))
 }

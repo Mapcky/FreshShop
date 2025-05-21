@@ -9,6 +9,9 @@ import SwiftUI
 
 struct OrderScreen: View {
     // MARK: - PROPERTIES
+    @Environment(\.navigationState) private var navigationState
+    @Environment(OrderViewModel.self) private var orderVM
+    
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -18,22 +21,25 @@ struct OrderScreen: View {
                 .padding(.horizontal)
             
             ScrollView {
-                LazyVStack(spacing: 10) {
-                    ForEach(1...4, id:\.self) { _ in
-                        //OrderLittleView(order: orderExample)
-                        Text("order xd")
-                    }//:LOOP
-                }//:LVSTACK
-                .padding(.horizontal)
+                OrderLittleView()
             }//: Scroll
         }//:VSTACK
         .padding()
         .padding(.bottom, 80)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 24))
+        .task {
+            do {
+                try await orderVM.loadOrders()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
 #Preview {
     OrderScreen()
+        .environment(\.navigationState, NavigationState())
+        .environment(OrderViewModel(httpClient: .development))
 }

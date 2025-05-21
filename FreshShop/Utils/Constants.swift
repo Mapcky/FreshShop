@@ -13,6 +13,8 @@ struct Constants {
         static let allCategories: URL = URL(string: "http://localhost:8080/api/category/all")!
         static let loadCart: URL = URL(string: "http://localhost:8080/api/cart/")!
         static let addCartItems: URL = URL(string: "http://localhost:8080/api/cart/addItem")!
+        static let createOrder: URL = URL(string: "http://localhost:8080/api/order/create")!
+        static let getOrders: URL = URL(string: "http://localhost:8080/api/order/loadOrders")!
         
         static func products(_ categoryId: Int) -> URL {
             return URL(string: "http://localhost:8080/api/product/fromCategory/\(categoryId)")!
