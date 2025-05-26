@@ -15,6 +15,9 @@ struct FreshShopApp: App {
     @State private var categoryVM = CategoryViewModel(httpClient: HTTPClient())
     @State private var productVM = ProductViewModel(httpClient: HTTPClient())
     @State private var cartVM = CartViewModel(httpClient: HTTPClient())
+    @State private var orderVM = OrderViewModel(httpClient: HTTPClient())
+    @State private var paymentVM = PaymentViewModel(httpClient: HTTPClient())
+
 
     // MARK: - BODY
     var body: some Scene {
@@ -24,6 +27,8 @@ struct FreshShopApp: App {
                 .environment(categoryVM)
                 .environment(productVM)
                 .environment(cartVM)
+                .environment(orderVM)
+                .environment(paymentVM)
         }
     }
 }

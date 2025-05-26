@@ -9,6 +9,11 @@ import SwiftUI
 
 struct CreditCardView: View {
     // MARK: - PROPERTIES
+    @Environment(\.navigationState) private var navigationState
+    @Environment(CartViewModel.self) private var cartVM
+    @Environment(PaymentViewModel.self) private var paymentVM
+    @Environment(OrderViewModel.self) private var orderVM
+    
     @State private var cardNumber: String = ""
     @State private var cardName: String = ""
     @State private var expireMonth: String = ""
@@ -18,6 +23,39 @@ struct CreditCardView: View {
     
     @FocusState private var activeField: FocusedTextField?
     @State private var animateField: FocusedTextField?
+    
+    
+    // MARK: - FUNCTIONS
+    
+    private func checkout() async {
+        do {
+            try await paymentVM.creditCardPayment(totalAmount: cartVM.total)
+            
+            if let paymentStatus = paymentVM.paymentStatus {
+                
+                if paymentStatus {
+                    
+                    
+                    do {
+                        guard let cart = cartVM.cart else {
+                            return
+                        }
+                        let order = Order(from: cart)
+                        
+                        try await orderVM.generateOrder(order: order)
+                        navigationState.path.append(Route.purchaseComplete)
+                        
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     // MARK: - BODY
     var body: some View {
         
@@ -29,12 +67,35 @@ struct CreditCardView: View {
                         width: 3,
                         height: 3,
                         points: [
-                            .init(0, 0), .init(0.5, 0), .init(1, 0), .init(0, 0.5), .init(0.9, 0.6), .init(1, 0.5), .init(0, 1), .init(0.5, 1), .init(1,1)
+                            .init(0, 0), .init(0.5, 0), .init(1, 0),
+                            .init(0, 0.5), .init(0.9, 0.6), .init(1, 0.5),
+                            .init(0, 1), .init(0.5, 1), .init(1, 1)
                         ],
-                        colors: [ .red, .red, .pink, .pink, .orange, .red, .red ,.orange, .red
-                                ]
+                        colors: [
+                            .red, .orange, .red,
+                            .orange, .yellow.opacity(0.7), .red,
+                            .orange, .red, .orange
+                        ]
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 16))
+
+                    VStack {
+                        HStack {
+                            Spacer()
+                            ZStack {
+                                Circle()
+                                    .fill(Color.red)
+                                    .frame(width: 30, height: 30)
+                                    .offset(x: -10)
+
+                                Circle()
+                                    .fill(Color.orange)
+                                    .frame(width: 30, height: 30)
+                                    .offset(x: 10)
+                            }
+                            .padding()
+                        }
+                    }
                     .overlay {
                         
                         VStack(alignment: .leading, spacing: 15) {
@@ -137,6 +198,22 @@ struct CreditCardView: View {
                 .focused($activeField, equals: .CVV)
             }//:HSTACK
             .keyboardType(.numberPad)
+            
+            Button(action:{
+                Task {
+                    await checkout()
+                }
+            }, label: {
+                Text("Pay $\(cartVM.total)")
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Capsule().fill(Color("ButtonsDarkGreen")))
+                    .foregroundStyle(.white)
+                    .contentShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.top, 16)
+            })//: BUTTON
+            
         }//:VSTACK
         .padding()
         .onChange(of: activeField, { oldValue, newValue in
@@ -162,4 +239,9 @@ enum FocusedTextField {
 
 #Preview {
     CreditCardView()
+        .environment(\.navigationState, NavigationState())
+        .environment(CartViewModel(httpClient: .development))
+        .environment(PaymentViewModel(httpClient: .development))
+        .environment(OrderViewModel(httpClient: .development))
+
 }

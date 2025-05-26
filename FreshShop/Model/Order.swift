@@ -40,7 +40,8 @@ struct Order: Codable, Hashable {
                     "productId": item.product.id,
                     "quantity": item.quantity
                 ]
-            }
+            },
+            "total": self.total
         ]
     }
 }
@@ -74,4 +75,9 @@ struct GetOrdersResponse: Codable {
     var orders: [Order] = []
     let message: String?
     let success: Bool
+}
+
+struct CreateOrderResponse: Codable {
+    let success: Bool
+    let message: String?
 }

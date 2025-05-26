@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum OrderError: Error {
+    case creationFailed(String)
+}
+
 @MainActor
 @Observable
 class OrderViewModel {
@@ -30,8 +34,17 @@ class OrderViewModel {
     }
     
     
-    func generateOrder() async throws {
+    func generateOrder(order: Order) async throws {
         
+        let body = try JSONSerialization.data(withJSONObject: order.toRequestBody(), options: [])
+        
+        let resource = Resource(url: Constants.Urls.createOrder, method: .post(body), modelType: CreateOrderResponse.self)
+        
+        let response = try await httpClient.load(resource)
+        
+        if !response.success {
+            throw OrderError.creationFailed(response.message ?? "Error creating the order")
+        }
     }
     
 }
