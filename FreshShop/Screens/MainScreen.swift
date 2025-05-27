@@ -78,8 +78,7 @@ struct MainScreen: View {
                             PurchaseCompleteView()
                         case .orderDetail(
                             let order):
-                            //  OrderDetailView(order: order)
-                            EmptyView()
+                            OrderDetailView(orderDVM: OrderDetailViewModel(order: order))
                         case .address:
                             DeliveryAdressView()
                         case .placeOrder:

@@ -11,7 +11,6 @@ struct OrderLittleView: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
     @Environment(OrderViewModel.self) private var orderVM
-    //let order: Order
     
     // MARK: - BODY
     var body: some View {
@@ -35,7 +34,7 @@ struct OrderLittleView: View {
                 
                 
                 Button(action: {
-                    //navigationState.path.append(Route.orderDetail(order))
+                navigationState.path.append(Route.orderDetail(order))
                     
                 }, label: {
                     Image(systemName: "chevron.right")

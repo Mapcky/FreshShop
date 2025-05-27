@@ -122,7 +122,12 @@ struct HTTPClient {
         }
         
         do {
-            let result = try JSONDecoder().decode(resource.modelType, from: data)
+            let decoder = JSONDecoder()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            decoder.dateDecodingStrategy = .formatted(formatter)
+            let result = try decoder.decode(resource.modelType, from: data)
             return result
         } catch {
             throw NetworkError.decodingError(error)

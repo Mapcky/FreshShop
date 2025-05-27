@@ -91,4 +91,8 @@ class CartViewModel {
         }) ?? 0
     }
     
+    func emptyLocalCart() {
+        cart?.cartItems = []
+    }
+    
 }

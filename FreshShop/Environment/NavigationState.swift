@@ -32,7 +32,7 @@ enum Route: Hashable {
     case categories(Int, String)
     case allCategories
     case purchaseComplete
-    case orderDetail(Int)
+    case orderDetail(Order)
     case address
     case placeOrder
     case creditCard

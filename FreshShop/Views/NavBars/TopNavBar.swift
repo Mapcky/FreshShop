@@ -13,6 +13,7 @@ struct TopNavBar: View {
     @Environment(\.navigationState) private var navigationState
 
     @State private var search: String = ""
+    @State private var backToHome: Bool = false
     
     // MARK: - BODY
     var body: some View {
@@ -28,8 +29,7 @@ struct TopNavBar: View {
                             if !navigationState.path.isEmpty {
                                 navigationState.path.removeLast()
                             }
-                            
-                            if navigationState.path.isEmpty {
+                            else if navigationState.path.isEmpty {
                                 navigationState.animatingTop = false
                                 navigationState.showingScreen = .home
                             }

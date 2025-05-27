@@ -20,6 +20,8 @@ struct CreditCardView: View {
     @State private var expireYear: String = ""
     @State private var CVV: String = ""
     @State private var cardFrontSide: Bool = true
+    @State private var isProcessingPayment = false
+
     
     @FocusState private var activeField: FocusedTextField?
     @State private var animateField: FocusedTextField?
@@ -28,31 +30,49 @@ struct CreditCardView: View {
     // MARK: - FUNCTIONS
     
     private func checkout() async {
+        withAnimation(.easeInOut) {
+            isProcessingPayment = true
+        }
+        
         do {
             try await paymentVM.creditCardPayment(totalAmount: cartVM.total)
             
-            if let paymentStatus = paymentVM.paymentStatus {
-                
-                if paymentStatus {
-                    
-                    
-                    do {
-                        guard let cart = cartVM.cart else {
-                            return
-                        }
-                        let order = Order(from: cart)
-                        
-                        try await orderVM.generateOrder(order: order)
-                        navigationState.path.append(Route.purchaseComplete)
-                        
-                    } catch {
-                        print(error.localizedDescription)
-                    }
+            guard paymentVM.paymentStatus == true else {
+                withAnimation(.easeInOut) {
+                    isProcessingPayment = false
                 }
+                return
             }
             
+            do {
+                guard let cart = cartVM.cart else {
+                    withAnimation(.easeInOut) {
+                        isProcessingPayment = false
+                    }
+                    return
+                }
+                let order = Order(from: cart)
+                
+                try await orderVM.generateOrder(order: order)
+                
+                cartVM.emptyLocalCart()
+                withAnimation(.easeInOut) {
+                    isProcessingPayment = false
+                }
+                
+                navigationState.path.append(Route.purchaseComplete)
+                
+            } catch {
+                print(error.localizedDescription)
+                withAnimation(.easeInOut) {
+                    isProcessingPayment = false
+                }
+            }
         } catch {
             print(error.localizedDescription)
+            withAnimation(.easeInOut) {
+                isProcessingPayment = false
+            }
         }
     }
     
@@ -76,7 +96,7 @@ struct CreditCardView: View {
                             .orange, .yellow.opacity(0.7), .red,
                             .orange, .red, .orange
                         ]
-                    )
+                    )//: MESH
                     .clipShape(RoundedRectangle(cornerRadius: 16))
 
                     VStack {
@@ -202,17 +222,24 @@ struct CreditCardView: View {
             Button(action:{
                 Task {
                     await checkout()
+                    
                 }
             }, label: {
-                Text("Pay $\(cartVM.total)")
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Capsule().fill(Color("ButtonsDarkGreen")))
-                    .foregroundStyle(.white)
-                    .contentShape(RoundedRectangle(cornerRadius: 10))
-                    .padding(.top, 16)
+                if isProcessingPayment {
+                    ProgressView()
+                        .padding()
+                        .tint(.white)
+                } else {
+                    Text("Pay $\(cartVM.total)")
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .padding()
+                        .foregroundStyle(.white)
+                }//ELSE
             })//: BUTTON
+            .frame(maxWidth: isProcessingPayment ? nil : .infinity)
+            .background(Capsule().fill(Color("ButtonsDarkGreen")))
+            .padding(.top, 20)
+            .disabled(isProcessingPayment)
             
         }//:VSTACK
         .padding()

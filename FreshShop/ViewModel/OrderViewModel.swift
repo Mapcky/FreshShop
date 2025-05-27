@@ -27,7 +27,7 @@ class OrderViewModel {
         let response = try await httpClient.load(resource)
         
         if response.success {
-            self.orders = response.orders
+            self.orders = response.orders.sorted { $0.date! > $1.date! }
         } else {
             print(response.message ?? "An error ocurred when loading orders")
         }

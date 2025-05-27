@@ -33,8 +33,6 @@ struct CartView: View {
             .padding(.top, 10)
             
             Button(action:{
-                //navigationState.animatingTop = false
-                //navigationState.path.append(Route.purchaseComplete)
                 navigationState.path.append(Route.placeOrder)
 
             }, label: {
@@ -42,11 +40,12 @@ struct CartView: View {
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Capsule().fill(Color("ButtonsDarkGreen")))
+                    .background(Capsule().fill(cartVM.cartItems.isEmpty ? .gray : Color("ButtonsDarkGreen")))
                     .foregroundStyle(.white)
                     .padding()
                     .contentShape(Capsule())
             })//: BUTTON
+            .disabled(cartVM.cartItems.isEmpty)
         }//: VSTACK
         .task {
             try? await cartVM.loadCart()
