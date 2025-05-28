@@ -9,7 +9,7 @@ import Foundation
 @MainActor
 @Observable
 class ProductDetailViewModel {
-    let product: Product
+    private let product: Product
     var count: Int = 1
     
     init(product: Product) {
@@ -19,6 +19,23 @@ class ProductDetailViewModel {
     var isInStock: Bool {
         count < product.quantity
     }
+    
+    var name: String {
+        return product.name
+    }
+    
+    var id: Int {
+        return product.id
+    }
+    
+    var price: String {
+        return product.price
+    }
+    
+    var imageUrl: String {
+        return product.imageUrl
+    }
+    
     
     func incrementCount() {
         if isInStock {
@@ -31,5 +48,6 @@ class ProductDetailViewModel {
             count -= 1
         }
     }
+    
 
 }

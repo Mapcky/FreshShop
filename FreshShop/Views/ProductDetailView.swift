@@ -16,7 +16,7 @@ struct ProductDetailView: View {
     // MARK: - FUNCTIONS
     private func addItemToCart() async {
         do {
-            try await cartVM.addItemToCart(productId: productDetailVM.product.id, quantity: productDetailVM.count)
+            try await cartVM.addItemToCart(productId: productDetailVM.id, quantity: productDetailVM.count)
         } catch {
             print(error.localizedDescription)
         }
@@ -33,10 +33,15 @@ struct ProductDetailView: View {
 
                     VStack (alignment: .leading) {
                         VStack {
-                            Text(productDetailVM.product.name)
-                                .font(.largeTitle)
-                                .fontWeight(.black)
-                                .fontDesign(.rounded)
+                            Text(productDetailVM.name)
+                                .font(.system(size: 36, weight: .heavy, design: .rounded))
+                                .foregroundStyle(.white)
+                                .shadow(radius: 8)
+                                .multilineTextAlignment(.leading)
+                                .padding(.horizontal, 12)
+                                .padding(.top, 20)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.8)
                         }//:VSTACK TITLE
                         .foregroundStyle(.white)
                         .shadow(radius: 5, x: 0, y: 3)
@@ -48,7 +53,7 @@ struct ProductDetailView: View {
                                 Text("Price")
                                     .fontWeight(.semibold)
                                 
-                                Text(Double(productDetailVM.product.price) ?? 0, format: .currency(code: "ARS"))
+                                Text(Double(productDetailVM.price) ?? 0, format: .currency(code: "ARS"))
                                     .font(.title3)
                                     .fontWeight(.black)
                                     .scaleEffect(1.2, anchor: .leading)
@@ -57,7 +62,7 @@ struct ProductDetailView: View {
                             
                             Spacer()
                             
-                            AsyncImage(url: URL(string: productDetailVM.product.imageUrl)) { img in
+                            AsyncImage(url: URL(string: productDetailVM.imageUrl)) { img in
                                 img.resizable()
                                     .scaledToFit()
                                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
@@ -163,10 +168,8 @@ struct ProductDetailView: View {
                         .foregroundStyle(.white)
                         .padding()
                         .contentShape(Capsule())
-                })
-                
+                })//:BUTTON
             }//:VSTACK
-            
         }
         .ignoresSafeArea()
         .navigationBarBackButtonHidden(true)

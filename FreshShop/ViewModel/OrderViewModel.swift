@@ -14,7 +14,7 @@ enum OrderError: Error {
 @MainActor
 @Observable
 class OrderViewModel {
-    var orders: [Order] = []
+    private(set) var orders: [Order] = []
     let httpClient: HTTPClient
     
     init(httpClient: HTTPClient) {
@@ -33,6 +33,11 @@ class OrderViewModel {
         }
     }
     
+    func createLocalOrder(from cartVM: CartViewModel) -> Order? {
+        guard let cart = cartVM.cart else { return nil }
+        return Order(from: cart)
+    }
+    
     
     func generateOrder(order: Order) async throws {
         
@@ -46,5 +51,6 @@ class OrderViewModel {
             throw OrderError.creationFailed(response.message ?? "Error creating the order")
         }
     }
+    
     
 }

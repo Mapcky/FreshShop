@@ -30,4 +30,12 @@ class OrderDetailViewModel {
         return order.orderItems
     }
     
+    var date: Date? {
+        return order.date
+    }
+    
+    var status: OrderStatus {
+        return order.status
+    }
+    
 }

@@ -45,13 +45,12 @@ struct CreditCardView: View {
             }
             
             do {
-                guard let cart = cartVM.cart else {
+                guard let order = orderVM.createLocalOrder(from: cartVM) else {
                     withAnimation(.easeInOut) {
                         isProcessingPayment = false
                     }
                     return
                 }
-                let order = Order(from: cart)
                 
                 try await orderVM.generateOrder(order: order)
                 

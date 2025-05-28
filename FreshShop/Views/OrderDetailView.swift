@@ -18,6 +18,18 @@ struct OrderDetailView: View {
                     .font(.title2)
                     .fontWeight(.bold)
                 
+                VStack(spacing: 4) {
+                    Text("Placed on \(orderDVM.date?.formatted(.dateTime.day().month().year().hour().minute()) ?? "server exception")")
+                        .font(.footnote)
+                        .foregroundStyle(.gray)
+                    
+                    HStack {
+                        Text("Shipping Status:")
+                        Text(" \(orderDVM.status.rawValue.capitalized)")
+                            .foregroundStyle(orderDVM.status.color)
+                    }//:HSTACK
+                }//:VSTACK
+                
                 List {
                     Section {
                         ForEach(orderDVM.orderItems, id: \.self) { item in

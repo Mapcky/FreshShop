@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUICore
 
 struct Order: Codable, Hashable {
     let id: Int?
@@ -54,6 +55,15 @@ enum OrderStatus: String, Codable {
     case shipped
     case delivered
     case cancelled
+    
+    var color: Color {
+        switch self {
+        case .pending: return .orange
+        case .shipped: return .blue
+        case .delivered: return .green
+        case .cancelled: return .red
+        }
+    }
 }
 
 struct OrderItem: Codable, Hashable {

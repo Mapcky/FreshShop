@@ -11,7 +11,7 @@ import SwiftUI
 @MainActor
 @Observable
 class CartViewModel {
-    var cart: Cart?
+    private(set) var cart: Cart?
     let httpClient: HTTPClient
     
     init(httpClient: HTTPClient) {
@@ -94,5 +94,6 @@ class CartViewModel {
     func emptyLocalCart() {
         cart?.cartItems = []
     }
+    
     
 }

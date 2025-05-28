@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 @Observable
 class CartItemViewModel {
-    private let cartItem: CartItem
+    private(set) var cartItem: CartItem
     
     init(cartItem: CartItem) {
         self.cartItem = cartItem
