@@ -15,30 +15,68 @@ struct DeliveryAdressView: View {
     @State private var country: String = ""
     @State private var zipCode: String = ""
     @State private var validationErrors: [String] = []
+    
+    
+    @State private var streetError: Bool = false
+    @State private var cityError: Bool = false
+    @State private var stateError: Bool = false
+    @State private var zipError: Bool = false
+    @State private var counrtyError: Bool = false
+    
+    enum AddressField: CaseIterable {
+        case street, city, state, zipCode, country
+    }
+    
+    @State private var fieldErrors: [AddressField: Bool] = [:]
+    
+    @Environment(AddressViewModel.self) private var addressVM
+
 
     // MARK: - FUNCTIONS
     
     private func validateForm() -> Bool {
-        
-        validationErrors = []
-        
+        fieldErrors = [:]
+
+        var isValid = true
+
         if street.isEmptyOrWhiteSpaces {
-            validationErrors.append("Street is required.")
+            fieldErrors[.street] = true
+            isValid = false
         }
+
         if city.isEmptyOrWhiteSpaces {
-            validationErrors.append("City is required.")
+            fieldErrors[.city] = true
+            isValid = false
         }
+
         if state.isEmptyOrWhiteSpaces {
-            validationErrors.append("State is required.")
+            fieldErrors[.state] = true
+            isValid = false
         }
+
         if !zipCode.isZipCode {
-            validationErrors.append("Invalid ZIP code.")
+            fieldErrors[.zipCode] = true
+            isValid = false
         }
+
         if country.isEmptyOrWhiteSpaces {
-            validationErrors.append("Country is required.")
+            fieldErrors[.country] = true
+            isValid = false
+        }
+
+        return isValid
+    }
+    
+    func sendData() async {
+        
+        let newAddress = Address(street: street, city: city, state: state, country: country, zip: zipCode, isDefault: true)//default hardcoded
+        
+        do {
+            try await addressVM.newAddress(newAddress: newAddress)
+        } catch {
+            print(error.localizedDescription)
         }
         
-        return validationErrors.isEmpty
     }
 
     // MARK: - BODY
@@ -51,17 +89,24 @@ struct DeliveryAdressView: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     
-                    NiceTextField(titleLabel: "Street", fieldValue: $street) {
-                        
-                    }
-                    NiceTextField(titleLabel: "City", fieldValue: $city)
-                    NiceTextField(titleLabel: "State", fieldValue: $state)
-                    NiceTextField(titleLabel: "Country", fieldValue: $country)
-                    NiceTextField(titleLabel: "Zip Code", fieldValue: $zipCode)
+                    NiceTextField(titleLabel: "Street", fieldValue: $street, showError: fieldErrors[.street] ?? false)
+                    
+                    NiceTextField(titleLabel: "City", fieldValue: $city, showError: fieldErrors[.city] ?? false)
+                    
+                    NiceTextField(titleLabel: "State", fieldValue: $state, showError: fieldErrors[.state] ?? false)
+                    
+                    NiceTextField(titleLabel: "Country", fieldValue: $country, showError: fieldErrors[.country] ?? false)
+                    
+                    NiceTextField(titleLabel: "Zip Code", fieldValue: $zipCode, showError: fieldErrors[.zipCode] ?? false)
                     
                 }//: VSTACK
                 
                 Button(action:{
+                    if validateForm() {
+                        Task {
+                            await sendData()
+                        }
+                    }
                 }, label: {
                     Text("Save")
                         .font(.system(size: 18, weight: .bold, design: .rounded))
@@ -79,7 +124,6 @@ struct DeliveryAdressView: View {
             .padding(.horizontal, 15)
             .shadow(radius: 0.5)
             .padding(.top, 30)
-            .navigationBarBackButtonHidden()
         }//: Scroll
         .background(Color("LightGrayBackground"))
         .navigationBarBackButtonHidden()
@@ -88,4 +132,5 @@ struct DeliveryAdressView: View {
 
 #Preview {
     DeliveryAdressView()
+        .environment(AddressViewModel(httpClient: .development))
 }

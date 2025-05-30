@@ -11,6 +11,7 @@ struct NiceTextField: View {
     // MARK: - PROPERTIES
     var titleLabel: String
     @Binding var fieldValue: String
+    var showError: Bool = false
     @FocusState private var isFocused: Bool
     @State private var isActive: Bool = false
     
@@ -28,7 +29,8 @@ struct NiceTextField: View {
                 .contentShape(.rect)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(isActive ? .buttonsDarkGreen : .gray.opacity(0.5), lineWidth: 1.5)
+                        .stroke(showError ? .red :
+                            isActive ? .buttonsDarkGreen : .gray.opacity(0.5), lineWidth: 1.5)
                 )
                 .focused($isFocused)
                 .onChange(of: isFocused, {

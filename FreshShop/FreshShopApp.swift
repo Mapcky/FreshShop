@@ -17,6 +17,8 @@ struct FreshShopApp: App {
     @State private var cartVM = CartViewModel(httpClient: HTTPClient())
     @State private var orderVM = OrderViewModel(httpClient: HTTPClient())
     @State private var paymentVM = PaymentViewModel(httpClient: HTTPClient())
+    @State private var addressVM = AddressViewModel(httpClient: HTTPClient())
+
 
 
     // MARK: - BODY
@@ -29,6 +31,7 @@ struct FreshShopApp: App {
                 .environment(cartVM)
                 .environment(orderVM)
                 .environment(paymentVM)
+                .environment(addressVM)
         }
     }
 }

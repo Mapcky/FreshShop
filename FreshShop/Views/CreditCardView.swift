@@ -21,11 +21,28 @@ struct CreditCardView: View {
     @State private var CVV: String = ""
     @State private var cardFrontSide: Bool = true
     @State private var isProcessingPayment = false
-
+    
     
     @FocusState private var activeField: FocusedTextField?
     @State private var animateField: FocusedTextField?
     
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    private var cardIsComplete: Bool {
+        guard let month = Int(expireMonth),
+              let year = Int(expireYear),
+              (1...12).contains(month),
+              year > 24,
+              expireMonth.count == 2,
+              expireYear.count == 2,
+              cardNumber.count == 19,
+              !cardName.isEmpty,
+              CVV.count == 3 else {
+            return false
+        }
+        return true
+    }
     
     // MARK: - FUNCTIONS
     
@@ -58,7 +75,6 @@ struct CreditCardView: View {
                 withAnimation(.easeInOut) {
                     isProcessingPayment = false
                 }
-                
                 navigationState.path.append(Route.purchaseComplete)
                 
             } catch {
@@ -236,10 +252,10 @@ struct CreditCardView: View {
                 }//ELSE
             })//: BUTTON
             .frame(maxWidth: isProcessingPayment ? nil : .infinity)
-            .background(Capsule().fill(Color("ButtonsDarkGreen")))
+            .background(Capsule().fill(cardIsComplete ? Color("ButtonsDarkGreen") : .gray))
             .padding(.top, 20)
-            .disabled(isProcessingPayment)
-            
+            .disabled(isProcessingPayment || !cardIsComplete)
+            .animation(.easeInOut, value: cardIsComplete)
         }//:VSTACK
         .padding()
         .onChange(of: activeField, { oldValue, newValue in
