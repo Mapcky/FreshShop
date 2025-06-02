@@ -20,7 +20,7 @@ struct Address: Codable {
 struct GetAddressResponse: Codable {
     let success: Bool
     let message: String?
-    var userAddresses: [Address]?
+    var addresses: [Address] = []
 }
 
 struct SetAddressResponse: Codable {

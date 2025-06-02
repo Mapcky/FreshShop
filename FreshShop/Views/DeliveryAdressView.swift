@@ -14,6 +14,8 @@ struct DeliveryAdressView: View {
     @State private var state: String = ""
     @State private var country: String = ""
     @State private var zipCode: String = ""
+    @State private var isDefault: Bool = false
+    @State private var isDefaultDisabled: Bool = false
     @State private var validationErrors: [String] = []
     
     
@@ -99,6 +101,11 @@ struct DeliveryAdressView: View {
                     
                     NiceTextField(titleLabel: "Zip Code", fieldValue: $zipCode, showError: fieldErrors[.zipCode] ?? false)
                     
+                    Toggle("Set as default", isOn: $isDefault)
+                        .foregroundStyle(.gray)
+                        .padding(.vertical, 15)
+                        .disabled(isDefaultDisabled)
+                    
                 }//: VSTACK
                 
                 Button(action:{
@@ -127,6 +134,12 @@ struct DeliveryAdressView: View {
         }//: Scroll
         .background(Color("LightGrayBackground"))
         .navigationBarBackButtonHidden()
+        .onAppear(){
+            if addressVM.addresses.isEmpty {
+                isDefault = true
+                isDefaultDisabled = true
+            }
+        }
     }
 }
 

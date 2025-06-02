@@ -10,29 +10,20 @@ import SwiftUI
 struct AddressItem: View {
     // MARK: - PROPERTIES
     
-    //Temporal Address struct
-    struct Addres {
-        let street: String
-        let city: String
-        let state: String
-        let zipCode: Int
-        let country: String
-    }
-    
-    private var address = Addres(street: "BV San Juan 500", city: "Cordoba", state: "Cordoba", zipCode: 5000, country: "Argentina")
+    var addressDVM: AddressDetailViewModel
     
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(address.street)
+            Text(addressDVM.street)
                 .font(.headline)
                 .foregroundColor(.primary)
             
-            Text("\(address.city), \(address.state) \(address.zipCode)")
+            Text("\(addressDVM.city), \(addressDVM.state) \(addressDVM.zip)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             
-            Text(address.country)
+            Text(addressDVM.country)
                 .font(.footnote)
                 .foregroundColor(.gray)
         }
@@ -44,5 +35,5 @@ struct AddressItem: View {
 }
 
 #Preview {
-    AddressItem()
+    AddressItem(addressDVM: AddressDetailViewModel(address: Address(street: "BV San Juan 500", city: "Cordoba", state: "Cordoba", country: "Argentina", zip: "5000", isDefault: false)))
 }

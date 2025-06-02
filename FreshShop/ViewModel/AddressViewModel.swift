@@ -11,7 +11,7 @@ import Foundation
 @Observable
 class AddressViewModel {
     
-    private(set) var address: [Address] = []
+    private(set) var addresses: [Address] = []
     let httpClient: HTTPClient
     
     init(httpClient: HTTPClient) {
@@ -23,8 +23,8 @@ class AddressViewModel {
         
         let response = try await httpClient.load(resource)
         
-        if response.success, let addresses = response.userAddresses {
-            self.address = addresses
+        if response.success {
+            self.addresses = response.addresses
         } else {
             print(response.message ?? "An error occurred while retrieving the address information from the server")
         }
@@ -40,11 +40,14 @@ class AddressViewModel {
         let response = try await httpClient.load(resource)
         
         if response.success, let address = response.address {
-            self.address.append(address)
+            self.addresses.append(address)
         } else {
             print(response.message ?? "An error occurred while setting a new address")
         }
     }
     
+    var defaultAddress: Address? {
+        return addresses.first { $0.isDefault }
+    }
     
 }

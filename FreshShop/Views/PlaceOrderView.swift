@@ -11,6 +11,7 @@ struct PlaceOrderView: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
+    @Environment(AddressViewModel.self) private var addressVM
 
     // MARK: - BODY
     var body: some View {
@@ -24,7 +25,7 @@ struct PlaceOrderView: View {
                         .font(.title2)
                         .bold()
                     
-                    AddressItem()
+                    AddressItem(addressDVM: AddressDetailViewModel(address: addressVM.defaultAddress!))
                 }//: VSTACK
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 30)
@@ -93,4 +94,5 @@ struct PlaceOrderView: View {
     PlaceOrderView()
         .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
+        .environment(AddressViewModel(httpClient: .development))
 }

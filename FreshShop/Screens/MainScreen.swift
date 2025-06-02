@@ -16,6 +16,7 @@ struct MainScreen: View {
     @Environment(CategoryViewModel.self) private var categoryVM
     @Environment(CartViewModel.self) private var cartVM
     @Environment(OrderViewModel.self) private var orderVM
+    @Environment(AddressViewModel.self) private var addressVM
 
     
     
@@ -110,6 +111,9 @@ struct MainScreen: View {
         .task {
             try? await cartVM.loadCart()
         }
+        .task {
+            try? await addressVM.getAddresses()
+        }
     }
 }
 
@@ -125,4 +129,5 @@ struct MainScreen: View {
         .environment(CartViewModel(httpClient: .development))
         .environment(OrderViewModel(httpClient: .development))
         .environment(PaymentViewModel(httpClient: .development))
+        .environment(AddressViewModel(httpClient: .development))
 }
