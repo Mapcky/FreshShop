@@ -18,20 +18,27 @@ struct FreshShopApp: App {
     @State private var orderVM = OrderViewModel(httpClient: HTTPClient())
     @State private var paymentVM = PaymentViewModel(httpClient: HTTPClient())
     @State private var addressVM = AddressViewModel(httpClient: HTTPClient())
-
+    @State private var userVM = UserViewModel(httpClient: HTTPClient())
 
 
     // MARK: - BODY
     var body: some Scene {
         WindowGroup {
-            MainScreen()
-                .environment(\.navigationState, NavigationState())
-                .environment(categoryVM)
-                .environment(productVM)
-                .environment(cartVM)
-                .environment(orderVM)
-                .environment(paymentVM)
-                .environment(addressVM)
+            if (userVM.user != nil) {
+                MainScreen()
+                    .environment(\.navigationState, NavigationState())
+                    .environment(categoryVM)
+                    .environment(productVM)
+                    .environment(cartVM)
+                    .environment(orderVM)
+                    .environment(paymentVM)
+                    .environment(addressVM)
+                    .environment(userVM)
+            }//: IF
+            else {
+                LoginScreen()
+                    .environment(userVM)
+            }
         }
     }
 }

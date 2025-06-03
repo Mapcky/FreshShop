@@ -10,6 +10,9 @@ import Foundation
 struct Constants {
     
     struct Urls {
+        // MARK: - AUTH
+        static let loginUser: URL = URL(string: "http://localhost:8080/api/auth/login")!
+        
         // MARK: - CATEGORIES
         static let allCategories: URL = URL(string: "http://localhost:8080/api/category/all")!
         

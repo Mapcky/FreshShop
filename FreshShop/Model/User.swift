@@ -7,14 +7,24 @@
 
 import Foundation
 
-struct User {
+struct User: Codable {
     var id: Int
     var username: String
     var firstName: String
+    var imageUrl: String?
     
     
-    enum codingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
+        case imageUrl = "image_url"
         case username, id
     }
+    
+}
+
+struct LoginUserResponse: Codable {
+    let success: Bool
+    let user: User?
+    var message: String?
+    var token: String?
 }
