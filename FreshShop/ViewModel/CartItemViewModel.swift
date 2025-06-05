@@ -16,7 +16,7 @@ class CartItemViewModel {
         self.cartItem = cartItem
     }
     
-    
+    // MARK: - COMPUTED PROPERTIES
     var productImage: String {
         return cartItem.product.imageUrl
     }

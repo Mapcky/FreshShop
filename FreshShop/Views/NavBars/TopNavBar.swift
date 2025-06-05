@@ -11,6 +11,7 @@ struct TopNavBar: View {
     // MARK: - PROPERTIES
     
     @Environment(\.navigationState) private var navigationState
+    @Environment(UserViewModel.self) private var userVM
 
     @State private var search: String = ""
     @State private var backToHome: Bool = false
@@ -47,7 +48,7 @@ struct TopNavBar: View {
                         navigationState.showingScreen = .profile
                     }
                 }, label: {
-                    Text("Hi, User")
+                    Text("Hi, \(userVM.user?.firstName ?? "User")")
                     Image(systemName: "person.crop.circle.fill")
                         .font(.largeTitle)
                 })
@@ -78,5 +79,6 @@ struct TopNavBar: View {
 #Preview {
     TopNavBar()
         .environment(\.navigationState, NavigationState())
+        .environment(UserViewModel(httpClient: .development))
 }
 

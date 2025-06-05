@@ -114,6 +114,7 @@ struct MainScreen: View {
         .task {
             try? await addressVM.getAddresses()
         }
+        .requiresAuthentication()
     }
 }
 
@@ -130,4 +131,6 @@ struct MainScreen: View {
         .environment(OrderViewModel(httpClient: .development))
         .environment(PaymentViewModel(httpClient: .development))
         .environment(AddressViewModel(httpClient: .development))
+        .environment(UserViewModel(httpClient: .development))
+        
 }

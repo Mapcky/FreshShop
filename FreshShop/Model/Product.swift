@@ -14,9 +14,10 @@ struct Product: Codable, Equatable, Hashable {
     var quantity: Int
     var imageUrl: String
     let categoryId: Int
+    var description: String
     
     private enum CodingKeys: String, CodingKey {
-        case id, name, price, quantity
+        case id, name, price, quantity, description
         case imageUrl = "image_url"
         case categoryId = "category_id"
     }

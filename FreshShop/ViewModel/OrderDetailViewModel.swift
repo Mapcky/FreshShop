@@ -16,7 +16,7 @@ class OrderDetailViewModel {
         self.order = order
     }
     
-    
+    // MARK: - COMPUTED PROPERTIES
     var id : Int {
         guard let id = order.id else { return 0 }
         return id

@@ -15,7 +15,7 @@ class OrderItemViewModel {
         self.orderItem = orderItem
     }
     
-    
+    // MARK: - COMPUTED PROPERTIES
     var productImage: String {
         return orderItem.product.imageUrl
     }

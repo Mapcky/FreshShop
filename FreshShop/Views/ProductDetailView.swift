@@ -32,7 +32,7 @@ struct ProductDetailView: View {
                         .clipShape(BottomCircle())
 
                     VStack (alignment: .leading) {
-                        VStack {
+                        VStack(alignment: .leading, spacing: 6) {
                             Text(productDetailVM.name)
                                 .font(.system(size: 36, weight: .heavy, design: .rounded))
                                 .foregroundStyle(.white)
@@ -143,12 +143,13 @@ struct ProductDetailView: View {
                         .font(.system(.title3, design: .rounded))
                         .foregroundStyle(.gray)
                     
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nec felis in accumsan. Aenean euismod lectus eu lorem tristique, non finibus purus porttitor. Sed pulvinar ullamcorper ex, id ultricies ligula tincidunt vel. Donec ut augue vitae diam congue hendrerit. Donec id mi a mauris efficitur interdum. Suspendisse aliquam in odio tempus accumsan. Integer molestie, justo nec posuere porta, nunc erat tristique risus, vitae vestibulum nibh leo vitae ligula. Sed et nunc at risus rhoncus posuere. In in tempus nisi, auctor tristique quam.")
+                    Text(productDetailVM.description)
                         .font(.system(.body, design: .rounded))
                         .foregroundStyle(.gray)
                         .multilineTextAlignment(.leading)
                 }
                 .padding(.horizontal, 25)
+                .padding(.vertical, 15)
                 
                 Spacer()
                 
@@ -177,7 +178,7 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1)))
+    ProductDetailView(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1, description: "")))
         .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(ProductViewModel(httpClient: .development))

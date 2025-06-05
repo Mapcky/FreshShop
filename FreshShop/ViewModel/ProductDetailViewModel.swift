@@ -16,6 +16,7 @@ class ProductDetailViewModel {
         self.product = product
     }
     
+    // MARK: - COMPUTED PROPERTIES
     var isInStock: Bool {
         count < product.quantity
     }
@@ -34,6 +35,10 @@ class ProductDetailViewModel {
     
     var imageUrl: String {
         return product.imageUrl
+    }
+    
+    var description: String {
+        return product.description
     }
     
     

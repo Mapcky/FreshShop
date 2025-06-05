@@ -12,6 +12,7 @@ struct Constants {
     struct Urls {
         // MARK: - AUTH
         static let loginUser: URL = URL(string: "http://localhost:8080/api/auth/login")!
+        static let loginById: URL = URL(string: "http://localhost:8080/api/auth/secureLogin")!
         
         // MARK: - CATEGORIES
         static let allCategories: URL = URL(string: "http://localhost:8080/api/category/all")!

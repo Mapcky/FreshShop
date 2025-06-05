@@ -12,32 +12,47 @@ struct LoginScreen: View {
     @Environment(UserViewModel.self) private var userVM
     @State private var username: String = ""
     @State private var password: String = ""
-    
-    
+
     private var isFormValid: Bool {
         !username.isEmptyOrWhiteSpaces && !password.isEmptyOrWhiteSpaces
     }
-    
+
     // MARK: - BODY
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Welcome Back!")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.top, 40)
-            
+        VStack(spacing: 30) {
+            Spacer()
+
+            VStack(spacing: 8) {
+                Text("FreshShop")
+                    .font(.system(size: 38, weight: .bold))
+                    .foregroundColor(.green)
+
+                Text("Login to continue")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+            }//: VSTACK TITLES
+
             VStack(spacing: 16) {
-                TextField("User name", text: $username)
-                    .textInputAutocapitalization(.never)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
-                
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
-            }//:VSTACK
+                HStack {
+                    Image(systemName: "person.fill")
+                        .foregroundColor(.gray)
+                    TextField("Username", text: $username)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.green.opacity(0.6), lineWidth: 1))
+
+                HStack {
+                    Image(systemName: "lock.fill")
+                        .foregroundColor(.gray)
+                    SecureField("Password", text: $password)
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.green.opacity(0.6), lineWidth: 1))
+            }//:VSTACK FIELDS
             .padding(.horizontal)
-            
+
             Button(action: {
                 Task {
                     do {
@@ -49,14 +64,68 @@ struct LoginScreen: View {
             }) {
                 Text("Login")
                     .foregroundColor(.white)
+                    .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(isFormValid ? Color.green : Color.gray)
                     .cornerRadius(10)
-            }//: BUTTON
+                    .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 5)
+            }//:BUTTON LOGIN
             .disabled(!isFormValid)
             .padding(.horizontal)
-        }//:VSTACK
+            
+            Button {
+                //Register
+            } label: {
+                Text("¿No tenés cuenta? Registrate")
+                    .font(.footnote)
+                    .foregroundColor(.green)
+                    .underline()
+            }//:BUTTON REGISTER
+
+            VStack(spacing: 12) {
+                Text("or login with")
+                    .foregroundColor(.gray)
+
+                HStack(spacing: 20) {
+                    Button {
+                        
+                    } label: {
+                        HStack {
+                            Image(systemName: "globe")
+                            Text("Google")
+                        }
+                        .foregroundColor(.black)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        )
+                    }
+
+                    Button {
+                    } label: {
+                        HStack {
+                            Image(systemName: "apple.logo")
+                            Text("Apple")
+                        }
+                        .foregroundColor(.black)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        )
+                    }
+                }//:FAKE BUTTONS
+                .padding(.horizontal)
+            }
+
+            Spacer()
+        }//: VSTACK
         .padding()
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }

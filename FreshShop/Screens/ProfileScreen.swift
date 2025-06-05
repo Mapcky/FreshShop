@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileScreen: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
+    @Environment(UserViewModel.self) private var userVM
     // MARK: - BODY
     var body: some View {
         VStack (spacing: 20) {
@@ -17,10 +18,10 @@ struct ProfileScreen: View {
                 .resizable()
                 .frame(width: 100, height: 100)
             VStack (spacing: 5){
-                Text("User Name")
+                Text(userVM.firstName)
                     .font(.system(size: 16, weight: .bold, design: .rounded))
                 
-                Text(verbatim: "email@placeholder.com")
+                Text(verbatim: userVM.email)
                     .font(.footnote)
                     .fontDesign(.rounded)
                     .foregroundStyle(.gray)
@@ -47,4 +48,5 @@ struct ProfileScreen: View {
 #Preview {
     ProfileScreen()
         .environment(\.navigationState, NavigationState())
+        .environment(UserViewModel(httpClient: .development))
 }

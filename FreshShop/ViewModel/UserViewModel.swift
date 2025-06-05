@@ -17,7 +17,19 @@ class UserViewModel {
         self.httpClient = httpClient
     }
     
+    // MARK: - COMPUTED PROPERTIES
     
+    var firstName: String {
+        return user?.firstName ?? ""
+    }
+    
+    var email: String {
+        return user?.email ?? ""
+    }
+    
+    
+    
+    // MARK: - FUNCTIONS
     func login(username: String, password: String) async throws {
         
         let body = ["username" : username, "password" : password]
@@ -34,6 +46,22 @@ class UserViewModel {
         } else {
             print(response.message ?? "An error occured while retriving user data")
         }
+    }
+    
+    func loginById() async throws {
+        let resource = Resource(url: Constants.Urls.loginById, modelType: LoginUserResponse.self)
+        
+        let response = try await httpClient.load(resource)
+        
+        if response.success, let user = response.user {
+            self.user = user
+        } else {
+            print(response.message ?? "An error occured while retriving user data")
+        }
+    }
+    
+    func logout() {
+        user = nil
     }
     
     

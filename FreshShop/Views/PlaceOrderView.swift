@@ -12,6 +12,7 @@ struct PlaceOrderView: View {
     @Environment(\.navigationState) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
     @Environment(AddressViewModel.self) private var addressVM
+    @Environment(UserViewModel.self) private var userVM
 
     // MARK: - BODY
     var body: some View {
@@ -21,7 +22,7 @@ struct PlaceOrderView: View {
                     .font(.title)
                 Divider()
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Ship to |User name|")
+                    Text("Ship to \(userVM.firstName)")
                         .font(.title2)
                         .bold()
                     
@@ -95,4 +96,6 @@ struct PlaceOrderView: View {
         .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(AddressViewModel(httpClient: .development))
+        .environment(UserViewModel(httpClient: .development))
+
 }

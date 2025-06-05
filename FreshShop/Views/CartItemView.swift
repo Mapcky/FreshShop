@@ -88,6 +88,6 @@ struct CartItemView: View {
 }
 
 #Preview {
-    CartItemView(cartItemVM: CartItemViewModel(cartItem: CartItem(id: 1, product: Product(id: 1, name: "test", price: "30", quantity: 10, imageUrl: "", categoryId: 1))))
+    CartItemView(cartItemVM: CartItemViewModel(cartItem: CartItem(id: 1, product: Product(id: 1, name: "test", price: "30", quantity: 10, imageUrl: "", categoryId: 1, description: ""))))
         .environment(CartViewModel(httpClient: .development))
 }
