@@ -19,7 +19,6 @@ struct CreditCardView: View {
     @State private var expireMonth: String = ""
     @State private var expireYear: String = ""
     @State private var CVV: String = ""
-    @State private var cardFrontSide: Bool = true
     @State private var isProcessingPayment = false
     
     
@@ -246,13 +245,18 @@ struct CreditCardView: View {
                         .tint(.white)
                 } else {
                     Text("Pay $\(cartVM.total)")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
                         .padding()
-                        .foregroundStyle(.white)
+                        .background(cardIsComplete ? Color.green : Color.gray)
+                        .cornerRadius(10)
+                        .shadow(color: cardIsComplete ? Color.green.opacity(0.3) : .clear, radius: 5, x: 0, y: 5)
+                        .animation(.easeInOut, value: cardIsComplete)
                 }//ELSE
             })//: BUTTON
             .frame(maxWidth: isProcessingPayment ? nil : .infinity)
-            .background(Capsule().fill(cardIsComplete ? Color("ButtonsDarkGreen") : .gray))
+            .background(Capsule().fill(cardIsComplete ? Color.green : .gray))
             .padding(.top, 20)
             .disabled(isProcessingPayment || !cardIsComplete)
             .animation(.easeInOut, value: cardIsComplete)

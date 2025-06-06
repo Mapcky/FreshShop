@@ -18,7 +18,7 @@ struct ProfileScreen: View {
                 .resizable()
                 .frame(width: 100, height: 100)
             VStack (spacing: 5){
-                Text(userVM.firstName)
+                Text(userVM.fullName)
                     .font(.system(size: 16, weight: .bold, design: .rounded))
                 
                 Text(verbatim: userVM.email)

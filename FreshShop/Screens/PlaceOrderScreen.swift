@@ -1,5 +1,5 @@
 //
-//  PlaceOrderView.swift
+//  PlaceOrderScreen.swift
 //  FreshShop
 //
 //  Created by Mateo Andres Perano on 06/05/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlaceOrderView: View {
+struct PlaceOrderScreen: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
@@ -51,14 +51,15 @@ struct PlaceOrderView: View {
                     }, label: {
                         Image(systemName: "creditcard")
                         Text("Pay with credit card")
-                    })//: BUTTON
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    })//: BUTTON CCARD
+                    .foregroundColor(.white)
+                    .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Capsule().fill(Color("ButtonsDarkGreen")))
-                    .foregroundStyle(.white)
-                    .padding()
-                    .contentShape(Capsule())
+                    .background(Color.green)
+                    .cornerRadius(10)
+                    .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 5)
+                    .padding(.vertical)
                     
                     Button(action:{
 
@@ -66,14 +67,14 @@ struct PlaceOrderView: View {
                         Text("Pay with")
                         Text("stripe")
                             .fontWeight(.black)
-                    })//: BUTTON
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    })//: BUTTON STRIPE
+                    .foregroundColor(.white)
+                    .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Capsule().fill(Color("stripeColor")))
-                    .foregroundStyle(.white)
-                    .padding(.horizontal)
-                    .contentShape(Capsule())
+                    .background(Color("stripeColor"))
+                    .cornerRadius(10)
+                    .shadow(color:  Color("stripeColor"), radius: 5, x: 0, y: 5)
                 }//:VSTACK
                 
             }//: VSTACK
@@ -92,7 +93,7 @@ struct PlaceOrderView: View {
 }
 
 #Preview {
-    PlaceOrderView()
+    PlaceOrderScreen()
         .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(AddressViewModel(httpClient: .development))

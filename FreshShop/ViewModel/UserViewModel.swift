@@ -23,6 +23,14 @@ class UserViewModel {
         return user?.firstName ?? ""
     }
     
+    var lastName: String {
+        return user?.lastName ?? ""
+    }
+    
+    var fullName: String {
+        return firstName + " " + lastName
+    }
+    
     var email: String {
         return user?.email ?? ""
     }
@@ -62,6 +70,21 @@ class UserViewModel {
     
     func logout() {
         user = nil
+    }
+    
+    func register(user: User) async throws {
+        let bodyData = try? JSONEncoder().encode(user)
+        
+        let resource = Resource(url: Constants.Urls.register, method: .post(bodyData), modelType: LoginUserResponse.self)
+        
+        let response = try await httpClient.load(resource)
+        
+        if response.success, let newUser = response.user, let newToken = response.token {
+            self.user = newUser
+            Keychain.set(newToken, forKey: "jwttoken")
+        } else {
+            print(response.message ?? "An error occurred during the registration process")
+        }
     }
     
     

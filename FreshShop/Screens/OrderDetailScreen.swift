@@ -1,5 +1,5 @@
 //
-//  OrderDetailView.swift
+//  OrderDetailScreen.swift
 //  FreshShop
 //
 //  Created by Mateo Andres Perano on 31/03/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OrderDetailView: View {
+struct OrderDetailScreen: View {
     // MARK: - PROPERTIES
     let orderDVM: OrderDetailViewModel
     // MARK: - BODY
@@ -68,7 +68,7 @@ struct OrderDetailView: View {
 
 #Preview {
 
-    OrderDetailView(orderDVM: OrderDetailViewModel(
+    OrderDetailScreen(orderDVM: OrderDetailViewModel(
         order: Order(from: Cart(id: 1, userId: 1, cartItems: []))
     ))
 }

@@ -16,14 +16,7 @@ struct DeliveryAdressView: View {
     @State private var zipCode: String = ""
     @State private var isDefault: Bool = false
     @State private var isDefaultDisabled: Bool = false
-    @State private var validationErrors: [String] = []
-    
-    
-    @State private var streetError: Bool = false
-    @State private var cityError: Bool = false
-    @State private var stateError: Bool = false
-    @State private var zipError: Bool = false
-    @State private var counrtyError: Bool = false
+
     
     enum AddressField: CaseIterable {
         case street, city, state, zipCode, country
@@ -108,21 +101,17 @@ struct DeliveryAdressView: View {
                     
                 }//: VSTACK
                 
-                Button(action:{
-                    if validateForm() {
-                        Task {
+                GreenButton(title: "Save", enabled: validateForm(), action: {
+                    Task {
+                        do {
                             await sendData()
+                        } catch {
+                            print(error.localizedDescription)
                         }
                     }
-                }, label: {
-                    Text("Save")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Capsule().fill(Color("ButtonsDarkGreen")))
-                        .foregroundStyle(.white)
-                        .contentShape(Capsule())
+                    
                 })//: BUTTON
+                
             }//: VSTACK
             .padding()
             .padding(.bottom, 80)

@@ -1,5 +1,5 @@
 //
-//  CartView.swift
+//  CartScreen.swift
 //  FreshShop
 //
 //  Created by Mateo Andres Perano on 24/03/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CartView: View {
+struct CartScreen: View {
     // MARK: - PROPERTIES
 
     @Environment(\.navigationState) private var navigationState
@@ -37,13 +37,14 @@ struct CartView: View {
 
             }, label: {
                 Text("Proceed to Checkout")
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Capsule().fill(cartVM.cartItems.isEmpty ? .gray : Color("ButtonsDarkGreen")))
-                    .foregroundStyle(.white)
-                    .padding()
-                    .contentShape(Capsule())
+                    .background(cartVM.cartItems.isEmpty ? Color.gray : Color.green)
+                    .cornerRadius(10)
+                    .shadow(color: cartVM.cartItems.isEmpty ? .clear : Color.green.opacity(0.3), radius: 5, x: 0, y: 5)
+                    .padding(.horizontal)
             })//: BUTTON
             .disabled(cartVM.cartItems.isEmpty)
         }//: VSTACK
@@ -54,7 +55,7 @@ struct CartView: View {
 }
 
 #Preview {
-    CartView()
+    CartScreen()
         .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
 

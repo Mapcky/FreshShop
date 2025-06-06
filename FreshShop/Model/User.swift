@@ -8,17 +8,19 @@
 import Foundation
 
 struct User: Codable {
-    var id: Int
+    var id: Int?
     var username: String
     var firstName: String
+    var lastName: String
     var imageUrl: String?
     var email: String
-    
+    var password: String? //used on register
     
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
+        case lastName = "last_name"
         case imageUrl = "image_url"
-        case username, id, email
+        case username, id, email, password
     }
     
 }

@@ -1,5 +1,5 @@
 //
-//  ProductDetailView.swift
+//  ProductDetailScreen.swift
 //  FreshShop
 //
 //  Created by Mateo Andres Perano on 18/03/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProductDetailView: View {
+struct ProductDetailScreen: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
     var productDetailVM: ProductDetailViewModel
@@ -90,11 +90,15 @@ struct ProductDetailView: View {
                         
                         HStack(alignment: .center, spacing: 3, content: {
                             ForEach(1...5, id: \.self) { item in
+                                let isFilled = item <= (productDetailVM.rate)
                                 Button(action: {}, label: {
                                     Image(systemName: "star.fill")
                                         .frame(width: 28, height: 28, alignment: .center)
-                                        .background(Color(.gray).clipShape(RoundedRectangle(cornerRadius: 5)))
-                                        .foregroundStyle(.white)
+                                        .background(Color.gray.opacity(0.2).clipShape(RoundedRectangle(cornerRadius: 10)))
+                                        .foregroundStyle(isFilled ? Color.green : Color.white)
+
+
+
                                 })
                             }
                         })
@@ -112,7 +116,7 @@ struct ProductDetailView: View {
                                 .foregroundStyle(.white)
                                 .padding(10)
                                 .background(
-                                    Circle().fill(Color("ButtonsDarkGreen"))
+                                    Circle().fill(Color.green)
                                 )
                                 .contentShape(Circle())
                         })
@@ -130,7 +134,7 @@ struct ProductDetailView: View {
                                 .foregroundStyle(.white)
                                 .padding(10)
                                 .background(
-                                    Capsule().fill(Color("ButtonsDarkGreen"))
+                                    Capsule().fill(Color.green)
                                 )
                                 .contentShape(Circle())
                         })
@@ -162,15 +166,17 @@ struct ProductDetailView: View {
                     navigationState.showingScreen = .cart
                 }, label: {
                     Text("Add to Cart")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Capsule().fill(Color("ButtonsDarkGreen")))
-                        .foregroundStyle(.white)
-                        .padding()
-                        .contentShape(Capsule())
+                        .background(Color.green)
+                        .cornerRadius(10)
+                        .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 5)
+                        .padding(.horizontal)
                 })//:BUTTON
             }//:VSTACK
+            .padding(.bottom, 30)
         }
         .ignoresSafeArea()
         .navigationBarBackButtonHidden(true)
@@ -178,7 +184,7 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1, description: "")))
+    ProductDetailScreen(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1, description: "", rate: 4)))
         .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(ProductViewModel(httpClient: .development))

@@ -60,7 +60,7 @@ struct CartItemView: View {
                         .font(.system(size: 14, weight: .bold, design: .rounded))
                         .frame(width: 24, height: 24)
                         .foregroundStyle(.white)
-                        .background(Circle().fill(Color("ButtonsDarkGreen")))
+                        .background(Circle().fill(Color.green))
                 })//:MINUS BUTTON
                 
                 Text(String(cartItemVM.quantity))
@@ -75,7 +75,7 @@ struct CartItemView: View {
                         .font(.system(size: 14, weight: .bold, design: .rounded))
                         .frame(width: 24, height: 24)
                         .foregroundStyle(.white)
-                        .background(Circle().fill(Color("ButtonsDarkGreen")))
+                        .background(Circle().fill(Color.green))
                 })//: PLUS BUTTON
             }//: BUTTON HSTACK
         }//: HSTACK

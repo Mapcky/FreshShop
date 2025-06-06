@@ -53,7 +53,7 @@ struct MainScreen: View {
                                 .padding(.top, 30)
                             
                         case .cart:
-                            CartView()
+                            CartScreen()
                                 .padding(.horizontal, 15)
                                 .shadow(radius: 0.5)
                                 .padding(.top, 30)
@@ -67,7 +67,7 @@ struct MainScreen: View {
                         switch route {
                         case .productDetail(
                             let product):
-                            ProductDetailView(productDetailVM: ProductDetailViewModel(product: product))
+                            ProductDetailScreen(productDetailVM: ProductDetailViewModel(product: product))
                         case .categories(
                             let categoryId,
                             let categoryName):
@@ -79,11 +79,11 @@ struct MainScreen: View {
                             PurchaseCompleteView()
                         case .orderDetail(
                             let order):
-                            OrderDetailView(orderDVM: OrderDetailViewModel(order: order))
+                            OrderDetailScreen(orderDVM: OrderDetailViewModel(order: order))
                         case .address:
                             DeliveryAdressView()
                         case .placeOrder:
-                            PlaceOrderView()
+                            PlaceOrderScreen()
                         case .creditCard:
                             CreditCardView()
                         }//: SWITCH

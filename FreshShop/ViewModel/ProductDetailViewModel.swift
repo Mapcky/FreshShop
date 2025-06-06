@@ -41,7 +41,11 @@ class ProductDetailViewModel {
         return product.description
     }
     
+    var rate: Int {
+        return product.rate ?? 0
+    }
     
+    // MARK: - FUNCTIONS
     func incrementCount() {
         if isInStock {
             count += 1
@@ -49,7 +53,7 @@ class ProductDetailViewModel {
     }
     
     func decrementCount() {
-        if count > 0 {
+        if count > 1 {
             count -= 1
         }
     }

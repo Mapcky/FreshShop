@@ -16,7 +16,7 @@ struct AuthenticationModifier: ViewModifier {
     func body(content: Content) -> some View {
         Group {
             if isLoading {
-                ProgressView("Loading...")
+                SplashScreen()
             } else {
                 if userVM.user != nil {
                     content
@@ -31,14 +31,18 @@ struct AuthenticationModifier: ViewModifier {
     
     private func checkAuthentication() {
         guard let token = Keychain<String>.get("jwttoken"), JWTTokenValidator.validate(token: token) else {
-            isLoading = false
+            withAnimation(.easeIn(duration: 0.8)) {
+                isLoading = false
+            }
             userVM.logout()
             return
         }
-        isLoading = false
         Task {
             do {
                 try await userVM.loginById()
+                withAnimation(.easeIn(duration: 0.8)) {
+                    isLoading = false
+                }
             } catch {
                 print(error.localizedDescription)
             }
