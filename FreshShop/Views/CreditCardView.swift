@@ -11,7 +11,7 @@ struct CreditCardView: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
-    @Environment(PaymentViewModel.self) private var paymentVM
+    private var paymentVM = PaymentViewModel(httpClient: HTTPClient())
     @Environment(OrderViewModel.self) private var orderVM
     
     @State private var cardNumber: String = ""
@@ -287,7 +287,6 @@ enum FocusedTextField {
     CreditCardView()
         .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
-        .environment(PaymentViewModel(httpClient: .development))
         .environment(OrderViewModel(httpClient: .development))
 
 }

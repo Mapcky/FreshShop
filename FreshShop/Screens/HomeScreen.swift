@@ -10,11 +10,12 @@ import SwiftUI
 struct HomeScreen: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
+    var categoryVM: CategoryViewModel
 
     // MARK: - BODY
     var body: some View {
         VStack (spacing: 0){
-            CategoriesLittle()
+            CategoriesLittle(categoryVM: categoryVM)
                 .padding(.horizontal, 15)
                 .shadow(radius: 0.5)
                 .padding(.top, 30)
@@ -32,6 +33,6 @@ struct HomeScreen: View {
 }
 
 #Preview {
-    HomeScreen()
+    HomeScreen(categoryVM: CategoryViewModel(httpClient: .development))
         .environment(\.navigationState, NavigationState())
 }

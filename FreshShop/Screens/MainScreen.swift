@@ -8,18 +8,16 @@
 import SwiftUI
 
 struct MainScreen: View {
-    // MARK: - PROPERTIES
-    
-    @State private var search: String = ""
+    // MARK: - ENVIRONMENT PROPERTIES
     @Environment(\.navigationState) private var navigationState
-    @State private var localPath = NavigationPath()
-    @Environment(CategoryViewModel.self) private var categoryVM
     @Environment(CartViewModel.self) private var cartVM
     @Environment(OrderViewModel.self) private var orderVM
     @Environment(AddressViewModel.self) private var addressVM
-
     
-    
+    // MARK: - PROPERTIES
+    @State private var search: String = ""
+    @State private var localPath = NavigationPath()
+    private var categoryVM = CategoryViewModel(httpClient: HTTPClient())    
     // MARK: - BODY
     var body: some View {
         ZStack {
@@ -32,7 +30,7 @@ struct MainScreen: View {
                     ScrollView {
                         switch navigationState.showingScreen {
                         case .home:
-                            HomeScreen()
+                            HomeScreen(categoryVM: categoryVM)
                                 .padding(.bottom, 150)
                         case .orders:
                             OrderScreen()
@@ -40,10 +38,11 @@ struct MainScreen: View {
                                 .shadow(radius: 0.5)
                                 .padding(.top, 30)
                         case .deals:
-                            ProductsVGrid(selectedCategoryId: 1)
-                                .padding(.horizontal, 15)
-                                .shadow(radius: 0.5)
-                                .padding(.top, 30)
+                            EmptyView()
+                            //ProductsVGrid( selectedCategoryId: 1)
+                                //.padding(.horizontal, 15)
+                                //.shadow(radius: 0.5)
+                                //.padding(.top, 30)
                         case .more:
                             EmptyView()
                         case .profile:
@@ -74,13 +73,15 @@ struct MainScreen: View {
                             CategoryProductsView(selectedCategoryId: categoryId,selectedCategoryName: categoryName)
                             
                         case .allCategories:
-                            CategoriesVGrid()
+                            CategoriesVGrid(categoryVM: categoryVM)
                         case .purchaseComplete:
                             PurchaseCompleteView()
                         case .orderDetail(
                             let order):
                             OrderDetailScreen(orderDVM: OrderDetailViewModel(order: order))
-                        case .address:
+                        case .userAddress:
+                            UserAddressesScreen()
+                        case .setAddress:
                             DeliveryAdressView()
                         case .placeOrder:
                             PlaceOrderScreen()
@@ -106,7 +107,11 @@ struct MainScreen: View {
         } //:OVERLAY
         .ignoresSafeArea()
         .task {
-            try? await categoryVM.loadCategories()
+            do {
+                try await categoryVM.loadCategories()
+            } catch {
+                print(error.localizedDescription)
+            }
         }
         .task {
             try? await cartVM.loadCart()
@@ -125,11 +130,8 @@ struct MainScreen: View {
 #Preview {
     MainScreen()
         .environment(\.navigationState, NavigationState())
-        .environment(CategoryViewModel(httpClient: .development))
-        .environment(ProductViewModel(httpClient: .development))
         .environment(CartViewModel(httpClient: .development))
         .environment(OrderViewModel(httpClient: .development))
-        .environment(PaymentViewModel(httpClient: .development))
         .environment(AddressViewModel(httpClient: .development))
         .environment(UserViewModel(httpClient: .development))
         

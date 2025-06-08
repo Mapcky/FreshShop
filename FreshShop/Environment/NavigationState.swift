@@ -33,7 +33,8 @@ enum Route: Hashable {
     case allCategories
     case purchaseComplete
     case orderDetail(Order)
-    case address
+    case userAddress
+    case setAddress
     case placeOrder
     case creditCard
 }

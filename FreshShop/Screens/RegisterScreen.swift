@@ -99,9 +99,12 @@ struct RegisterScreen: View {
 
             VStack(spacing: 18) {
                 NiceTextField(titleLabel: "Username", fieldValue: $username, showError: fieldErrors[.username] ?? false)
+                    .textInputAutocapitalization(.never)
+                    
                 NiceTextField(titleLabel: "First Name", fieldValue: $firstName, showError: fieldErrors[.firstName] ?? false)
                 NiceTextField(titleLabel: "Last Name", fieldValue: $lastName, showError: fieldErrors[.lastName] ?? false)
                 NiceTextField(titleLabel: "Email", fieldValue: $email, showError: fieldErrors[.email] ?? false)
+                    .textInputAutocapitalization(.never)
 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Password")
@@ -121,7 +124,7 @@ struct RegisterScreen: View {
             GreenButton(title: "Register", enabled: isFormValid, action: {
                 Task {
                     await registerUser()
-                    dismiss()
+                        //dismiss()
                 }
             })//: REGISTER BUTTON
             .padding(.horizontal)

@@ -10,9 +10,14 @@ import SwiftUI
 struct CategoryProductsView: View {
     // MARK: - PROPERTIES
     
-    @Environment(ProductViewModel.self) private var productVM
+    private var productVM = ProductViewModel(httpClient: HTTPClient())
     var selectedCategoryId: Int
     var selectedCategoryName: String
+    
+    init(selectedCategoryId: Int, selectedCategoryName: String) {
+        self.selectedCategoryId = selectedCategoryId
+        self.selectedCategoryName = selectedCategoryName
+    }
     
     // MARK: - BODY
     var body: some View {
@@ -22,7 +27,8 @@ struct CategoryProductsView: View {
                     .font(.title)
                     .fontDesign(.rounded)
                     .foregroundStyle(.gray.opacity(0.7))
-                ProductsVGrid(selectedCategoryId: selectedCategoryId)
+                
+                ProductsVGrid(productVM: productVM, selectedCategoryId: selectedCategoryId)
             }//:VSTACK
             .padding(.horizontal, 15)
             .shadow(radius: 0.5)
@@ -31,14 +37,17 @@ struct CategoryProductsView: View {
         .background(Color("LightGrayBackground"))
         .navigationBarBackButtonHidden()
         .task {
-            try? await productVM.loadProducts(categoryId: selectedCategoryId)
+            do {
+                try await productVM.loadProducts(categoryId: selectedCategoryId)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }
 
+
 #Preview {
     CategoryProductsView(selectedCategoryId: 1, selectedCategoryName: "Dairy")
-        .environment(ProductViewModel(httpClient: .development))
-    
-    
 }
+

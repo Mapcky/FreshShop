@@ -11,8 +11,8 @@ struct ProductsVGrid: View {
     // MARK: - PROPERTIES
     
     @Environment(\.navigationState) private var navigationState
-    @Environment(ProductViewModel.self) private var productVM
-    var selectedCategoryId: Int
+    let productVM: ProductViewModel
+    let selectedCategoryId: Int
     
     var products: [Product] {
         productVM.productsByCategory[selectedCategoryId] ?? []
@@ -71,7 +71,6 @@ struct ProductsVGrid: View {
 
 
 #Preview {
-    ProductsVGrid(selectedCategoryId: 1)
+    ProductsVGrid(productVM: ProductViewModel(httpClient: .development), selectedCategoryId: 1)
         .environment(\.navigationState, NavigationState())
-        .environment(ProductViewModel(httpClient: .development))
 }

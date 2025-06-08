@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct CategoriesHGrid: View {
-    // MARK: - DEVELOPMENT CATEGORIES
     
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
-    @Environment(CategoryViewModel.self) private var categoryVM
-    @Environment(ProductViewModel.self) private var productVM
-    
+    let categoryVM: CategoryViewModel    
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
         return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 1)
@@ -61,8 +58,6 @@ struct CategoriesHGrid: View {
 }
 
 #Preview {
-    CategoriesHGrid()
+    CategoriesHGrid(categoryVM: CategoryViewModel(httpClient: .development))
         .environment(\.navigationState, NavigationState())
-        .environment(CategoryViewModel(httpClient: .development))
-        .environment(ProductViewModel(httpClient: .development))
 }

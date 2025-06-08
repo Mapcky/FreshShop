@@ -10,7 +10,7 @@ import SwiftUI
 struct CategoriesLittle: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
-    @Environment(CategoryViewModel.self) private var categoryVM
+    let categoryVM: CategoryViewModel
     
 
     // MARK: - BODY
@@ -36,7 +36,7 @@ struct CategoriesLittle: View {
                 })
             }//:HSTACK
             Divider()
-            CategoriesHGrid()
+            CategoriesHGrid(categoryVM: categoryVM)
         }//:VSTACK
         .padding()
         .background(.white)
@@ -46,9 +46,8 @@ struct CategoriesLittle: View {
 
 #Preview {
     NavigationStack{
-        CategoriesLittle()
+        CategoriesLittle(categoryVM: CategoryViewModel(httpClient: .development))
             .environment(\.navigationState, NavigationState())
-            .environment(CategoryViewModel(httpClient: .development))
 
     }
 }

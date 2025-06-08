@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 @Observable
-class CategoryViewModel {
+class CategoryViewModel: ObservableObject {
     private(set) var categories: [Category] = []
     let httpClient: HTTPClient
     

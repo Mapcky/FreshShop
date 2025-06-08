@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DeliveryAdressView: View {
     // MARK: - PROPERTIES
+    @Environment(\.navigationState) private var navigationState
+    
     @State private var street: String = ""
     @State private var city: String = ""
     @State private var state: String = ""
@@ -103,11 +105,8 @@ struct DeliveryAdressView: View {
                 
                 GreenButton(title: "Save", enabled: validateForm(), action: {
                     Task {
-                        do {
-                            await sendData()
-                        } catch {
-                            print(error.localizedDescription)
-                        }
+                        await sendData()
+                        navigationState.path.removeLast()
                     }
                     
                 })//: BUTTON
@@ -135,4 +134,5 @@ struct DeliveryAdressView: View {
 #Preview {
     DeliveryAdressView()
         .environment(AddressViewModel(httpClient: .development))
+        .environment(\.navigationState, NavigationState())
 }

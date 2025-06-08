@@ -18,6 +18,7 @@ class ProductViewModel {
         self.httpClient = httpClient
     }
     
+    // MARK: - FUNCTIONS
     
     func loadProducts(categoryId: Int) async throws {
         if productsByCategory[categoryId] != nil {
@@ -38,6 +39,4 @@ class ProductViewModel {
     func productsLocalByCategoryId(categoryId: Int) -> [Product] {
         return productsByCategory[categoryId] ?? []
     }
-    
-    
 }

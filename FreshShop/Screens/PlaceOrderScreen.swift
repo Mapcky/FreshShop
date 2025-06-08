@@ -22,11 +22,26 @@ struct PlaceOrderScreen: View {
                     .font(.title)
                 Divider()
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Ship to \(userVM.firstName)")
-                        .font(.title2)
-                        .bold()
-                    
-                    AddressItem(addressDVM: AddressDetailViewModel(address: addressVM.defaultAddress!))
+                    if addressVM.addresses.isEmpty {
+                        
+                        Text("Looks like you haven’t added an address yet")
+                            .font(.system(.title3, design: .rounded))
+                            .fontWeight(.medium)
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.center)
+                            
+                        GreenButton(title: "Add One Now", action: {
+                            navigationState.path.append(Route.setAddress)
+                            
+                        })
+                        .padding(.horizontal)
+                        
+                    } else {
+                        Text("Ship to \(userVM.firstName)")
+                            .font(.title2)
+                            .bold()
+                        AddressItem(addressDVM: AddressDetailViewModel(address: addressVM.defaultAddress!))
+                    }//: ELSE
                 }//: VSTACK
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 30)

@@ -9,17 +9,9 @@ import SwiftUI
 
 struct PopularProductsHGrid: View {
     
-    // MARK: - DEVELOPMENT PRODUCTS
-    let productsArray: [Product] = [Product(id: 1, name: "Fresh Orange",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1, description: ""),
-        Product(id: 2, name: "Milk",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1, description: ""),
-        Product(id: 3, name: "Bananas",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1, description: ""),
-        Product(id: 4, name: "Strawberry",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1, description: ""),
-        Product(id: 5, name: "Blueberry",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1, description: ""),
-        Product(id: 6, name: "Lemon",price: "100",quantity: 50, imageUrl: "xd",categoryId: 1, description: "")]
-
-    
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
+    private var topProductsVM = TopRatedProductsViewModel(httpClient: HTTPClient())
 
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
@@ -29,25 +21,27 @@ struct PopularProductsHGrid: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: gridLayout, spacing: rowSpacing, content: {
-                ForEach(1...4, id:\.self) { item in
+                ForEach(topProductsVM.topRatedProducts, id:\.self) { product in
                     VStack {
                         ZStack {
                             Color("LightGreenGridBackground")
                             
-                            Image(systemName: "cart.fill")
+                            ImageLoader(urlString: product.imageUrl)
                         }//: ZSTACK
                         .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                         
                         
-                        Text(String(item))
+                        Text(product.name)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
+                            .lineLimit(2)
                     }//: VSTACK
+                    .frame(maxWidth: 200)
                     .onTapGesture {
                         withAnimation(.linear) {
-                            //navigationState.path.append(Route.productDetail(item))
+                            navigationState.path.append(Route.productDetail(product))
                             navigationState.animatingBot = true
                         }
                         withAnimation(nil) {
@@ -57,6 +51,13 @@ struct PopularProductsHGrid: View {
                 }
             })
         }//: SCROLL
+        .task {
+            do {
+                try await topProductsVM.loadTopRated()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
 
 }

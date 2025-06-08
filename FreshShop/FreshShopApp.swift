@@ -12,11 +12,8 @@ struct FreshShopApp: App {
     // MARK: - PROPERTIES
     
     @Environment(\.navigationState) private var navigationState
-    @State private var categoryVM = CategoryViewModel(httpClient: HTTPClient())
-    @State private var productVM = ProductViewModel(httpClient: HTTPClient())
     @State private var cartVM = CartViewModel(httpClient: HTTPClient())
     @State private var orderVM = OrderViewModel(httpClient: HTTPClient())
-    @State private var paymentVM = PaymentViewModel(httpClient: HTTPClient())
     @State private var addressVM = AddressViewModel(httpClient: HTTPClient())
     @State private var userVM = UserViewModel(httpClient: HTTPClient())
     
@@ -26,11 +23,8 @@ struct FreshShopApp: App {
         WindowGroup {
             MainScreen()
                 .environment(\.navigationState, NavigationState())
-                .environment(categoryVM)
-                .environment(productVM)
                 .environment(cartVM)
                 .environment(orderVM)
-                .environment(paymentVM)
                 .environment(addressVM)
                 .environment(userVM)
         }
