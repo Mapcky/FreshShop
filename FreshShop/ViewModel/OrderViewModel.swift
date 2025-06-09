@@ -47,9 +47,15 @@ class OrderViewModel {
         
         let response = try await httpClient.load(resource)
         
-        if !response.success {
+        if response.success, let newOrder = response.order {
+            orders.insert(newOrder, at: 0)
+        } else {
             throw OrderError.creationFailed(response.message ?? "Error creating the order")
         }
+    }
+    
+    func emptyLocalOrders() {
+        self.orders = []
     }
     
     

@@ -92,5 +92,6 @@ struct GetOrdersResponse: Codable {
 
 struct CreateOrderResponse: Codable {
     let success: Bool
+    let order: Order?
     let message: String?
 }

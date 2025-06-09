@@ -124,13 +124,13 @@ struct RegisterScreen: View {
             GreenButton(title: "Register", enabled: isFormValid, action: {
                 Task {
                     await registerUser()
-                        //dismiss()
+                        
                 }
             })//: REGISTER BUTTON
             .padding(.horizontal)
             
             Button("Already have an account? Login") {
-                //back login scren
+                dismiss()
             }//: LOGIN
             .font(.footnote)
             .foregroundColor(.gray)

@@ -15,6 +15,14 @@ class NavigationState: ObservableObject {
     var animatingBot: Bool = false
     var showingScreen: selectedScreen = .home
     
+    
+    func restart() {
+        self.path = NavigationPath()
+        self.animatingTop = false
+        self.animatingBot = false
+        self.showingScreen = .home
+    }
+    
 }
 
 enum selectedScreen {

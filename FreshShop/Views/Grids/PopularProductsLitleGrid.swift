@@ -24,7 +24,7 @@ struct PopularProductsLitleGrid: View {
             
             PopularProductsHGrid()
         }//:VSTACK
-        .padding(.horizontal)
+        .padding()
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 24))
     }

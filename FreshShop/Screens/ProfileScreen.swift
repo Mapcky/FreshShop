@@ -11,6 +11,22 @@ struct ProfileScreen: View {
     // MARK: - PROPERTIES
     @Environment(\.navigationState) private var navigationState
     @Environment(UserViewModel.self) private var userVM
+    @Environment(AddressViewModel.self) private var addressVM
+    @Environment(CartViewModel.self) private var cartVM
+    @Environment(OrderViewModel.self) private var orderVM
+    
+    //@State private var animatingLogout: Bool = false
+    
+    // MARK: - FUNCTIONS
+    
+    func logOut() {
+        addressVM.emptyLocalAddresses()
+        cartVM.emptyLocalCart()
+        orderVM.emptyLocalOrders()
+        userVM.logout()
+        navigationState.restart()
+    }
+    
     // MARK: - BODY
     var body: some View {
         VStack (spacing: 20) {
@@ -37,6 +53,29 @@ struct ProfileScreen: View {
             
             ProfileButton(buttonImage: "person.2.badge.gearshape.fill", buttonTitle: "Support", action: {})
             
+            Button(action: {
+                withAnimation(.easeOut) {
+                    logOut()
+                }
+            }, label: {
+                ZStack {
+                    HStack() {
+                        Image(systemName: "power")
+                            .padding(.horizontal, 15)
+                        Spacer()
+                    }//HSTACK
+                    Text("Log Out")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                }//: ZSTACK
+                .padding(.horizontal, 10)
+                .padding(.vertical, 18)
+                .frame(maxWidth: .infinity)
+                .background(Color.red.opacity(0.6))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .padding(.horizontal, 5)
+                .foregroundStyle(.black)
+            })//: BUTTON
+            
         }//:VSTACK
         .padding()
         .padding(.bottom, 80)
@@ -49,4 +88,7 @@ struct ProfileScreen: View {
     ProfileScreen()
         .environment(\.navigationState, NavigationState())
         .environment(UserViewModel(httpClient: .development))
+        .environment(CartViewModel(httpClient: .development))
+        .environment(OrderViewModel(httpClient: .development))
+        .environment(AddressViewModel(httpClient: .development))
 }

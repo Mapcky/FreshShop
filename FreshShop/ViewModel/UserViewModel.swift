@@ -70,6 +70,7 @@ class UserViewModel {
     
     func logout() {
         user = nil
+        let _ = Keychain<String>.delete("jwttoken")
     }
     
     func register(user: User) async throws {

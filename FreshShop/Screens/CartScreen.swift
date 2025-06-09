@@ -49,7 +49,9 @@ struct CartScreen: View {
             .disabled(cartVM.cartItems.isEmpty)
         }//: VSTACK
         .task {
-            try? await cartVM.loadCart()
+            if cartVM.cart == nil {
+                try? await cartVM.loadCart()
+            }
         }
     }
 }

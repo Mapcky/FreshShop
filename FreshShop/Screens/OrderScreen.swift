@@ -28,9 +28,11 @@ struct OrderScreen: View {
         .padding(.bottom, 80)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 24))
-        .task {
+        .task() {
             do {
-                try await orderVM.loadOrders()
+                if orderVM.orders.isEmpty {
+                    try await orderVM.loadOrders()
+                }
             } catch {
                 print(error.localizedDescription)
             }

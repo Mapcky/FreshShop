@@ -23,7 +23,7 @@ struct CartItemView: View {
     func removeCartItem(){
         Task {
             try await cartVM.removeItemFromCart(cartItemId: cartItemVM.id)
-        }
+        }//: TASK
     }
     
     // MARK: - BODY
@@ -53,10 +53,12 @@ struct CartItemView: View {
                     if cartItemVM.quantity > 1 {
                         modifyQuantity(modifier: -1)
                     } else {
-                        removeCartItem()
+                        withAnimation(.easeInOut) {
+                            removeCartItem()
+                        }
                     }
                 }, label: {
-                    Image(systemName: "minus")
+                    Image(systemName: cartItemVM.quantity == 1 ? "trash.fill" : "minus")
                         .font(.system(size: 14, weight: .bold, design: .rounded))
                         .frame(width: 24, height: 24)
                         .foregroundStyle(.white)

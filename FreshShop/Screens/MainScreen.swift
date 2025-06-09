@@ -11,7 +11,6 @@ struct MainScreen: View {
     // MARK: - ENVIRONMENT PROPERTIES
     @Environment(\.navigationState) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
-    @Environment(OrderViewModel.self) private var orderVM
     @Environment(AddressViewModel.self) private var addressVM
     
     // MARK: - PROPERTIES
@@ -106,18 +105,22 @@ struct MainScreen: View {
             BottomNavBar()
         } //:OVERLAY
         .ignoresSafeArea()
-        .task {
+        .task() {
             do {
                 try await categoryVM.loadCategories()
             } catch {
                 print(error.localizedDescription)
             }
         }
-        .task {
-            try? await cartVM.loadCart()
+        .task() {
+            if cartVM.cart == nil {
+                try? await cartVM.loadCart()
+            }
         }
-        .task {
-            try? await addressVM.getAddresses()
+        .task() {
+            if addressVM.addresses.isEmpty {
+                try? await addressVM.getAddresses()
+            }
         }
         .requiresAuthentication()
     }
@@ -131,8 +134,8 @@ struct MainScreen: View {
     MainScreen()
         .environment(\.navigationState, NavigationState())
         .environment(CartViewModel(httpClient: .development))
-        .environment(OrderViewModel(httpClient: .development))
         .environment(AddressViewModel(httpClient: .development))
         .environment(UserViewModel(httpClient: .development))
+        .environment(OrderViewModel(httpClient: .development))
         
 }

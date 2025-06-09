@@ -36,7 +36,7 @@ struct ProfileButton: View {
             .clipShape(RoundedRectangle(cornerRadius: 14))
             .padding(.horizontal, 5)
             .foregroundStyle(.black)
-        })
+        })//: BUTTON
     }
 }
 

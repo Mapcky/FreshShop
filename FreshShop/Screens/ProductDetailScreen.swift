@@ -158,7 +158,7 @@ struct ProductDetailScreen: View {
                 Spacer()
                 
                 Button(action:{
-                    Task {
+                    Task.detached {
                         await addItemToCart()
                     }
                     navigationState.path = NavigationPath()

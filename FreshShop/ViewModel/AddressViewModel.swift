@@ -50,4 +50,8 @@ class AddressViewModel {
         return addresses.first { $0.isDefault }
     }
     
+    func emptyLocalAddresses() {
+        self.addresses = []
+    }
+    
 }
