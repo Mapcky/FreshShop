@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoriesLittle: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     let categoryVM: CategoryViewModel
     
 
@@ -47,7 +47,7 @@ struct CategoriesLittle: View {
 #Preview {
     NavigationStack{
         CategoriesLittle(categoryVM: CategoryViewModel(httpClient: .development))
-            .environment(\.navigationState, NavigationState())
+            .environment(NavigationState())
 
     }
 }

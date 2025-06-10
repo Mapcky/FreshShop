@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderLittleView: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     @Environment(OrderViewModel.self) private var orderVM
     
     // MARK: - BODY
@@ -57,6 +57,6 @@ struct OrderLittleView: View {
 
 #Preview {
     OrderLittleView()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(OrderViewModel(httpClient: .development))
 }

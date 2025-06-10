@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileScreen: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     @Environment(UserViewModel.self) private var userVM
     @Environment(AddressViewModel.self) private var addressVM
     @Environment(CartViewModel.self) private var cartVM
@@ -86,7 +86,7 @@ struct ProfileScreen: View {
 
 #Preview {
     ProfileScreen()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(UserViewModel(httpClient: .development))
         .environment(CartViewModel(httpClient: .development))
         .environment(OrderViewModel(httpClient: .development))

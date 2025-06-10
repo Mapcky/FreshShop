@@ -10,7 +10,7 @@ import SwiftUI
 struct PopularProductsHGrid: View {
     
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     private var topProductsVM = TopRatedProductsViewModel(httpClient: HTTPClient())
 
     private let rowSpacing: CGFloat = 10
@@ -64,7 +64,7 @@ struct PopularProductsHGrid: View {
 
  #Preview {
      PopularProductsHGrid()
-         .environment(\.navigationState, NavigationState())
+         .environment(NavigationState())
 
  }
 

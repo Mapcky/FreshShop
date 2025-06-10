@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderItemView: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     var orderItemVM: OrderItemViewModel
     
     // MARK: - BODY
@@ -57,6 +57,6 @@ struct OrderItemView: View {
 
 #Preview {
     OrderItemView(orderItemVM: OrderItemViewModel(orderItem: OrderItem(from: CartItem(id: 1, product: Product(id: 3, name: "Bananas",price: "100",quantity: 50, imageUrl: "http://localhost:8080/api/assets/products/bakery/2.png",categoryId: 1, description: ""), quantity: 30))))
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
     
 }

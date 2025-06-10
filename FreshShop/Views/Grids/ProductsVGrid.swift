@@ -10,7 +10,7 @@ import SwiftUI
 struct ProductsVGrid: View {
     // MARK: - PROPERTIES
     
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     let productVM: ProductViewModel
     let selectedCategoryId: Int
     
@@ -72,5 +72,5 @@ struct ProductsVGrid: View {
 
 #Preview {
     ProductsVGrid(productVM: ProductViewModel(httpClient: .development), selectedCategoryId: 1)
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
 }

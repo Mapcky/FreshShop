@@ -10,7 +10,7 @@ import SwiftUI
 struct TopNavBar: View {
     // MARK: - PROPERTIES
     
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     @Environment(UserViewModel.self) private var userVM
 
     @State private var search: String = ""
@@ -78,7 +78,7 @@ struct TopNavBar: View {
 
 #Preview {
     TopNavBar()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(UserViewModel(httpClient: .development))
 }
 

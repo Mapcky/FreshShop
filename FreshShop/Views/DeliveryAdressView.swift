@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DeliveryAdressView: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     
     @State private var street: String = ""
     @State private var city: String = ""
@@ -134,5 +134,5 @@ struct DeliveryAdressView: View {
 #Preview {
     DeliveryAdressView()
         .environment(AddressViewModel(httpClient: .development))
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
 }

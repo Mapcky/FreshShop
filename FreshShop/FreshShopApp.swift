@@ -11,7 +11,7 @@ import SwiftUI
 struct FreshShopApp: App {
     // MARK: - PROPERTIES
     
-    @Environment(\.navigationState) private var navigationState
+    @State private var navigationState = NavigationState()
     @State private var cartVM = CartViewModel(httpClient: HTTPClient())
     @State private var orderVM = OrderViewModel(httpClient: HTTPClient())
     @State private var addressVM = AddressViewModel(httpClient: HTTPClient())
@@ -22,7 +22,7 @@ struct FreshShopApp: App {
     var body: some Scene {
         WindowGroup {
             MainScreen()
-                .environment(\.navigationState, NavigationState())
+                .environment(navigationState)
                 .environment(cartVM)
                 .environment(orderVM)
                 .environment(addressVM)

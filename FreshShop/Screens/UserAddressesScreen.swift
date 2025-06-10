@@ -10,7 +10,7 @@ import SwiftUI
 struct UserAddressesScreen: View {
     // MARK: - PROPERTIES
     @Environment(AddressViewModel.self) private var addressVM
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
 
     // MARK: - BODY
     var body: some View {
@@ -51,6 +51,6 @@ struct UserAddressesScreen: View {
 
 #Preview {
     UserAddressesScreen()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(AddressViewModel(httpClient: .development))
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct PurchaseCompleteView: View {
     // MARK: - PROPERTIES
 
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
 
     // MARK: - BODY
     var body: some View {
@@ -55,6 +55,6 @@ struct PurchaseCompleteView: View {
 
 #Preview {
     PurchaseCompleteView()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
 
 }

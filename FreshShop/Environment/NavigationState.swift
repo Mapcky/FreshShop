@@ -8,6 +8,7 @@
 import SwiftUI
 import Observation
 
+@MainActor
 @Observable
 class NavigationState: ObservableObject {
     var path = NavigationPath()
@@ -15,6 +16,9 @@ class NavigationState: ObservableObject {
     var animatingBot: Bool = false
     var showingScreen: selectedScreen = .home
     
+    init() {
+        
+    }
     
     func restart() {
         self.path = NavigationPath()
@@ -47,6 +51,3 @@ enum Route: Hashable {
     case creditCard
 }
 
-extension EnvironmentValues {
-    @Entry var navigationState = NavigationState()
-}

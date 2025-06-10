@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreditCardView: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
     private var paymentVM = PaymentViewModel(httpClient: HTTPClient())
     @Environment(OrderViewModel.self) private var orderVM
@@ -285,7 +285,7 @@ enum FocusedTextField {
 
 #Preview {
     CreditCardView()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(OrderViewModel(httpClient: .development))
 

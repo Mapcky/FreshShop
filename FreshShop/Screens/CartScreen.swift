@@ -10,7 +10,7 @@ import SwiftUI
 struct CartScreen: View {
     // MARK: - PROPERTIES
 
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
 
     // MARK: - BODY
@@ -58,7 +58,7 @@ struct CartScreen: View {
 
 #Preview {
     CartScreen()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(CartViewModel(httpClient: .development))
 
 }

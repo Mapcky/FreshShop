@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoriesVGrid: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     var categoryVM: CategoryViewModel
     
     private let columnSpacing: CGFloat = 12
@@ -64,7 +64,7 @@ struct CategoriesVGrid: View {
 
 #Preview {
     CategoriesVGrid(categoryVM: CategoryViewModel(httpClient: .development))
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(CategoryViewModel(httpClient: .development))
     
 }

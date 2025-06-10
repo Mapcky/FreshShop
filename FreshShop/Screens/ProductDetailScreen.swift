@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductDetailScreen: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     var productDetailVM: ProductDetailViewModel
     @Environment(CartViewModel.self) private var cartVM
     
@@ -17,6 +17,8 @@ struct ProductDetailScreen: View {
     private func addItemToCart() async {
         do {
             try await cartVM.addItemToCart(productId: productDetailVM.id, quantity: productDetailVM.count)
+        } catch is CancellationError {
+            //do nothing
         } catch {
             print(error.localizedDescription)
         }
@@ -160,10 +162,13 @@ struct ProductDetailScreen: View {
                 Button(action:{
                     Task.detached {
                         await addItemToCart()
-                    }
-                    navigationState.path = NavigationPath()
-                    navigationState.animatingBot = true
-                    navigationState.showingScreen = .cart
+                        await MainActor.run {
+                            navigationState.animatingBot = true
+                            navigationState.showingScreen = .cart
+                            navigationState.path = NavigationPath()
+                        }
+                    }//:TASK
+                    
                 }, label: {
                     Text("Add to Cart")
                         .foregroundColor(.white)
@@ -185,7 +190,7 @@ struct ProductDetailScreen: View {
 
 #Preview {
     ProductDetailScreen(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1, description: "", rate: 4)))
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(ProductViewModel(httpClient: .development))
 }

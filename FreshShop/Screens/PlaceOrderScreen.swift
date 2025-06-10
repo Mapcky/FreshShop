@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PlaceOrderScreen: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
     @Environment(AddressViewModel.self) private var addressVM
     @Environment(UserViewModel.self) private var userVM
@@ -109,7 +109,7 @@ struct PlaceOrderScreen: View {
 
 #Preview {
     PlaceOrderScreen()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(AddressViewModel(httpClient: .development))
         .environment(UserViewModel(httpClient: .development))

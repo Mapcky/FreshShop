@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderScreen: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     @Environment(OrderViewModel.self) private var orderVM
     
     // MARK: - BODY
@@ -42,6 +42,6 @@ struct OrderScreen: View {
 
 #Preview {
     OrderScreen()
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
         .environment(OrderViewModel(httpClient: .development))
 }

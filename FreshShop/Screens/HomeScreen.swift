@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeScreen: View {
     // MARK: - PROPERTIES
-    @Environment(\.navigationState) private var navigationState
+    @Environment(NavigationState.self) private var navigationState
     var categoryVM: CategoryViewModel
 
     // MARK: - BODY
@@ -34,5 +34,5 @@ struct HomeScreen: View {
 
 #Preview {
     HomeScreen(categoryVM: CategoryViewModel(httpClient: .development))
-        .environment(\.navigationState, NavigationState())
+        .environment(NavigationState())
 }
