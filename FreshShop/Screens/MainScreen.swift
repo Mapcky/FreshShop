@@ -12,6 +12,7 @@ struct MainScreen: View {
     @Environment(NavigationState.self) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
     @Environment(AddressViewModel.self) private var addressVM
+    @Environment(OrderViewModel.self) private var orderVM
     
     // MARK: - PROPERTIES
     @State private var search: String = ""
@@ -120,6 +121,15 @@ struct MainScreen: View {
         .task() {
             if addressVM.addresses.isEmpty {
                 try? await addressVM.getAddresses()
+            }
+        }
+        .task{
+            do {
+                if orderVM.orders.isEmpty {
+                    try await orderVM.loadOrders()
+                }
+            } catch {
+                print(error.localizedDescription)
             }
         }
         .requiresAuthentication()

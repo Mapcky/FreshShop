@@ -50,18 +50,22 @@ struct ProductsVGrid: View {
                             .lineLimit(2)
                             .multilineTextAlignment(.center)
                             .frame(width: 120)
+                            .frame(maxHeight: .infinity)
+
                         
                         Text(Double(product.price) ?? 0, format: .currency(code: "ARS"))
                             .font(.system(size: 14))
                             .fontWeight(.bold)
                     }//: VSTACK NAME
+                    .frame(maxHeight: .infinity)
                 }//: VSTACK
+                .frame(height: 220)
                 .onTapGesture {
                     navigationState.path.append(Route.productDetail(product))
                     navigationState.animatingBot = true
-                }
-            }
-        })
+                }//: TAP GESTURE
+            }//: LOOP
+        })//: VGRID
         .padding()
         .padding(.bottom, 80)
         .background(.white)

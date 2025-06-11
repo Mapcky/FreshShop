@@ -43,11 +43,13 @@ struct CategoriesVGrid: View {
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
                             .frame(width: 100)
+                            .frame(maxHeight: .infinity, alignment: .top)
                     }//: VSTACK
+                    .frame(height: 220)
                     .onTapGesture {
                         navigationState.path.append(Route.categories(category.id, category.name))
-                    }
-                }
+                    }//: ON TAP
+                }//: LOOP
             })//:VGRID
             .padding()
             .padding(.bottom, 80)

@@ -20,7 +20,7 @@ struct BottomNavBar: View {
                 Rectangle()
                     .fill(Color("DarkGreen"))
                     .clipShape(CustomShape(cutoutRatio: 8, cutoutHeight: 0))
-                    .frame(height: 75)
+                    .frame(height: 70)
                 
                 HStack {
                     
@@ -100,7 +100,7 @@ struct BottomNavBar: View {
                     
                     ZStack {
                         Circle().fill(.white)
-                        Circle().stroke(lineWidth: 8)
+                        Circle().stroke(lineWidth: 5)
                         Button(action: {
                             withAnimation(.easeInOut) {
                                 navigationState.animatingTop = true
@@ -130,7 +130,7 @@ struct BottomNavBar: View {
                     .frame(width: 70, height: 70)
                     .foregroundStyle(Color("DarkGreen"))
                 }
-                .offset(y: -40)
+                .offset(y: -30)
                 
             }//:ZSTACK
             .transition(.move(edge: .bottom).combined(with: .opacity))

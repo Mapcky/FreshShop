@@ -23,7 +23,7 @@ struct AuthenticationModifier: ViewModifier {
                 } else {
                     LoginScreen()
                 }
-            }
+            }//: if Splash
         }.onAppear(perform: {
             checkAuthentication()
         })
@@ -31,8 +31,10 @@ struct AuthenticationModifier: ViewModifier {
     
     private func checkAuthentication() {
         guard let token = Keychain<String>.get("jwttoken"), JWTTokenValidator.validate(token: token) else {
-            withAnimation(.easeIn(duration: 0.8)) {
-                isLoading = false
+            DispatchQueue.main.async{
+                withAnimation(.linear) {
+                    isLoading = false
+                }
             }
             userVM.logout()
             return
@@ -40,8 +42,10 @@ struct AuthenticationModifier: ViewModifier {
         Task {
             do {
                 try await userVM.loginById()
-                withAnimation(.easeIn(duration: 0.8)) {
-                    isLoading = false
+                DispatchQueue.main.async {
+                    withAnimation(.linear) {
+                        isLoading = false
+                    }
                 }
             } catch {
                 print(error.localizedDescription)

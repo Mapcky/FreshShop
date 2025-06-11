@@ -80,7 +80,7 @@ struct LoginScreen: View {
                 Button {
                     isShowingRegister = true
                 } label: {
-                    Text("¿No tenés cuenta? Registrate")
+                    Text("Don't have an account? Sing Up")
                         .font(.footnote)
                         .foregroundColor(.green)
                         .underline()

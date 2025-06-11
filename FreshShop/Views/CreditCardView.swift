@@ -206,6 +206,7 @@ struct CreditCardView: View {
             NiceTextField(titleLabel: "Card Number", fieldValue: $cardNumber) {
                 cardNumber = String(cardNumber.group(" ", count: 4).prefix(19))
             }
+            .keyboardType(.numberPad)
             .focused($activeField, equals: .cardNumber)
             
             NiceTextField(titleLabel: "Name", fieldValue: $cardName)
@@ -235,6 +236,8 @@ struct CreditCardView: View {
             
             Button(action:{
                 Task {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
                     await checkout()
                     
                 }

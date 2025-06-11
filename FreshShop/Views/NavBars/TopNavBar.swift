@@ -69,7 +69,7 @@ struct TopNavBar: View {
                 .padding(.vertical, 10)
             }
         }
-        .padding(.top, 60)
+        .padding(.top, 44)
         .padding(.horizontal, 35)
         
         

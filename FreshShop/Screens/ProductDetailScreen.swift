@@ -64,7 +64,7 @@ struct ProductDetailScreen: View {
                             
                             Spacer()
                             
-                            AsyncImage(url: URL(string: productDetailVM.imageUrl)) { img in
+                            AsyncImage(url: URL(string: Constants.Urls.baseURL + productDetailVM.imageUrl)) { img in
                                 img.resizable()
                                     .scaledToFit()
                                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
