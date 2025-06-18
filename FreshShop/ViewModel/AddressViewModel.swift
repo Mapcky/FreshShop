@@ -46,6 +46,25 @@ class AddressViewModel {
         }
     }
     
+    func newDefaultAddress(addressId: Int) async throws {
+        
+        let data = ["addressId" : addressId]
+
+        let bodyData = try JSONEncoder().encode(data)
+        
+        let resource = Resource(url: Constants.Urls.setAddressDefault, method: .post(bodyData), modelType: DefaultAddressResponse.self)
+        
+        let response = try await httpClient.load(resource)
+        
+        if !response.success {
+            print(response.message)
+        }
+        
+        for i in addresses.indices {
+            addresses[i].isDefault = (addresses[i].id == addressId)
+        }
+    }
+    
     var defaultAddress: Address? {
         return addresses.first { $0.isDefault }
     }

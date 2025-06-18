@@ -53,6 +53,7 @@ struct Constants {
         // MARK: - ADDRESS
         static let getAddresses: URL = URL(string: baseURL + "/api/address/getAll")!
         static let newAddress: URL = URL(string: baseURL + "/api/address/setNew")!
+        static let setAddressDefault: URL = URL(string: baseURL + "/api/address/changeDefault")!
         
 
     }

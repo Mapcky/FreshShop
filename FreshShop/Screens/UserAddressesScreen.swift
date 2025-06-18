@@ -23,21 +23,20 @@ struct UserAddressesScreen: View {
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.center)
             } else {
-                ScrollView {
-                    Text("User Addresses")
+                VStack(alignment: .center, spacing: 25) {
+                    Text("Your Default Addresses")
                         .font(.system(size: 32, weight: .bold))
                         .foregroundColor(.green)
-                    
-                    ForEach (addressVM.addresses, id:\.self) { address in
-                        AddressItem(addressDVM: AddressDetailViewModel(address: address))
-                            .padding(.vertical, 15)
-                            .padding(.horizontal)
-                    }//: LOOP
+                    AddressItem(addressDVM: AddressDetailViewModel(address: addressVM.defaultAddress!))
+                    Spacer()
                 }//: SCROLL
                 .padding()
                 .padding(.bottom, 80)
                 .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 24))
+                GreenButton(title: "Choose Another!", action: {
+                    navigationState.path.append(Route.setDefaultAddress)
+                })
             }//: IF ELSE
             GreenButton(title: addressVM.addresses.isEmpty ? "Add One Now" : "Add Another Address", action: {
                 navigationState.path.append(Route.setAddress)

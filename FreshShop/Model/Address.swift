@@ -28,3 +28,8 @@ struct SetAddressResponse: Codable {
     let message: String?
     var address: Address?
 }
+
+struct DefaultAddressResponse: Codable {
+    let message: String
+    let success: Bool
+}

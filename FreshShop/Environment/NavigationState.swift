@@ -47,7 +47,9 @@ enum Route: Hashable {
     case orderDetail(Order)
     case userAddress
     case setAddress
+    case setDefaultAddress
     case placeOrder
     case creditCard
+    
 }
 

@@ -102,6 +102,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				302EBA792DA974EB00DE0AF7 /* XCRemoteSwiftPackageReference "JWTDecode" */,
+				3019AADF2E01EF9300AB0E20 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3086F0C02D84A55F00D8EA6C /* Products */;
@@ -337,6 +338,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3019AADF2E01EF9300AB0E20 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stripe/stripe-ios-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.16.0;
+			};
+		};
 		302EBA792DA974EB00DE0AF7 /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
