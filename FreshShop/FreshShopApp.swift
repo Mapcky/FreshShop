@@ -17,6 +17,7 @@ struct FreshShopApp: App {
     @State private var orderVM = OrderViewModel(httpClient: HTTPClient())
     @State private var addressVM = AddressViewModel(httpClient: HTTPClient())
     @State private var userVM = UserViewModel(httpClient: HTTPClient())
+    @State private var paymentVM = PaymentViewModel(httpClient: HTTPClient())
     
     init() {
         StripeAPI.defaultPublishableKey = ProcessInfo.processInfo.environment["STRIPE_PUBLISHABLE_KEY"] ?? ""
@@ -31,6 +32,7 @@ struct FreshShopApp: App {
                 .environment(orderVM)
                 .environment(addressVM)
                 .environment(userVM)
+                .environment(paymentVM)
         }
     }
 }
