@@ -6,13 +6,50 @@
 //
 
 import SwiftUI
+import StripePaymentSheet
+
 
 struct PlaceOrderScreen: View {
     // MARK: - PROPERTIES
+    
     @Environment(NavigationState.self) private var navigationState
     @Environment(CartViewModel.self) private var cartVM
     @Environment(AddressViewModel.self) private var addressVM
     @Environment(UserViewModel.self) private var userVM
+    @Environment(OrderViewModel.self) private var orderVM
+    @Environment(PaymentViewModel.self) private var paymentVM
+    private let cotizationVM = UsdCotizationViewModel(httpClient: HTTPClient())
+    @State private var paymentSheet: PaymentSheet?
+    @State private var cotizatioGotten: Bool = false
+
+    // MARK: - FUNCTIONS
+    
+    private func paymentCompletion(result: PaymentSheetResult) {
+        switch result {
+        case .completed:
+            Task {
+                do {
+
+                    guard let order = orderVM.createLocalOrder(from: cartVM) else {
+                        return
+                    }
+                    
+                    try await orderVM.generateOrder(order: order)
+
+                    cartVM.emptyLocalCart()
+
+                    navigationState.path.append(Route.purchaseComplete)
+
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        case .canceled:
+            print("Payment canceled")
+        case .failed(error: let error):
+            print(error)
+        }
+    }
 
     // MARK: - BODY
     var body: some View {
@@ -76,20 +113,23 @@ struct PlaceOrderScreen: View {
                     .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 5)
                     .padding(.vertical)
                     
-                    Button(action:{
-
-                    }, label: {
-                        Text("Pay with")
-                        Text("stripe")
-                            .fontWeight(.black)
-                    })//: BUTTON STRIPE
-                    .foregroundColor(.white)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color("stripeColor"))
-                    .cornerRadius(10)
-                    .shadow(color:  Color("stripeColor"), radius: 5, x: 0, y: 5)
+                    if let paymentSheet {
+                        PaymentSheet.PaymentButton(paymentSheet: paymentSheet, onCompletion: paymentCompletion) {
+                            HStack {
+                                Text("Pay with")
+                                Text("stripe")
+                                    .fontWeight(.black)
+                            }
+                            .foregroundColor(.white)
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("stripeColor"))
+                            .cornerRadius(10)
+                            .shadow(color:  Color("stripeColor"), radius: 5, x: 0, y: 5)
+                            
+                        }//: STRIPE BUTTON
+                    }
                 }//:VSTACK
                 
             }//: VSTACK
@@ -103,7 +143,26 @@ struct PlaceOrderScreen: View {
         }//: SCROLL
         .background(Color("LightGrayBackground"))
         .navigationBarBackButtonHidden()
-        
+        .task {
+            do {
+                try await cotizationVM.getCotization()
+                cotizatioGotten = true
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        .onChange(of: cotizatioGotten) {
+            Task {
+                do {
+                    guard let dolarTarjeta = cotizationVM.cotizationTarjeta?.price else { return }
+                    let totalCart = Double(cartVM.total)
+                    let totalAmount = (totalCart ?? 0)/dolarTarjeta
+                    paymentSheet = try await paymentVM.preparePaymentSheet(totalAmount: totalAmount)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
 }
 
@@ -113,5 +172,8 @@ struct PlaceOrderScreen: View {
         .environment(CartViewModel(httpClient: .development))
         .environment(AddressViewModel(httpClient: .development))
         .environment(UserViewModel(httpClient: .development))
+        .environment(OrderViewModel(httpClient: .development))
+        .environment(PaymentViewModel(httpClient: .development))
+
 
 }

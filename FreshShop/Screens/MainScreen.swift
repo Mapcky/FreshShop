@@ -149,5 +149,6 @@ struct MainScreen: View {
         .environment(AddressViewModel(httpClient: .development))
         .environment(UserViewModel(httpClient: .development))
         .environment(OrderViewModel(httpClient: .development))
+        .environment(PaymentViewModel(httpClient: .development))
         
 }

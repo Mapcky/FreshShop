@@ -49,12 +49,16 @@ struct Constants {
         
         // MARK: - PAYMENT
         static let paymentCreditCard: URL = URL(string: baseURL + "/api/pay/simulate")!
+        static let generateStripePaymentIntent: URL = URL(string: baseURL + "/api/pay/stripePaymentIntent/")!
+
         
         // MARK: - ADDRESS
         static let getAddresses: URL = URL(string: baseURL + "/api/address/getAll")!
         static let newAddress: URL = URL(string: baseURL + "/api/address/setNew")!
         static let setAddressDefault: URL = URL(string: baseURL + "/api/address/changeDefault")!
         
+        // MARK: - DOLAR COTIZATION
+        static let getUsdCotization: URL = URL(string: "https://criptoya.com/api/dolar")!
 
     }
 }
