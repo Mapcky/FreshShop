@@ -36,9 +36,8 @@ Quiero compartir algunos avances del frontend para mostrar cómo va tomando form
 ---
 
 ## 🚀 Últimos avances (junio 2025)
-
-🔗 **Versión funcional conectada al backend**  
-El backend está disponible en el repo 👉 [FeshShopBack](https://github.com/Mapcky/FeshShopBack)
+🔗 Integración completa con backend Express + PostgreSQL
+El código del backend está disponible en 👉 [FeshShopBack](https://github.com/Mapcky/FeshShopBack)
 
 ---
 
