@@ -52,7 +52,7 @@ El usuario puede crear una cuenta, iniciar sesión y acceder de forma segura con
 ---
 
 ### 🧭 Navegación entre categorías y detalle de producto  
-Navegación fluida entre categorías y productos, con transición animada y lógica conectada al backend.  
+Transición animada entre categorías y productos, con datos obtenidos dinámicamente desde el backend.
 
 <img src="assets/category1.gif" width="300"/>  
 
@@ -80,11 +80,9 @@ Los usuarios pueden seleccionar una dirección predeterminada y añadir nuevas.
 Checkout funcional con dos opciones de pago:
 
 - **Stripe:** Integración real con pasarela de pago segura.
-- 
 <img src="assets/stripe.gif" width="300"/>
 
 - **Tarjeta de crédito personalizada:** Formulario con validaciones visuales y simulación de pago.
-- 
 <img src="assets/ccPay.gif" width="300"/>
 
 ---
