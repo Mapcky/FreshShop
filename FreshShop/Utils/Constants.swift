@@ -25,7 +25,7 @@ struct Constants {
         // MARK: - AUTH
         static let loginUser: URL = URL(string: baseURL + "/api/auth/login")!
         static let loginById: URL = URL(string: baseURL + "/api/auth/secureLogin")!
-        static let register: URL = URL(string: baseURL + "/auth/register")!
+        static let register: URL = URL(string: baseURL + "/api/auth/register")!
         
         // MARK: - CATEGORIES
         static let allCategories: URL = URL(string: baseURL + "/api/category/all")!

@@ -106,9 +106,9 @@ struct CreditCardView: View {
                             .init(0, 1), .init(0.5, 1), .init(1, 1)
                         ],
                         colors: [
-                            .red, .orange, .red,
-                            .orange, .yellow.opacity(0.7), .red,
-                            .orange, .red, .orange
+                            .gray.opacity(0.9), .gray.opacity(0.6), .gray.opacity(0.8),
+                            .gray.opacity(0.7), .gray.opacity(0.7), .gray.opacity(0.5),
+                            .gray.opacity(0.3), .gray.opacity(0.6), .gray.opacity(0.5)
                         ]
                     )//: MESH
                     .clipShape(RoundedRectangle(cornerRadius: 16))

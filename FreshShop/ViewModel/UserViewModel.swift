@@ -74,7 +74,11 @@ class UserViewModel {
     }
     
     func register(user: User) async throws {
-        let bodyData = try? JSONEncoder().encode(user)
+        //let bodyData = try JSONEncoder().encode(user)
+                
+        let body = ["username": user.username, "password": user.password!, "first_name": user.firstName, "last_name": user.lastName, "email": user.email]
+        
+        let bodyData = try JSONEncoder().encode(body)
         
         let resource = Resource(url: Constants.Urls.register, method: .post(bodyData), modelType: LoginUserResponse.self)
         

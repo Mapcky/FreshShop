@@ -100,6 +100,7 @@ struct RegisterScreen: View {
             VStack(spacing: 18) {
                 NiceTextField(titleLabel: "Username", fieldValue: $username, showError: fieldErrors[.username] ?? false)
                     .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
                     
                 NiceTextField(titleLabel: "First Name", fieldValue: $firstName, showError: fieldErrors[.firstName] ?? false)
                 NiceTextField(titleLabel: "Last Name", fieldValue: $lastName, showError: fieldErrors[.lastName] ?? false)

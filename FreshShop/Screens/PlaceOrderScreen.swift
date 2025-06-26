@@ -77,10 +77,14 @@ struct PlaceOrderScreen: View {
                         Text("Ship to \(userVM.firstName)")
                             .font(.title2)
                             .bold()
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        Divider()
                         AddressItem(addressDVM: AddressDetailViewModel(address: addressVM.defaultAddress!))
+                            .padding(.leading, 30)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Divider()
                     }//: ELSE
                 }//: VSTACK
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 30)
                 
                 Text("Your order content")

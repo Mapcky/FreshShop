@@ -52,6 +52,7 @@ struct OrderLittleView: View {
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .shadow(color: .gray.opacity(0.2), radius: 3, x: 0, y: 2)
         }//:LOOP
+        .padding(.bottom, 10)
     }//:BODY
 }
 

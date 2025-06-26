@@ -22,12 +22,13 @@ struct AddressItem: View {
             Text("\(addressDVM.city), \(addressDVM.state) \(addressDVM.zip)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+                .frame(width: 220, alignment: .leading)
             
             Text(addressDVM.country)
                 .font(.footnote)
                 .foregroundColor(.gray)
         }
-        //.padding()
+        .padding(.leading, 30)
         .background(Color("LightGray"))
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)

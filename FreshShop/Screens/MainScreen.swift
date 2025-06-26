@@ -17,7 +17,7 @@ struct MainScreen: View {
     // MARK: - PROPERTIES
     @State private var search: String = ""
     @State private var localPath = NavigationPath()
-    private var categoryVM = CategoryViewModel(httpClient: HTTPClient())    
+    private var categoryVM = CategoryViewModel(httpClient: HTTPClient())
     // MARK: - BODY
     var body: some View {
         ZStack {

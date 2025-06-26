@@ -20,6 +20,11 @@ struct CategoriesVGrid: View {
     // MARK: - BODY
     var body: some View {
         ScrollView{
+            Text("Categories")
+                .font(.title)
+                .fontDesign(.rounded)
+                .foregroundStyle(.gray.opacity(0.7))
+                .padding(.top,15)
             LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
                 ForEach(categoryVM.categories, id:\.self) { category in
                     VStack(spacing: 8) {
