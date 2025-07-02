@@ -26,14 +26,7 @@ struct TopNavBar: View {
                 else {
                     Button(action: {
                         withAnimation(.easeInOut, {
-                            navigationState.animatingBot = false
-                            if !navigationState.path.isEmpty {
-                                navigationState.path.removeLast()
-                            }
-                            else if navigationState.path.isEmpty {
-                                navigationState.animatingTop = false
-                                navigationState.showingScreen = .home
-                            }
+                            navigationState.goBack()
                         })
                     }, label: {
                         Image(systemName: "chevron.left")

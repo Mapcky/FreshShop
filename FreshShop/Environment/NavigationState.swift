@@ -27,6 +27,21 @@ class NavigationState: ObservableObject {
         self.showingScreen = .home
     }
     
+    func goBack() {
+        animatingBot = false
+
+        if !path.isEmpty {
+            path.removeLast()
+
+            if path.isEmpty && showingScreen == .home {
+                animatingTop = false
+            }
+        } else {
+            animatingTop = false
+            showingScreen = .home
+        }
+    }
+    
 }
 
 enum selectedScreen {
