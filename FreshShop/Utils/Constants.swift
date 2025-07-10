@@ -60,5 +60,7 @@ struct Constants {
         // MARK: - DOLAR COTIZATION
         static let getUsdCotization: URL = URL(string: "https://criptoya.com/api/dolar")!
 
+        // MARK: - DEALS
+        static let activeDeals: URL = URL(string: "/api/deal/active")!
     }
 }

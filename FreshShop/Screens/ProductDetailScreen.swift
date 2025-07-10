@@ -185,6 +185,7 @@ struct ProductDetailScreen: View {
         }
         .ignoresSafeArea()
         .navigationBarBackButtonHidden(true)
+        
     }
 }
 
