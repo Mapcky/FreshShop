@@ -18,6 +18,7 @@ struct MainScreen: View {
     @State private var search: String = ""
     @State private var localPath = NavigationPath()
     private var categoryVM = CategoryViewModel(httpClient: HTTPClient())
+    private var dealVM = DealViewModel(httpClient: HTTPClient())
     // MARK: - BODY
     var body: some View {
         ZStack {
@@ -38,11 +39,10 @@ struct MainScreen: View {
                                 .shadow(radius: 0.5)
                                 .padding(.top, 30)
                         case .deals:
-                            EmptyView()
-                            //ProductsVGrid( selectedCategoryId: 1)
-                                //.padding(.horizontal, 15)
-                                //.shadow(radius: 0.5)
-                                //.padding(.top, 30)
+                            DealScreen(dealVM: dealVM)
+                                .padding(.horizontal, 15)
+                                .shadow(radius: 0.5)
+                                .padding(.top, 30)
                         case .more:
                             EmptyView()
                         case .profile:
@@ -129,6 +129,15 @@ struct MainScreen: View {
             do {
                 if orderVM.orders.isEmpty {
                     try await orderVM.loadOrders()
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        .task{
+            do {
+                if dealVM.deals.isEmpty {
+                    try await dealVM.getActiveDeals()
                 }
             } catch {
                 print(error.localizedDescription)

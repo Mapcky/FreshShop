@@ -11,7 +11,7 @@ import Foundation
 @Observable
 class DealViewModel {
     
-    private var deals: [Deal] = []
+    private(set) var deals: [Deal] = []
     var httpClient = HTTPClient()
     
     init(httpClient: HTTPClient) {
@@ -25,8 +25,8 @@ class DealViewModel {
         
         let response = try await httpClient.load(resource)
         
-        if response.success, let responseDeals = response.deals {
-            self.deals = responseDeals
+        if response.success {
+            self.deals = response.deals
         } else {
             print(response.message ?? "Error while retriving deals data")
         }
