@@ -11,12 +11,16 @@ struct CategoryProductsView: View {
     // MARK: - PROPERTIES
     
     private var productVM = ProductViewModel(httpClient: HTTPClient())
+    
+    let dealVM: DealViewModel
+    
     var selectedCategoryId: Int
     var selectedCategoryName: String
     
-    init(selectedCategoryId: Int, selectedCategoryName: String) {
+    init(selectedCategoryId: Int, selectedCategoryName: String, dealVM: DealViewModel) {
         self.selectedCategoryId = selectedCategoryId
         self.selectedCategoryName = selectedCategoryName
+        self.dealVM = dealVM
     }
     
     // MARK: - BODY
@@ -28,7 +32,7 @@ struct CategoryProductsView: View {
                     .fontDesign(.rounded)
                     .foregroundStyle(.gray.opacity(0.7))
                 
-                ProductsVGrid(productVM: productVM, selectedCategoryId: selectedCategoryId)
+                ProductsVGrid(productVM: productVM, dealVM: dealVM, selectedCategoryId: selectedCategoryId)
             }//:VSTACK
             .padding(.horizontal, 15)
             .shadow(radius: 0.5)
@@ -48,6 +52,6 @@ struct CategoryProductsView: View {
 
 
 #Preview {
-    CategoryProductsView(selectedCategoryId: 1, selectedCategoryName: "Dairy")
+    CategoryProductsView(selectedCategoryId: 1, selectedCategoryName: "Dairy", dealVM: DealViewModel(httpClient: .development))
 }
 

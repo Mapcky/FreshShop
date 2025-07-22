@@ -70,7 +70,7 @@ struct MainScreen: View {
                         case .categories(
                             let categoryId,
                             let categoryName):
-                            CategoryProductsView(selectedCategoryId: categoryId,selectedCategoryName: categoryName)
+                            CategoryProductsView(selectedCategoryId: categoryId,selectedCategoryName: categoryName, dealVM: dealVM)
                             
                         case .allCategories:
                             CategoriesVGrid(categoryVM: categoryVM)
@@ -138,6 +138,8 @@ struct MainScreen: View {
             do {
                 if dealVM.deals.isEmpty {
                     try await dealVM.getActiveDeals()
+                    dealVM.productsCategoryWDeals()
+                    //Testing
                 }
             } catch {
                 print(error.localizedDescription)

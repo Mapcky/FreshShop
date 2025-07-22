@@ -46,6 +46,7 @@ struct DealHGrid: View {
                     .onTapGesture {
                         withAnimation(nil){
                             navigationState.animatingTop = true
+                            navigationState.animatingBot = true
                         }
                         withAnimation(){
                             navigationState.path.append(Route.productDetail(item.product))

@@ -12,10 +12,21 @@ struct ProductsVGrid: View {
     
     @Environment(NavigationState.self) private var navigationState
     let productVM: ProductViewModel
+    let dealVM: DealViewModel
     let selectedCategoryId: Int
     
     var products: [Product] {
         productVM.productsByCategory[selectedCategoryId] ?? []
+    }
+    
+    var dealProducts: [Product] {
+        dealVM.productByCategory[selectedCategoryId] ?? []
+    }
+    
+    var regularProducts: [Product] {
+        let dealProductIds = Set(dealProducts.map { $0.id })
+        let allProducts = productVM.productsByCategory[selectedCategoryId] ?? []
+        return allProducts.filter { !dealProductIds.contains($0.id) }
     }
     
     //Grid Variables
@@ -28,43 +39,12 @@ struct ProductsVGrid: View {
     // MARK: - BODY
     var body: some View {
         LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
-            ForEach(products, id:\.self) { product in
-                VStack {
-                    ZStack {
-                        Color("LightGreenGridBackground")
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-                        
-                        ImageLoader(urlString: product.imageUrl)
-                            .frame(width: 100, height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                    }//: ZSTACK
-                    .frame(height: 120)
-                    
-                    VStack {
-                        Text(product.name)
-                            .font(.system(size: 16))
-                            .fontWeight(.semibold)
-                            .fontDesign(.rounded)
-                            .foregroundColor(.primary)
-                            .lineLimit(2)
-                            .multilineTextAlignment(.center)
-                            .frame(width: 120)
-                            .frame(maxHeight: .infinity)
-
-                        
-                        Text(Double(product.price) ?? 0, format: .currency(code: "ARS"))
-                            .font(.system(size: 14))
-                            .fontWeight(.bold)
-                    }//: VSTACK NAME
-                    .frame(maxHeight: .infinity)
-                }//: VSTACK
-                .frame(height: 220)
-                .onTapGesture {
-                    navigationState.path.append(Route.productDetail(product))
-                    navigationState.animatingBot = true
-                }//: TAP GESTURE
-            }//: LOOP
+            ForEach(dealProducts, id: \.self) { product in
+                GridProductCard(productDVM: ProductDetailViewModel(product: product), isDeal: true)
+            }//: LOOP DEALS
+            ForEach(regularProducts, id: \.self) { product in
+                GridProductCard(productDVM: ProductDetailViewModel(product: product), isDeal: false)
+            }
         })//: VGRID
         .padding()
         .padding(.bottom, 80)
@@ -75,6 +55,6 @@ struct ProductsVGrid: View {
 
 
 #Preview {
-    ProductsVGrid(productVM: ProductViewModel(httpClient: .development), selectedCategoryId: 1)
+    ProductsVGrid(productVM: ProductViewModel(httpClient: .development), dealVM: DealViewModel(httpClient: .development), selectedCategoryId: 1)
         .environment(NavigationState())
 }

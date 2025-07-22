@@ -9,7 +9,8 @@ import Foundation
 @MainActor
 @Observable
 class ProductDetailViewModel {
-    private let product: Product
+    
+    private(set) var product: Product
     var count: Int = 1
     
     init(product: Product) {

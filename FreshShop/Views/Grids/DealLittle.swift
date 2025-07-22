@@ -16,14 +16,12 @@ struct DealLittle: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 40) {
             ImageLoader(urlString: dealDetailVM.deal.imageUrl)
-                .frame(width: .infinity, height: 150)
+                .frame(maxWidth: .infinity)
+                .frame(height: 150)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
-            Divider()
-            
             
             if showingProducts {
                    DealHGrid(dealItemsVM: DealItemViewModel(dealItems: dealDetailVM.deal.items))
-                   .frame(width: .infinity)
             }
         }//:VSTACK
         .padding()

@@ -29,7 +29,7 @@ struct DealItem: Codable, Hashable {
     let dealId: Int
     let productId: Int
     let value: String
-    let product: Product
+    var product: Product
     
     private enum CodingKeys: String, CodingKey {
         case id, value

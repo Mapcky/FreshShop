@@ -19,7 +19,7 @@ struct DealScreen: View {
                 DealLittle(dealDetailVM: DealDetailViewModel(deal: deal))
             }//: LOOP
         }//: VSTACK
-        .padding(.bottom, 80)
+        .padding(.bottom, 100)
         .navigationBarBackButtonHidden()
     }
 }
