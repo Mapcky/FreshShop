@@ -56,7 +56,7 @@ struct OrderItemView: View {
 }
 
 #Preview {
-    OrderItemView(orderItemVM: OrderItemViewModel(orderItem: OrderItem(from: CartItem(id: 1, product: Product(id: 3, name: "Bananas",price: "100",quantity: 50, imageUrl: "http://localhost:8080/api/assets/products/bakery/2.png",categoryId: 1, description: ""), quantity: 30))))
+    OrderItemView(orderItemVM: OrderItemViewModel(orderItem: OrderItem(from: CartItem(id: 1, product: Product(id: 3, name: "Bananas",price: "100",quantity: 50, imageUrl: "http://localhost:8080/api/assets/products/bakery/2.png",categoryId: 1, description: ""), quantity: 30, unitPrice: "111"))))
         .environment(NavigationState())
     
 }

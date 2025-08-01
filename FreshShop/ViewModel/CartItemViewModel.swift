@@ -25,9 +25,6 @@ class CartItemViewModel {
         return cartItem.product.name
     }
     
-    var productUnitPrice: String {
-        return cartItem.product.price
-    }
     
     var quantity: Int {
         return cartItem.quantity
@@ -38,13 +35,17 @@ class CartItemViewModel {
     }
     
     var total: String {
-        let productPrice = Double(cartItem.product.price) ?? 0
+        let productPrice = Double(cartItem.unitPrice) ?? 0
         let total = Double(cartItem.quantity) * productPrice
         return String(total)
     }
     
     var id: Int {
         return cartItem.id
+    }
+    
+    var unitPrice: String {
+        return cartItem.unitPrice
     }
     
 }

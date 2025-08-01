@@ -22,11 +22,19 @@ struct CartItem: Codable, Hashable {
     var id: Int
     var product: Product
     var quantity: Int = 1
+    var unitPrice: String
     
     private enum CodingKeys: String, CodingKey {
         case id, quantity
         case product = "Product"
+        case unitPrice = "unit_price"
     }
+}
+
+struct encodableCartItem: Encodable {
+    var productId: Int
+    var quantity: Int
+    var unitPrice: String
 }
 
 struct CartResponse: Codable {

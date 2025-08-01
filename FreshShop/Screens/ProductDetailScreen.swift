@@ -16,7 +16,7 @@ struct ProductDetailScreen: View {
     // MARK: - FUNCTIONS
     private func addItemToCart() async {
         do {
-            try await cartVM.addItemToCart(productId: productDetailVM.id, quantity: productDetailVM.count)
+            try await cartVM.addItemToCart(productId: productDetailVM.id, quantity: productDetailVM.count, unitPrice: productDetailVM.price)
         } catch is CancellationError {
             //do nothing
         } catch {

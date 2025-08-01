@@ -16,7 +16,7 @@ struct CartItemView: View {
     
     func modifyQuantity(modifier: Int) {
         Task {
-            try await cartVM.addItemToCart(productId: cartItemVM.productId, quantity: modifier)
+            try await cartVM.addItemToCart(productId: cartItemVM.productId, quantity: modifier, unitPrice: cartItemVM.unitPrice)
         }
     }
     
@@ -90,6 +90,6 @@ struct CartItemView: View {
 }
 
 #Preview {
-    CartItemView(cartItemVM: CartItemViewModel(cartItem: CartItem(id: 1, product: Product(id: 1, name: "test", price: "30", quantity: 10, imageUrl: "", categoryId: 1, description: ""))))
+    CartItemView(cartItemVM: CartItemViewModel(cartItem: CartItem(id: 1, product: Product(id: 1, name: "test", price: "30", quantity: 10, imageUrl: "", categoryId: 1, description: ""), unitPrice: "111")))
         .environment(CartViewModel(httpClient: .development))
 }

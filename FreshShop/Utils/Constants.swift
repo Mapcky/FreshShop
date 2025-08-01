@@ -9,15 +9,15 @@ import Foundation
 
 struct Constants {
     
-    private static let production: String = "https://feshshopback.onrender.com"
+    //private static let production: String = "https://feshshopback.onrender.com"
     private static let localUrl: String = "http://localhost:8080"
     
     struct Urls {
         
         static var baseURL: String {
             #if DEBUG
-            return production
-            #else
+            //return production
+            //#else
             return localUrl
             #endif
         }

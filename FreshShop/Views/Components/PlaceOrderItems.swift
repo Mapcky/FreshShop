@@ -35,7 +35,7 @@ struct PlaceOrderItems: View {
                     .lineLimit(2)
                     .truncationMode(.tail)
                 
-                Text("\(String(cartItemVM.quantity)) x \(String(cartItemVM.productUnitPrice))")
+                Text("\(String(cartItemVM.quantity)) x \(String(cartItemVM.unitPrice))")
                     .font(.caption)
                     .bold()
                     .foregroundStyle(.gray)
@@ -55,6 +55,6 @@ struct PlaceOrderItems: View {
 }
 
 #Preview {
-    PlaceOrderItems(cartItemVM: CartItemViewModel(cartItem: CartItem(id: 1, product: Product(id: 1, name: "test", price: "30", quantity: 10, imageUrl: "", categoryId: 1, description: ""))))
+    PlaceOrderItems(cartItemVM: CartItemViewModel(cartItem: CartItem(id: 1, product: Product(id: 1, name: "test", price: "30", quantity: 10, imageUrl: "", categoryId: 1, description: ""), unitPrice: "111")))
         .environment(CartViewModel(httpClient: .development))
 }

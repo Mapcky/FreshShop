@@ -16,6 +16,7 @@ struct Order: Codable, Hashable {
     let total: String
     let date: Date?
     
+    
     init(from cart: Cart) {
         self.id = nil
         self.userId = cart.userId
@@ -23,7 +24,7 @@ struct Order: Codable, Hashable {
         self.orderItems = cart.cartItems.map(OrderItem.init)
         self.date = nil
         let totalValue: Double = cart.cartItems.reduce(0.0) { result, cartItem in
-            let price = Double(cartItem.product.price) ?? 0
+            let price = Double(cartItem.unitPrice) ?? 0
             let quantity = Double(cartItem.quantity)
             return result + price * quantity
         }
@@ -70,17 +71,21 @@ struct OrderItem: Codable, Hashable {
     let id: Int?
     let product: Product
     let quantity: Int
+    var unitPrice: String
+    
     
     init(from cartItem: CartItem){
         self.id = nil
         self.product = cartItem.product
         self.quantity = cartItem.quantity
+        self.unitPrice = cartItem.unitPrice
     }
     
     
     private enum CodingKeys: String, CodingKey {
         case id,quantity
         case product = "Product"
+        case unitPrice = "unit_price"
     }
 }
 

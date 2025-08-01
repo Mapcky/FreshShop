@@ -31,8 +31,8 @@ class CartViewModel {
     }
     
     
-    func addItemToCart(productId: Int, quantity: Int) async throws {
-        let body = ["productId" : productId, "quantity" : quantity]
+    func addItemToCart(productId: Int, quantity: Int, unitPrice: String) async throws {
+        let body = encodableCartItem(productId: productId, quantity: quantity, unitPrice: unitPrice)
         
         let bodyData = try JSONEncoder().encode(body)
         
@@ -77,7 +77,7 @@ class CartViewModel {
         guard let items = cart?.cartItems else { return "0" }
         
         let totalValue: Double = items.reduce(0.0) { result, cartItem in
-            let price = Double(cartItem.product.price) ?? 0
+            let price = Double(cartItem.unitPrice) ?? 0
             let quantity = Double(cartItem.quantity)
             return result + price * quantity
         }
