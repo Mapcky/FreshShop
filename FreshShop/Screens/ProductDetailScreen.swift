@@ -12,11 +12,17 @@ struct ProductDetailScreen: View {
     @Environment(NavigationState.self) private var navigationState
     var productDetailVM: ProductDetailViewModel
     @Environment(CartViewModel.self) private var cartVM
+    let dealNewPrice: String?
+    let dealValue: String?
     
     // MARK: - FUNCTIONS
     private func addItemToCart() async {
         do {
-            try await cartVM.addItemToCart(productId: productDetailVM.id, quantity: productDetailVM.count, unitPrice: productDetailVM.price)
+            if dealNewPrice != nil {
+                try await cartVM.addItemToCart(productId: productDetailVM.id, quantity: productDetailVM.count, unitPrice: dealNewPrice!)
+            } else {
+                try await cartVM.addItemToCart(productId: productDetailVM.id, quantity: productDetailVM.count, unitPrice: productDetailVM.price)
+            }
         } catch is CancellationError {
             //do nothing
         } catch {
@@ -54,11 +60,20 @@ struct ProductDetailScreen: View {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("Price")
                                     .fontWeight(.semibold)
-                                
                                 Text(Double(productDetailVM.price) ?? 0, format: .currency(code: "ARS"))
                                     .font(.title3)
                                     .fontWeight(.black)
                                     .scaleEffect(1.2, anchor: .leading)
+                                    .foregroundColor(dealNewPrice != nil ? .gray : .black)
+                                    .strikethrough(dealNewPrice != nil, color: .gray)
+                                
+                                if let dealNewPrice {
+                                    Text(Double(dealNewPrice) ?? 0, format: .currency(code: "ARS"))
+                                        .font(.title3)
+                                        .fontWeight(.black)
+                                        .scaleEffect(1.2, anchor: .leading)
+                                        .foregroundStyle(.orange)
+                                }
                             }
                             .padding(.trailing, 10)
                             
@@ -190,7 +205,7 @@ struct ProductDetailScreen: View {
 }
 
 #Preview {
-    ProductDetailScreen(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1, description: "", rate: 4)))
+    ProductDetailScreen(productDetailVM: ProductDetailViewModel(product: Product(id: 3, name: "Fresh Oranges",price: "100",quantity: 10, imageUrl: "ProductPlaceholder",categoryId: 1, description: "", rate: 4)), dealNewPrice: nil, dealValue: nil)
         .environment(NavigationState())
         .environment(CartViewModel(httpClient: .development))
         .environment(ProductViewModel(httpClient: .development))

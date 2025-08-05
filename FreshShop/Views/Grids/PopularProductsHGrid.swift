@@ -41,7 +41,7 @@ struct PopularProductsHGrid: View {
                     .frame(maxWidth: 200)
                     .onTapGesture {
                         withAnimation(.linear) {
-                            navigationState.path.append(Route.productDetail(product))
+                            navigationState.path.append(Route.productDetail(product, nil, nil))
                             navigationState.animatingBot = true
                         }
                         withAnimation(nil) {

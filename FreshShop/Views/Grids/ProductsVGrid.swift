@@ -19,12 +19,12 @@ struct ProductsVGrid: View {
         productVM.productsByCategory[selectedCategoryId] ?? []
     }
     
-    var dealProducts: [Product] {
+    var dealProducts: [ProductWithDeal] {
         dealVM.productByCategory[selectedCategoryId] ?? []
     }
     
     var regularProducts: [Product] {
-        let dealProductIds = Set(dealProducts.map { $0.id })
+        let dealProductIds = Set(dealProducts.map { $0.product.id })
         let allProducts = productVM.productsByCategory[selectedCategoryId] ?? []
         return allProducts.filter { !dealProductIds.contains($0.id) }
     }
@@ -39,11 +39,11 @@ struct ProductsVGrid: View {
     // MARK: - BODY
     var body: some View {
         LazyVGrid(columns: gridLayout, spacing: columnSpacing, content: {
-            ForEach(dealProducts, id: \.self) { product in
-                GridProductCard(productDVM: ProductDetailViewModel(product: product), isDeal: true)
+            ForEach(dealProducts, id: \.self) { dealProduct in
+                GridProductCard(productDVM: ProductDetailViewModel(product: dealProduct.product), dealValue: dealProduct.dealValue, dealNewPrice: dealProduct.dealNewPrice)
             }//: LOOP DEALS
             ForEach(regularProducts, id: \.self) { product in
-                GridProductCard(productDVM: ProductDetailViewModel(product: product), isDeal: false)
+                GridProductCard(productDVM: ProductDetailViewModel(product: product), dealValue: nil, dealNewPrice: nil)
             }
         })//: VGRID
         .padding()

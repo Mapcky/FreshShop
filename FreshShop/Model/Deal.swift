@@ -45,5 +45,9 @@ struct DealResponse: Codable {
     var success: Bool
 }
 
-
-
+struct ProductWithDeal: Hashable {
+    let product: Product
+    let dealNewPrice: String
+    let dealValue: String
+    let dealType: String
+}

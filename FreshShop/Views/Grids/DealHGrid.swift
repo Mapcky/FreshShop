@@ -49,7 +49,7 @@ struct DealHGrid: View {
                             navigationState.animatingBot = true
                         }
                         withAnimation(){
-                            navigationState.path.append(Route.productDetail(item.product))
+                            navigationState.path.append(Route.productDetail(item.product, nil, nil))
                         }
                     }
                 }//LOOP

@@ -11,7 +11,9 @@ struct GridProductCard: View {
     // MARK: - PROPERTIES
     @Environment(NavigationState.self) private var navigationState
     let productDVM: ProductDetailViewModel
-    var isDeal: Bool
+    let dealValue: String?
+    let dealNewPrice: String?
+    //let dealType: String
     
     // MARK: - BODY
     var body: some View {
@@ -38,21 +40,26 @@ struct GridProductCard: View {
                     .frame(width: 120)
                     .frame(maxHeight: .infinity)
 
-                
-                Text(Double(productDVM.price) ?? 0, format: .currency(code: "ARS"))
-                    .font(.system(size: 14))
-                    .fontWeight(.bold)
+                if let dealNewPrice {
+                    Text(Double(dealNewPrice) ?? 0, format: .currency(code: "ARS"))
+                        .font(.system(size: 14))
+                        .fontWeight(.bold)
+                } else {
+                    Text(Double(productDVM.price) ?? 0, format: .currency(code: "ARS"))
+                        .font(.system(size: 14))
+                        .fontWeight(.bold)
+                }
             }//: VSTACK NAME
             .frame(maxHeight: .infinity)
         }//: VSTACK
         .frame(height: 220)
         .onTapGesture {
-            navigationState.path.append(Route.productDetail(productDVM.product))
+            navigationState.path.append(Route.productDetail(productDVM.product, dealNewPrice, dealValue))
             navigationState.animatingBot = true
         }//: TAP GESTURE
     }
 }
 
 #Preview {
-    GridProductCard(productDVM: ProductDetailViewModel(product: Product(id: 1, name: "", price: "100", quantity: 120, imageUrl: "", categoryId: 1, description: "", rate: 1)), isDeal: true)
+    GridProductCard(productDVM: ProductDetailViewModel(product: Product(id: 1, name: "", price: "100", quantity: 120, imageUrl: "", categoryId: 1, description: "", rate: 1)), dealValue: nil, dealNewPrice: nil)
 }

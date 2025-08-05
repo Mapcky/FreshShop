@@ -65,8 +65,8 @@ struct MainScreen: View {
                     .navigationDestination(for: Route.self) { route in
                         switch route {
                         case .productDetail(
-                            let product):
-                            ProductDetailScreen(productDetailVM: ProductDetailViewModel(product: product))
+                            let product, let dealNewPrice, let dealValue):
+                            ProductDetailScreen(productDetailVM: ProductDetailViewModel(product: product), dealNewPrice: dealNewPrice, dealValue: dealValue)
                         case .categories(
                             let categoryId,
                             let categoryName):

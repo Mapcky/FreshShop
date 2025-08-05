@@ -7,12 +7,14 @@
 
 import Foundation
 
+
+
 @MainActor
 @Observable
 class DealViewModel {
     
     private(set) var deals: [Deal] = []
-    private(set) var productByCategory: [Int : [Product]] = [:]
+    private(set) var productByCategory: [Int : [ProductWithDeal]] = [:]
     var httpClient = HTTPClient()
     
     init(httpClient: HTTPClient) {
@@ -35,21 +37,23 @@ class DealViewModel {
     
     
     func productsCategoryWDeals() {
-        var tempDict: [Int: [Product]] = [:]
+        var tempDict: [Int: [ProductWithDeal]] = [:]
         
         for deal in deals {
             for item in deal.items {
-                var modifiedProduct = item.product
+                //var modifiedProduct = item.product
                 
-                let newPrice = (Double(item.product.price) ?? 0) * (1 - ((Double(item.value) ?? 0)/100))
-                modifiedProduct.price = String(format: "%.2f", newPrice)
+                let discountedPrice = (Double(item.product.price) ?? 0) * (1 - ((Double(item.value) ?? 0) / 100))
+                let newPrice = String(format: "%.2f", discountedPrice)
+
+                let productWDeal = ProductWithDeal(product: item.product,dealNewPrice: newPrice, dealValue: item.value, dealType: deal.type)
                 
-                let categoryId = modifiedProduct.categoryId
+                let categoryId = productWDeal.product.categoryId
                 if tempDict[categoryId] == nil {
                     tempDict[categoryId] = []
                 }
                 
-                tempDict[categoryId]?.append(modifiedProduct)
+                tempDict[categoryId]?.append(productWDeal)
             }// LOOP ITEMS
         }//: LOOP DEALS
         self.productByCategory = tempDict
